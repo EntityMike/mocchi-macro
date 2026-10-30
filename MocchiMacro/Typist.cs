@@ -1,7 +1,9 @@
 // Types a search text into the game's monster field by clicking keys on its keyboard:
-// first BS enough times to clear the field, then each key of the search text. It stops
-// before Ent., so the organizer can check the text and run the search themselves. A search
-// text with a character the keyboard has no key for is refused before any click.
+// it brings the game to the front (restoring it if minimized), clicks BS enough times to
+// clear the field, then each key of the search text. It stops before Ent., so the organizer
+// can check the text and run the search themselves. A search text with a character the
+// keyboard has no key for is refused before any click. It reports how typing went, and
+// clicks nothing more once something has gone wrong.
 
 using System.Drawing;
 using System.Linq;
@@ -13,12 +15,21 @@ namespace MocchiMacro
         Done,
         GameNotFound,
         CharacterWithoutKey,
+        GameNotInFront,
+        GameClosed,
     }
 
     public class Typist
     {
         // The monster field holds at most 12 characters, so 12 BS always clears it.
         const int ClearCount = 12;
+
+        // How long to wait for the game to come to the front, checking every so often.
+        const int InFrontTimeoutMs = 5000;
+        const int InFrontCheckMs = 50;
+
+        // Once in front, the game needs a moment before it takes clicks.
+        const int ReadyAfterInFrontMs = 500;
 
         readonly IGamePort game;
 
@@ -35,6 +46,21 @@ namespace MocchiMacro
             if (!searchText.All(KeyboardLayout.HasKey)) return TypingOutcome.CharacterWithoutKey;
             if (!game.FindGame()) return TypingOutcome.GameNotFound;
 
+            // Restore only a minimized game: restoring a maximized one would shrink it.
+            if (game.IsMinimized()) game.Restore();
+
+            // Clicks land on whatever window is in front at the key's spot, so the game must
+            // really be in front before the first one.
+            game.BringToFront();
+            long askedMs = game.NowMs;
+            while (!game.IsInFront())
+            {
+                if (!game.GameStillExists()) return TypingOutcome.GameClosed;
+                if (game.NowMs - askedMs >= InFrontTimeoutMs) return TypingOutcome.GameNotInFront;
+                game.Wait(InFrontCheckMs);
+            }
+            game.Wait(ReadyAfterInFrontMs);
+
             PointF[] keys = Enumerable.Repeat(KeyboardLayout.Backspace, ClearCount)
                 .Concat(searchText.Select(KeyboardLayout.KeyCenter))
                 .ToArray();
@@ -47,6 +73,9 @@ namespace MocchiMacro
             {
                 long waitMs = startMs + (long)(n * intervalMs) - game.NowMs;
                 if (waitMs > 0) game.Wait((int)waitMs);
+
+                // Once the game is gone, a click would land on whatever was behind it.
+                if (!game.GameStillExists()) return TypingOutcome.GameClosed;
 
                 // Read the client area before every click, so typing follows the window if it moves.
                 Rectangle picture = FindPicture(game.ReadClientArea());

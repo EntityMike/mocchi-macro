@@ -28,6 +28,16 @@ namespace MocchiMacro
             return gameWindow != IntPtr.Zero;
         }
 
+        public bool GameStillExists() => IsWindow(gameWindow);
+
+        public bool IsMinimized() => IsIconic(gameWindow);
+
+        public void Restore() => ShowWindow(gameWindow, SW_RESTORE);
+
+        public void BringToFront() => SetForegroundWindow(gameWindow);
+
+        public bool IsInFront() => GetForegroundWindow() == gameWindow;
+
         public Rectangle ReadClientArea()
         {
             GetClientRect(gameWindow, out RECT client);
@@ -71,8 +81,14 @@ namespace MocchiMacro
         const uint INPUT_MOUSE = 0;
         const uint MOUSEEVENTF_LEFTDOWN = 0x0002;
         const uint MOUSEEVENTF_LEFTUP = 0x0004;
+        const int SW_RESTORE = 9;
 
         [DllImport("user32.dll", CharSet = CharSet.Unicode)] static extern IntPtr FindWindow(string className, string title);
+        [DllImport("user32.dll")] static extern bool IsWindow(IntPtr hwnd);
+        [DllImport("user32.dll")] static extern bool IsIconic(IntPtr hwnd);
+        [DllImport("user32.dll")] static extern bool ShowWindow(IntPtr hwnd, int command);
+        [DllImport("user32.dll")] static extern bool SetForegroundWindow(IntPtr hwnd);
+        [DllImport("user32.dll")] static extern IntPtr GetForegroundWindow();
         [DllImport("user32.dll")] static extern bool GetClientRect(IntPtr hwnd, out RECT rect);
         [DllImport("user32.dll")] static extern bool ClientToScreen(IntPtr hwnd, ref POINT point);
         [DllImport("user32.dll")] static extern bool SetCursorPos(int x, int y);

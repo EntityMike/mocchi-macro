@@ -35,6 +35,7 @@ namespace MocchiMacro
             this.typingRateLabel = new System.Windows.Forms.Label();
             this.typingRateBox = new System.Windows.Forms.NumericUpDown();
             this.typingRateUnitLabel = new System.Windows.Forms.Label();
+            this.statusLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.typingRateBox)).BeginInit();
             this.SuspendLayout();
             //
@@ -78,7 +79,7 @@ namespace MocchiMacro
             // typingRateLabel
             //
             this.typingRateLabel.AutoSize = true;
-            this.typingRateLabel.Location = new System.Drawing.Point(12, 58);
+            this.typingRateLabel.Location = new System.Drawing.Point(12, 92);
             this.typingRateLabel.Name = "typingRateLabel";
             this.typingRateLabel.Size = new System.Drawing.Size(64, 13);
             this.typingRateLabel.TabIndex = 4;
@@ -86,7 +87,7 @@ namespace MocchiMacro
             //
             // typingRateBox
             //
-            this.typingRateBox.Location = new System.Drawing.Point(84, 56);
+            this.typingRateBox.Location = new System.Drawing.Point(84, 90);
             this.typingRateBox.Maximum = new decimal(new int[] {
             10,
             0,
@@ -110,18 +111,25 @@ namespace MocchiMacro
             // typingRateUnitLabel
             //
             this.typingRateUnitLabel.AutoSize = true;
-            this.typingRateUnitLabel.Location = new System.Drawing.Point(135, 58);
+            this.typingRateUnitLabel.Location = new System.Drawing.Point(135, 92);
             this.typingRateUnitLabel.Name = "typingRateUnitLabel";
             this.typingRateUnitLabel.Size = new System.Drawing.Size(82, 13);
             this.typingRateUnitLabel.TabIndex = 6;
             this.typingRateUnitLabel.Text = "keys per second";
+            //
+            // statusLabel
+            //
+            this.statusLabel.Location = new System.Drawing.Point(12, 56);
+            this.statusLabel.Name = "statusLabel";
+            this.statusLabel.Size = new System.Drawing.Size(260, 26);
+            this.statusLabel.TabIndex = 7;
             //
             // MainWindow
             //
             this.AcceptButton = this.goButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 88);
+            this.ClientSize = new System.Drawing.Size(284, 122);
             this.Controls.Add(this.searchTextLabel);
             this.Controls.Add(this.searchTextBox);
             this.Controls.Add(this.goButton);
@@ -129,6 +137,7 @@ namespace MocchiMacro
             this.Controls.Add(this.typingRateLabel);
             this.Controls.Add(this.typingRateBox);
             this.Controls.Add(this.typingRateUnitLabel);
+            this.Controls.Add(this.statusLabel);
             this.Name = "MainWindow";
             this.Text = "Mocchi Macro";
             ((System.ComponentModel.ISupportInitialize)(this.typingRateBox)).EndInit();
@@ -145,5 +154,6 @@ namespace MocchiMacro
         private System.Windows.Forms.Label typingRateLabel;
         private System.Windows.Forms.NumericUpDown typingRateBox;
         private System.Windows.Forms.Label typingRateUnitLabel;
+        private System.Windows.Forms.Label statusLabel;
     }
 }

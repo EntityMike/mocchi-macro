@@ -148,9 +148,76 @@ namespace MocchiMacro.Tests
 
             new Typist(game).Type("Mocchi", typingRate);
 
-            // 12 BS clicks plus 6 keys, each one interval after the one before.
+            // 12 BS clicks plus 6 keys, each one interval after the one before, counted from the
+            // first click (which waits for the game to be in front).
+            long firstMs = game.Clicks[0].AtMs;
             long[] expected = Enumerable.Range(0, 18).Select(n => (long)n * intervalMs).ToArray();
-            CollectionAssert.AreEqual(expected, game.Clicks.Select(c => c.AtMs).ToArray());
+            CollectionAssert.AreEqual(expected, game.Clicks.Select(c => c.AtMs - firstMs).ToArray());
+        }
+
+        [TestMethod]
+        public void WhenTheGameIsMinimizedItIsRestoredBeforeTheFirstClick()
+        {
+            var game = new FakeGamePort { Minimized = true };
+
+            TypingOutcome outcome = new Typist(game).Type("M", 10);
+
+            // The restored 1600x900 positions: 12 BS, then M.
+            Point[] expected = Enumerable.Repeat(new Point(1197, 671), 12)
+                .Concat(new[] { new Point(420, 391) }).ToArray();
+            Assert.AreEqual(TypingOutcome.Done, outcome);
+            CollectionAssert.AreEqual(expected, game.Clicks.Select(c => c.Point).ToArray());
+        }
+
+        [TestMethod]
+        public void TheFirstClickComesHalfASecondAfterTheGameIsInFront()
+        {
+            var game = new FakeGamePort { ComesToFrontAfterMs = 1200 };
+
+            TypingOutcome outcome = new Typist(game).Type("Mocchi", 10);
+
+            Assert.AreEqual(TypingOutcome.Done, outcome);
+            Assert.AreEqual(1700, game.Clicks[0].AtMs);
+        }
+
+        [TestMethod]
+        [DataRow(5100)]
+        [DataRow(null)] // never
+        public void ReportsTheGameNotInFrontWithinFiveSecondsAndClicksNothing(int? comesToFrontAfterMs)
+        {
+            var game = new FakeGamePort { ComesToFrontAfterMs = comesToFrontAfterMs };
+
+            TypingOutcome outcome = new Typist(game).Type("Mocchi", 10);
+
+            Assert.AreEqual(TypingOutcome.GameNotInFront, outcome);
+            Assert.AreEqual(0, game.Clicks.Count);
+        }
+
+        [TestMethod]
+        public void WhenTheGameClosesPartwayThroughItReportsSoAndNoClicksFollow()
+        {
+            var game = new FakeGamePort();
+            game.AfterClick = () =>
+            {
+                if (game.Clicks.Count == 5) game.GameRunning = false;
+            };
+
+            TypingOutcome outcome = new Typist(game).Type("Mocchi", 10);
+
+            Assert.AreEqual(TypingOutcome.GameClosed, outcome);
+            Assert.AreEqual(5, game.Clicks.Count);
+        }
+
+        [TestMethod]
+        public void WhenTheGameClosesWhileWaitingToComeToTheFrontItReportsTheGameClosed()
+        {
+            var game = new FakeGamePort { ComesToFrontAfterMs = null };
+            game.AfterWait = () => game.GameRunning = false;
+
+            TypingOutcome outcome = new Typist(game).Type("Mocchi", 10);
+
+            Assert.AreEqual(TypingOutcome.GameClosed, outcome);
+            Assert.AreEqual(0, game.Clicks.Count);
         }
 
         [TestMethod]

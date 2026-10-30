@@ -3,11 +3,14 @@
 // clicks. The typing rate is saved in the user settings and restored at startup.
 // The search text box holds at most 12 characters and drops any character the keyboard
 // has no key for, with a note under it naming what was dropped or saying the text was cut
-// to 12. Enter in it runs Go.
+// to 12. Enter in it runs Go. While Go types, it and both boxes are disabled; then a status
+// line between the search text and the typing rate says how typing went.
 
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using MocchiMacro.Properties;
 
@@ -28,10 +31,63 @@ namespace MocchiMacro
                 Math.Min(typingRateBox.Maximum, Settings.Default.TypingRate));
         }
 
-        void GoButton_Click(object sender, EventArgs e)
+        async void GoButton_Click(object sender, EventArgs e)
         {
-            // The outcome isn't shown yet; the status line comes later.
-            new Typist(new User32GamePort()).Type(searchTextBox.Text, (int)typingRateBox.Value);
+            // With nothing to type, Go would only clear the monster field.
+            if (searchTextBox.TextLength == 0)
+            {
+                ShowStatus("Type a search text first.", ProblemColor);
+                return;
+            }
+
+            string searchText = searchTextBox.Text;
+            int typingRate = (int)typingRateBox.Value;
+
+            // Disabled so a second Go can't start typing on top of the first.
+            SetInputsEnabled(false);
+            ShowStatus("Typing...", SystemColors.ControlText);
+            try
+            {
+                // Typing takes seconds, so it runs off the UI thread to keep the window responsive.
+                TypingOutcome outcome = await Task.Run(
+                    () => new Typist(new User32GamePort()).Type(searchText, typingRate));
+                ShowStatus(DescribeOutcome(outcome), outcome == TypingOutcome.Done ? DoneColor : ProblemColor);
+            }
+            finally
+            {
+                SetInputsEnabled(true);
+            }
+        }
+
+        // Problems use the dropped-characters note's red, so red means one thing across the window.
+        // Done is a dark green, about as easy to read on the window's grey as that red.
+        Color ProblemColor => droppedNoteLabel.ForeColor;
+        static readonly Color DoneColor = Color.DarkGreen;
+
+        void ShowStatus(string text, Color color)
+        {
+            statusLabel.Text = text;
+            statusLabel.ForeColor = color;
+        }
+
+        void SetInputsEnabled(bool enabled)
+        {
+            goButton.Enabled = enabled;
+            searchTextBox.Enabled = enabled;
+            typingRateBox.Enabled = enabled;
+        }
+
+        static string DescribeOutcome(TypingOutcome outcome)
+        {
+            switch (outcome)
+            {
+                case TypingOutcome.Done: return "Done. Check the monster field, then press Ent. in the game.";
+                case TypingOutcome.GameNotFound: return "Game not found. Start MR2 DX, then press Go again.";
+                case TypingOutcome.CharacterWithoutKey: return "The search text has a character without a key.";
+                case TypingOutcome.GameNotInFront: return "The game didn't come to the front. Click the game, then press Go again.";
+                case TypingOutcome.GameClosed: return "The game window closed partway through, so typing stopped.";
+                default: return outcome.ToString();
+            }
         }
 
         // A typed character that has a key, and would make a 13th, is stopped here so it does
