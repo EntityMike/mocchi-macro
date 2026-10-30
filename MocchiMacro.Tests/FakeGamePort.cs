@@ -1,6 +1,8 @@
 // A stand-in for the game used by the typist tests. It records every click with the time
-// on a virtual clock, and Wait just moves that clock forward, so tests run instantly.
+// on a virtual clock, and Wait just moves that clock forward, so tests run instantly. Tests can
+// change the game partway through (for example move the window) from AfterClick.
 
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 
@@ -21,13 +23,20 @@ namespace MocchiMacro.Tests
 
         public readonly List<RecordedClick> Clicks = new List<RecordedClick>();
 
+        // Runs after each click is recorded, so a test can change the game partway through.
+        public Action AfterClick = () => { };
+
         public long NowMs { get; private set; }
 
         public bool FindGame() => GameRunning;
 
         public Rectangle ReadClientArea() => ClientArea;
 
-        public void Click(Point screenPoint) => Clicks.Add(new RecordedClick { Point = screenPoint, AtMs = NowMs });
+        public void Click(Point screenPoint)
+        {
+            Clicks.Add(new RecordedClick { Point = screenPoint, AtMs = NowMs });
+            AfterClick();
+        }
 
         public void Wait(int ms) => NowMs += ms;
     }

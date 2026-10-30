@@ -31,3 +31,8 @@ Make the clicks land on the right keys at every screen setup, not just a 1600×9
 
 - 2026-10-30, from implementing 01: scaled positions are cut off to whole pixels (391.8 becomes 391), as the keyboard test and ticket 01's typist do. Work out the expected values in the 854×480, 1920×1080 and 3440×1441 tests with the same rule.
 - 2026-10-30, from implementing 01: ticket 01 removed the unused `ReferenceWidth`/`ReferenceHeight` constants from `KeyboardLayout`; add them back here when scaling needs them.
+- 2026-10-30, implemented on branch `main-window`: black bars are cut off to whole pixels: (3440 − 1441 × 16/9) / 2 = 439.1 gives 439 px bars and a 2562 px picture. The same rule gives 854×480, which is 0.67 px wider than 16:9, no bars, so it fills the window.
+- 2026-10-30: "largest 16:9 area that fits" also covers monitors taller than 16:9 (16:10, 4:3), where the bars go above and below the picture. An extra test pins this down: at 1920×1200 the picture is 1920×1080 between 60 px bars.
+- 2026-10-30: the scaling tests type "Mocchi" plus the BS clears, which covers both blocks and several rows, rather than every key.
+- 2026-10-30: the typist can't tell a window from fullscreen, so a window 2 px or more off 16:9 gets thin bars too. For example, 1360×768 gets a 1 px bar above and below. This is harmless at true 16:9 sizes.
+- 2026-10-30: PerMonitorV2 is set in `App.config` (`DpiAwareness`), plus an `app.manifest` that declares Windows 10 support so Windows Forms will turn it on. A launched build reports the PerMonitorV2 awareness context. The by-hand checks against the game (other sizes, scaling above 100%, fullscreen on a monitor that isn't 16:9) are still to do.

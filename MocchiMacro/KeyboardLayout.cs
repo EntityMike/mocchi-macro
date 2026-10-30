@@ -9,6 +9,9 @@ namespace MocchiMacro
 {
     public static class KeyboardLayout
     {
+        // The size of the picture the key positions were measured in.
+        public const int ReferenceWidth = 1600, ReferenceHeight = 900;
+
         // Two 5-column blocks with a wider gap between them than between keys, so each block
         // gets its own left edge.
         const float LeftBlockX = 270, RightBlockX = 735, ColumnPitch = 75;
