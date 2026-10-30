@@ -1,0 +1,50 @@
+// The game's on-screen keyboard (MR2 DX), as measured in a 1600x900 screenshot of the game's
+// client area (docs/screenshots/mr2/ingamekeyboard.png). Answers whether a character has a key,
+// and where each key's center is.
+
+using System.Collections.Generic;
+using System.Drawing;
+
+namespace MocchiMacro
+{
+    public static class KeyboardLayout
+    {
+        // Two 5-column blocks with a wider gap between them than between keys, so each block
+        // gets its own left edge.
+        const float LeftBlockX = 270, RightBlockX = 735, ColumnPitch = 75;
+        const float TopRowY = 280, RowPitch = 55.9f;
+
+        // One string per row of each block. '\0' marks the left block's key whose character
+        // isn't known yet (it looks like a comma or a raised dot), so it's left out and can't
+        // be typed. Right block row 6 is circle, cross, triangle, square.
+        static readonly string[] LeftBlock = { "ABCDE", "FGHIJ", "KLMNO", "PQRST", "UVWXY", "Z!?()", "'\":\0.", "01234" };
+        static readonly string[] RightBlock = { "abcde", "fghij", "klmno", "pqrst", "uvwxy", "z\u25CB\u00D7\u25B3\u25A1", "+-=~%", "56789" };
+
+        // BS sits right of the grid on the digits row, and Ent. one row below it. Their x is
+        // measured; their y is the grid row's, which is within 3 px of the measured centers.
+        public static readonly PointF Backspace = new PointF(1197, TopRowY + 7 * RowPitch);
+        public static readonly PointF Enter = new PointF(1198, TopRowY + 8 * RowPitch);
+
+        static readonly Dictionary<char, PointF> Keys = BuildKeys();
+
+        public static bool HasKey(char c) => Keys.ContainsKey(c);
+
+        // The key's center in the 1600x900 reference picture.
+        public static PointF KeyCenter(char c) => Keys[c];
+
+        static Dictionary<char, PointF> BuildKeys()
+        {
+            var keys = new Dictionary<char, PointF>();
+            for (int row = 0; row < 8; row++)
+            {
+                float y = TopRowY + row * RowPitch;
+                for (int col = 0; col < 5; col++)
+                {
+                    if (LeftBlock[row][col] != '\0') keys[LeftBlock[row][col]] = new PointF(LeftBlockX + col * ColumnPitch, y);
+                    keys[RightBlock[row][col]] = new PointF(RightBlockX + col * ColumnPitch, y);
+                }
+            }
+            return keys;
+        }
+    }
+}
