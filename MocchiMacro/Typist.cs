@@ -25,7 +25,7 @@ namespace MocchiMacro
             this.game = game;
         }
 
-        public TypingOutcome Type(string searchText, int keysPerSecond)
+        public TypingOutcome Type(string searchText, int typingRate)
         {
             if (!game.FindGame()) return TypingOutcome.GameNotFound;
 
@@ -35,7 +35,7 @@ namespace MocchiMacro
 
             // Schedule each click against the clock (click n at n intervals from the start)
             // instead of waiting a fixed gap, so late wake-ups don't add up.
-            double intervalMs = 1000.0 / keysPerSecond;
+            double intervalMs = 1000.0 / typingRate;
             long startMs = game.NowMs;
             for (int n = 0; n < keys.Length; n++)
             {

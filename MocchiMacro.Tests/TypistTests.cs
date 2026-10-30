@@ -139,14 +139,17 @@ namespace MocchiMacro.Tests
         }
 
         [TestMethod]
-        public void AtTenKeysPerSecondClickNHappensAtNTimes100Ms()
+        [DataRow(1, 1000)]
+        [DataRow(4, 250)]
+        [DataRow(10, 100)]
+        public void EachClickIsOneIntervalAfterThePreviousAtTheTypingRate(int typingRate, int intervalMs)
         {
             var game = new FakeGamePort();
 
-            new Typist(game).Type("Mocchi", 10);
+            new Typist(game).Type("Mocchi", typingRate);
 
-            // 12 BS clicks plus 6 keys, each 100 ms after the one before.
-            long[] expected = Enumerable.Range(0, 18).Select(n => n * 100L).ToArray();
+            // 12 BS clicks plus 6 keys, each one interval after the one before.
+            long[] expected = Enumerable.Range(0, 18).Select(n => (long)n * intervalMs).ToArray();
             CollectionAssert.AreEqual(expected, game.Clicks.Select(c => c.AtMs).ToArray());
         }
 

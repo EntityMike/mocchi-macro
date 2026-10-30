@@ -26,5 +26,20 @@ namespace MocchiMacro.Properties
                 return defaultInstance;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("10")]
+        public int TypingRate
+        {
+            get
+            {
+                return ((int)(this["TypingRate"]));
+            }
+            set
+            {
+                this["TypingRate"] = value;
+            }
+        }
     }
 }
