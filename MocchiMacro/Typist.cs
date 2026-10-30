@@ -1,6 +1,7 @@
 // Types a search text into the game's monster field by clicking keys on its keyboard:
 // first BS enough times to clear the field, then each key of the search text. It stops
-// before Ent., so the organizer can check the text and run the search themselves.
+// before Ent., so the organizer can check the text and run the search themselves. A search
+// text with a character the keyboard has no key for is refused before any click.
 
 using System.Drawing;
 using System.Linq;
@@ -11,6 +12,7 @@ namespace MocchiMacro
     {
         Done,
         GameNotFound,
+        CharacterWithoutKey,
     }
 
     public class Typist
@@ -27,6 +29,10 @@ namespace MocchiMacro
 
         public TypingOutcome Type(string searchText, int typingRate)
         {
+            // Checked before any click, BS included, so text the keyboard can't type leaves the
+            // monster field as it was. The search text box already drops such characters; this
+            // guards text that reaches the typist another way.
+            if (!searchText.All(KeyboardLayout.HasKey)) return TypingOutcome.CharacterWithoutKey;
             if (!game.FindGame()) return TypingOutcome.GameNotFound;
 
             PointF[] keys = Enumerable.Repeat(KeyboardLayout.Backspace, ClearCount)

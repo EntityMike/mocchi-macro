@@ -31,6 +31,7 @@ namespace MocchiMacro
             this.searchTextLabel = new System.Windows.Forms.Label();
             this.searchTextBox = new System.Windows.Forms.TextBox();
             this.goButton = new System.Windows.Forms.Button();
+            this.droppedNoteLabel = new System.Windows.Forms.Label();
             this.typingRateLabel = new System.Windows.Forms.Label();
             this.typingRateBox = new System.Windows.Forms.NumericUpDown();
             this.typingRateUnitLabel = new System.Windows.Forms.Label();
@@ -52,6 +53,8 @@ namespace MocchiMacro
             this.searchTextBox.Name = "searchTextBox";
             this.searchTextBox.Size = new System.Drawing.Size(120, 20);
             this.searchTextBox.TabIndex = 1;
+            this.searchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
+            this.searchTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SearchTextBox_KeyPress);
             //
             // goButton
             //
@@ -63,18 +66,27 @@ namespace MocchiMacro
             this.goButton.UseVisualStyleBackColor = true;
             this.goButton.Click += new System.EventHandler(this.GoButton_Click);
             //
+            // droppedNoteLabel
+            //
+            this.droppedNoteLabel.AutoSize = true;
+            this.droppedNoteLabel.ForeColor = System.Drawing.Color.Firebrick;
+            this.droppedNoteLabel.Location = new System.Drawing.Point(84, 36);
+            this.droppedNoteLabel.Name = "droppedNoteLabel";
+            this.droppedNoteLabel.Size = new System.Drawing.Size(0, 13);
+            this.droppedNoteLabel.TabIndex = 3;
+            //
             // typingRateLabel
             //
             this.typingRateLabel.AutoSize = true;
-            this.typingRateLabel.Location = new System.Drawing.Point(12, 45);
+            this.typingRateLabel.Location = new System.Drawing.Point(12, 58);
             this.typingRateLabel.Name = "typingRateLabel";
             this.typingRateLabel.Size = new System.Drawing.Size(64, 13);
-            this.typingRateLabel.TabIndex = 3;
+            this.typingRateLabel.TabIndex = 4;
             this.typingRateLabel.Text = "Typing rate:";
             //
             // typingRateBox
             //
-            this.typingRateBox.Location = new System.Drawing.Point(84, 43);
+            this.typingRateBox.Location = new System.Drawing.Point(84, 56);
             this.typingRateBox.Maximum = new decimal(new int[] {
             10,
             0,
@@ -87,7 +99,7 @@ namespace MocchiMacro
             0});
             this.typingRateBox.Name = "typingRateBox";
             this.typingRateBox.Size = new System.Drawing.Size(45, 20);
-            this.typingRateBox.TabIndex = 4;
+            this.typingRateBox.TabIndex = 5;
             this.typingRateBox.Value = new decimal(new int[] {
             10,
             0,
@@ -98,20 +110,22 @@ namespace MocchiMacro
             // typingRateUnitLabel
             //
             this.typingRateUnitLabel.AutoSize = true;
-            this.typingRateUnitLabel.Location = new System.Drawing.Point(135, 45);
+            this.typingRateUnitLabel.Location = new System.Drawing.Point(135, 58);
             this.typingRateUnitLabel.Name = "typingRateUnitLabel";
             this.typingRateUnitLabel.Size = new System.Drawing.Size(82, 13);
-            this.typingRateUnitLabel.TabIndex = 5;
+            this.typingRateUnitLabel.TabIndex = 6;
             this.typingRateUnitLabel.Text = "keys per second";
             //
             // MainWindow
             //
+            this.AcceptButton = this.goButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 75);
+            this.ClientSize = new System.Drawing.Size(284, 88);
             this.Controls.Add(this.searchTextLabel);
             this.Controls.Add(this.searchTextBox);
             this.Controls.Add(this.goButton);
+            this.Controls.Add(this.droppedNoteLabel);
             this.Controls.Add(this.typingRateLabel);
             this.Controls.Add(this.typingRateBox);
             this.Controls.Add(this.typingRateUnitLabel);
@@ -127,6 +141,7 @@ namespace MocchiMacro
         private System.Windows.Forms.Label searchTextLabel;
         private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.Button goButton;
+        private System.Windows.Forms.Label droppedNoteLabel;
         private System.Windows.Forms.Label typingRateLabel;
         private System.Windows.Forms.NumericUpDown typingRateBox;
         private System.Windows.Forms.Label typingRateUnitLabel;

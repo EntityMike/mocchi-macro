@@ -163,5 +163,18 @@ namespace MocchiMacro.Tests
             Assert.AreEqual(TypingOutcome.GameNotFound, outcome);
             Assert.AreEqual(0, game.Clicks.Count);
         }
+
+        [TestMethod]
+        [DataRow("Mo cchi")]
+        [DataRow("Mocchié")] // é
+        public void ReportsACharacterWithoutAKeyAndClicksNothingNotEvenBackspace(string searchText)
+        {
+            var game = new FakeGamePort();
+
+            TypingOutcome outcome = new Typist(game).Type(searchText, 10);
+
+            Assert.AreEqual(TypingOutcome.CharacterWithoutKey, outcome);
+            Assert.AreEqual(0, game.Clicks.Count);
+        }
     }
 }
