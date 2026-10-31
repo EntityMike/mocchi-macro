@@ -53,6 +53,7 @@
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="Game.cs" />
     <Compile Include="IGamePort.cs" />
     <Compile Include="KeyboardLayout.cs" />
     <Compile Include="Program.cs" />

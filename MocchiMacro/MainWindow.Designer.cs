@@ -37,6 +37,7 @@ namespace MocchiMacro
             this.typingRateBox = new System.Windows.Forms.NumericUpDown();
             this.typingRateUnitLabel = new System.Windows.Forms.Label();
             this.statusLabel = new System.Windows.Forms.Label();
+            this.gameBox = new System.Windows.Forms.ComboBox();
             this.searchTextToolTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.typingRateBox)).BeginInit();
             this.SuspendLayout();
@@ -54,14 +55,14 @@ namespace MocchiMacro
             //
             this.searchTextBox.Location = new System.Drawing.Point(84, 12);
             this.searchTextBox.Name = "searchTextBox";
-            this.searchTextBox.Size = new System.Drawing.Size(120, 20);
+            this.searchTextBox.Size = new System.Drawing.Size(138, 20);
             this.searchTextBox.TabIndex = 1;
             this.searchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
             this.searchTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SearchTextBox_KeyPress);
             //
             // goButton
             //
-            this.goButton.Location = new System.Drawing.Point(210, 10);
+            this.goButton.Location = new System.Drawing.Point(228, 10);
             this.goButton.Name = "goButton";
             this.goButton.Size = new System.Drawing.Size(60, 23);
             this.goButton.TabIndex = 2;
@@ -123,15 +124,24 @@ namespace MocchiMacro
             //
             this.statusLabel.Location = new System.Drawing.Point(12, 56);
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(260, 26);
+            this.statusLabel.Size = new System.Drawing.Size(276, 26);
             this.statusLabel.TabIndex = 7;
+            //
+            // gameBox
+            //
+            this.gameBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.gameBox.Location = new System.Drawing.Point(223, 89);
+            this.gameBox.Name = "gameBox";
+            this.gameBox.Size = new System.Drawing.Size(65, 21);
+            this.gameBox.TabIndex = 8;
+            this.gameBox.SelectedIndexChanged += new System.EventHandler(this.GameBox_SelectedIndexChanged);
             //
             // MainWindow
             //
             this.AcceptButton = this.goButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 122);
+            this.ClientSize = new System.Drawing.Size(300, 122);
             this.Controls.Add(this.searchTextLabel);
             this.Controls.Add(this.searchTextBox);
             this.Controls.Add(this.goButton);
@@ -140,6 +150,7 @@ namespace MocchiMacro
             this.Controls.Add(this.typingRateBox);
             this.Controls.Add(this.typingRateUnitLabel);
             this.Controls.Add(this.statusLabel);
+            this.Controls.Add(this.gameBox);
             this.Name = "MainWindow";
             this.Text = "Mocchi Macro";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWindow_FormClosed);
@@ -159,5 +170,6 @@ namespace MocchiMacro
         private System.Windows.Forms.Label typingRateUnitLabel;
         private System.Windows.Forms.Label statusLabel;
         private System.Windows.Forms.ToolTip searchTextToolTip;
+        private System.Windows.Forms.ComboBox gameBox;
     }
 }

@@ -1,6 +1,6 @@
 # 02: Pick the game and type into MR1 DX
 
-Status: ready-for-agent
+Status: resolved
 
 Blocked by: 01
 
@@ -19,19 +19,19 @@ A game dropdown, and everything Go needs to type into MR1 DX as well as MR2 DX.
 
 ## Acceptance criteria
 
-- [ ] With MR1 DX picked, windowed at 1600×900 on the keyboard screen, Go types each of these search texts into the monster field, replacing whatever was there: `ABCDEFGHIJKL`, `MNOPQRSTUVWX`, `YZabcdefghij`, `klmnopqrstuv`, `wxyz_/@*~!?+`, `` -%.`12345678 `` and `90`. Between them, every MR1 DX key gets typed.
-- [ ] The same for at least one text at one other window size, and once in fullscreen.
-- [ ] END is never clicked.
-- [ ] With MR1 DX picked, typing `(Tiger)△` in the box leaves `Tiger` with the note naming `(`, `)` and `△`. `^` and `#` are dropped as well.
-- [ ] The tooltip reads `` @ ○   * ×   ` · `` for MR1 DX and `` @ ○   * ×   ^ △   # □   ` · `` for MR2 DX.
-- [ ] With MR1 DX picked and only MR2 DX running (or neither), Go says "MR1 DX not found. Start it, then press Go again."
-- [ ] The dropdown is disabled while typing.
-- [ ] Everything that worked in MR2 DX still does.
-- [ ] Test: MR1 DX at 1600×900, client area at 0,0: twelve clicks at (1028, 536), then "Mocchi" at M (428, 356), o (1028, 356), c (878, 236), c (878, 236), h (878, 296), i (953, 296).
-- [ ] Test: MR1 DX at 854×480 and at 3440×1441 scale and shift positions from the reference, the same way as MR2 DX's.
-- [ ] Test: MR1 DX's layout has keys for letters, digits and `○ × _ / · ~ % ! ? + - .`, and none for `△ □ ( ) ' " : =`, space or accented letters.
-- [ ] Test: each game's stand-ins map to a key that game has, and no stand-in has a key itself.
-- [ ] The existing MR2 DX tests pass unchanged, apart from passing in MR2 DX's layout.
+- [x] With MR1 DX picked, windowed at 1600×900 on the keyboard screen, Go types each of these search texts into the monster field, replacing whatever was there: `ABCDEFGHIJKL`, `MNOPQRSTUVWX`, `YZabcdefghij`, `klmnopqrstuv`, `wxyz_/@*~!?+`, `` -%.`12345678 `` and `90`. Between them, every MR1 DX key gets typed.
+- [x] The same for at least one text at one other window size, and once in fullscreen.
+- [x] END is never clicked.
+- [x] With MR1 DX picked, typing `(Tiger)△` in the box leaves `Tiger` with the note naming `(`, `)` and `△`. `^` and `#` are dropped as well.
+- [x] The tooltip reads `` @ ○   * ×   ` · `` for MR1 DX and `` @ ○   * ×   ^ △   # □   ` · `` for MR2 DX.
+- [x] With MR1 DX picked and only MR2 DX running (or neither), Go says "MR1 DX not found. Start it, then press Go again."
+- [x] The dropdown is disabled while typing.
+- [x] Everything that worked in MR2 DX still does.
+- [x] Test: MR1 DX at 1600×900, client area at 0,0: twelve clicks at (1028, 536), then "Mocchi" at M (428, 356), o (1028, 356), c (878, 236), c (878, 236), h (878, 296), i (953, 296).
+- [x] Test: MR1 DX at 854×480 and at 3440×1441 scale and shift positions from the reference, the same way as MR2 DX's.
+- [x] Test: MR1 DX's layout has keys for letters, digits and `○ × _ / · ~ % ! ? + - .`, and none for `△ □ ( ) ' " : =`, space or accented letters.
+- [x] Test: each game's stand-ins map to a key that game has, and no stand-in has a key itself.
+- [x] The existing MR2 DX tests pass unchanged, apart from passing in MR2 DX's layout.
 
 ## User stories covered
 

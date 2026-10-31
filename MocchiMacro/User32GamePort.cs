@@ -1,4 +1,4 @@
-// The real game port: finds the MR2 DX window and clicks it through user32.dll.
+// The real game port: finds the game window by its title and clicks it through user32.dll.
 // The click, timing and window calls follow the keyboard test that was proven against the game.
 
 using System;
@@ -11,7 +11,7 @@ namespace MocchiMacro
 {
     public class User32GamePort : IGamePort
     {
-        const string GameWindowTitle = "MF2";
+        readonly string windowTitle;
 
         // Games often read the mouse once per frame (~16 ms at 60 fps). A down and up sent
         // back to back can both land between two frames, so the game never sees the press.
@@ -20,11 +20,17 @@ namespace MocchiMacro
         readonly Stopwatch clock = Stopwatch.StartNew();
         IntPtr gameWindow;
 
+        // The title of the game window to look for: "MF" for MR1 DX, "MF2" for MR2 DX.
+        public User32GamePort(string windowTitle)
+        {
+            this.windowTitle = windowTitle;
+        }
+
         public long NowMs => clock.ElapsedMilliseconds;
 
         public bool FindGame()
         {
-            gameWindow = FindWindow(null, GameWindowTitle);
+            gameWindow = FindWindow(null, windowTitle);
             return gameWindow != IntPtr.Zero;
         }
 
