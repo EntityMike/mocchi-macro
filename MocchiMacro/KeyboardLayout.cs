@@ -1,6 +1,6 @@
 // The game's on-screen keyboard (MR2 DX), as measured in a 1600x900 screenshot of the game's
 // client area (docs/screenshots/mr2/ingamekeyboard.png). Answers whether a character has a key,
-// and where each key's center is.
+// where each key's center is, and which symbol key a stand-in character stands for.
 
 using System.Collections.Generic;
 using System.Drawing;
@@ -23,6 +23,19 @@ namespace MocchiMacro
         static readonly string[] LeftBlock = { "ABCDE", "FGHIJ", "KLMNO", "PQRST", "UVWXY", "Z!?()", "'\":\0.", "01234" };
         static readonly string[] RightBlock = { "abcde", "fghij", "klmno", "pqrst", "uvwxy", "z\u25CB\u00D7\u25B3\u25A1", "+-=~%", "56789" };
 
+        // Stand-ins: characters the keyboard has no key for, which the search text box swaps for
+        // the symbol keys in row 6 above, so they can be typed on an ordinary keyboard. Each
+        // looks a little like its symbol, and all are Shift + a number key on a US keyboard. The
+        // comma is avoided because the unknown key may turn out to be one. A list, not a
+        // dictionary, so the order is fixed for the box's tooltip.
+        public static readonly IReadOnlyList<(char StandIn, char Symbol)> StandIns = new[]
+        {
+            ('@', '\u25CB'), // ○ round
+            ('*', '\u00D7'), // × multiplication sign in code
+            ('^', '\u25B3'), // △ pointed top
+            ('#', '\u25A1'), // □ boxy
+        };
+
         // BS sits right of the grid on the digits row, and Ent. one row below it. Their x is
         // measured; their y is the grid row's, which is within 3 px of the measured centers.
         public static readonly PointF Backspace = new PointF(1197, TopRowY + 7 * RowPitch);
@@ -31,6 +44,14 @@ namespace MocchiMacro
         static readonly Dictionary<char, PointF> Keys = BuildKeys();
 
         public static bool HasKey(char c) => Keys.ContainsKey(c);
+
+        // The symbol a stand-in stands for, or the character itself if it isn't a stand-in.
+        public static char SwapStandIn(char c)
+        {
+            foreach (var (standIn, symbol) in StandIns)
+                if (c == standIn) return symbol;
+            return c;
+        }
 
         // The key's center in the 1600x900 reference picture.
         public static PointF KeyCenter(char c) => Keys[c];

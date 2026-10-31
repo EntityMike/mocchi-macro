@@ -1,6 +1,6 @@
 # 01: Type a search text end to end
 
-Status: ready-for-agent
+Status: resolved
 
 Parent: [spec](../spec.md)
 
@@ -17,12 +17,12 @@ The thinnest path from the tool's window to letters in the game's monster field.
 
 ## Acceptance criteria
 
-- [ ] With MR2 DX windowed at 1600×900 on the keyboard screen and in front, typing "Mocchi" and pressing Go leaves the monster field reading "Mocchi", even when it held other text first.
-- [ ] Ent. is never clicked.
-- [ ] Test: at 1600×900, 12 BS clicks come first, then each key at its measured position (the positions measured by the pre-repo keyboard test).
-- [ ] Test: at 10 keys/s, click *n* happens at *n* × 100 ms on the fake clock.
-- [ ] Test: the layout says letters, digits and `○ × △ □` have keys, and space, accented letters and the unknown punctuation key don't.
-- [ ] Tests run from Visual Studio's Test Explorer.
+- [x] With MR2 DX windowed at 1600×900 on the keyboard screen and in front, typing "Mocchi" and pressing Go leaves the monster field reading "Mocchi", even when it held other text first.
+- [x] Ent. is never clicked.
+- [x] Test: at 1600×900, 12 BS clicks come first, then each key at its measured position (the positions measured by the pre-repo keyboard test).
+- [x] Test: at 10 keys/s, click *n* happens at *n* × 100 ms on the fake clock.
+- [x] Test: the layout says letters, digits and `○ × △ □` have keys, and space, accented letters and the unknown punctuation key don't.
+- [x] Tests run from Visual Studio's Test Explorer.
 
 ## User stories covered
 
@@ -34,3 +34,4 @@ The thinnest path from the tool's window to letters in the game's monster field.
 - 2026-10-30: the test project uses MSTest's own runner (Microsoft.Testing.Platform), so it needs no `Microsoft.NET.Test.Sdk`. The tests pass when run from the command line; running them from Test Explorer still needs checking in Visual Studio.
 - 2026-10-30: the in-game check is still to do by hand. If one old character survives in the monster field, see ticket 05's comment on the first click.
 - 2026-10-30, by hand while checking 05: windowed at 1600×900 with text already in the monster field and another window over part of the game, Go cleared the field and left "Mocchi". Ticket 05 now brings the game to the front first, which was the cause of a BS click being lost.
+- 2026-10-30, by hand: Run All in Visual Studio's Test Explorer passed 38 of 38.

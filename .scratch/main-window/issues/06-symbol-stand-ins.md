@@ -1,6 +1,6 @@
 # 06: Stand-ins for the symbol keys
 
-Status: ready-for-agent
+Status: resolved
 
 Blocked by: 04
 
@@ -33,15 +33,21 @@ Let the organizer type the keyboard's four symbol keys from an ordinary keyboard
 
 ## Acceptance criteria
 
-- [ ] Typing `Mocchi@` leaves `Mocchi○` in the box, with no note.
-- [ ] Typing `*`, `^` and `#` gives `×`, `△` and `□`.
-- [ ] Pasting `@*^#` leaves `○×△□`; pasting `Mo cchi@` leaves `Mocchi○` and a note naming only the space.
-- [ ] Typing a stand-in in the middle of the text leaves the caret just after the new symbol.
-- [ ] At 12 characters, typing a stand-in does nothing and shows no note.
-- [ ] Hovering over the box shows the stand-in tooltip.
-- [ ] Test: each stand-in maps to its symbol key, and no stand-in has a key itself.
-- [ ] `GLOSSARY.md` defines **Stand-in**.
+- [x] Typing `Mocchi@` leaves `Mocchi○` in the box, with no note.
+- [x] Typing `*`, `^` and `#` gives `×`, `△` and `□`.
+- [x] Pasting `@*^#` leaves `○×△□`; pasting `Mo cchi@` leaves `Mocchi○` and a note naming only the space.
+- [x] Typing a stand-in in the middle of the text leaves the caret just after the new symbol.
+- [x] At 12 characters, typing a stand-in does nothing and shows no note.
+- [x] Hovering over the box shows the stand-in tooltip.
+- [x] Test: each stand-in maps to its symbol key, and no stand-in has a key itself.
+- [x] `GLOSSARY.md` defines **Stand-in**.
 
 ## User stories covered
 
 8 (extends it: the symbols can be typed, not only pasted)
+
+## Comments
+
+- 2026-10-30, implemented on branch `main-window`: the table is `KeyboardLayout.StandIns`, right under the symbol keys' row, and `KeyboardLayout.SwapStandIn` gives the symbol for a stand-in or the character itself. The search text box swaps in `TextChanged`, before dropping and the 12-character cut, so a typed and a pasted stand-in are handled the same way. `KeyPress` treats a typed stand-in as its symbol key, so at 12 characters it does nothing. The tooltip is built from the table.
+- 2026-10-30: checked by hosting the built window in-process, typing characters into it, and pasting through the clipboard. "Mocchi@" became "Mocchi○" with no note, and "*^#" became "×△□". Pasting "@*^#" gave "○×△□", and pasting "Mo cchi@" gave "Mocchi○" with "No key, dropped: space". An "@" typed at position 2 of "Mocchi" gave "Mo○cchi" with the caret just after the ○. At 12 characters, "@" changed nothing and showed no note. The tooltip text is `@ ○   * ×   ^ △   # □`. Still to do by hand: seeing the tooltip on hover, and Go typing a swapped symbol into the game.
+- 2026-10-30, by hand: confirmed the tooltip on hover, Shift+2/8/6/3 on a real keyboard giving ○×△□, a stand-in typed mid-text leaving the caret after the symbol, a stand-in doing nothing in a full box, a real Ctrl+V of "Mo cchi@", Go typing "○×△□" into the game, and Enter in the box doing the same as Go.

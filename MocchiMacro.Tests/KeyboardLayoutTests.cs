@@ -1,5 +1,6 @@
 // Keyboard layout tests: which characters have a key, for the cases the search text box
-// relies on to drop characters the keyboard can't type.
+// relies on to drop characters the keyboard can't type, and which stand-ins it swaps for
+// the symbol keys.
 
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -35,6 +36,18 @@ namespace MocchiMacro.Tests
         public void HasNoKeyFor(char c)
         {
             Assert.IsFalse(KeyboardLayout.HasKey(c));
+        }
+
+        [TestMethod]
+        [DataRow('@', '\u25CB')] // ○
+        [DataRow('*', '\u00D7')] // ×
+        [DataRow('^', '\u25B3')] // △
+        [DataRow('#', '\u25A1')] // □
+        public void StandInSwapsForItsSymbolKey(char standIn, char symbol)
+        {
+            Assert.AreEqual(symbol, KeyboardLayout.SwapStandIn(standIn));
+            Assert.IsTrue(KeyboardLayout.HasKey(symbol));
+            Assert.IsFalse(KeyboardLayout.HasKey(standIn));
         }
     }
 }

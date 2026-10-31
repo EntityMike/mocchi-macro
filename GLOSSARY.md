@@ -42,6 +42,10 @@ _Avoid_: Search box, name field
 The text the tool types into the monster field: a full monster name, or just enough of one to narrow the search.
 _Avoid_: Name, input, query
 
+**Stand-in**:
+A character the keyboard has no key for, which the search text box swaps for the symbol key it stands for, such as `@` for ○.
+_Avoid_: Shortcut, alias
+
 **Typing rate**:
 How many keys the tool clicks on the keyboard per second.
 _Avoid_: Click rate, speed, rate of button presses

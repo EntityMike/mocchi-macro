@@ -28,6 +28,7 @@ namespace MocchiMacro
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.searchTextLabel = new System.Windows.Forms.Label();
             this.searchTextBox = new System.Windows.Forms.TextBox();
             this.goButton = new System.Windows.Forms.Button();
@@ -36,6 +37,7 @@ namespace MocchiMacro
             this.typingRateBox = new System.Windows.Forms.NumericUpDown();
             this.typingRateUnitLabel = new System.Windows.Forms.Label();
             this.statusLabel = new System.Windows.Forms.Label();
+            this.searchTextToolTip = new System.Windows.Forms.ToolTip(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.typingRateBox)).BeginInit();
             this.SuspendLayout();
             //
@@ -140,6 +142,7 @@ namespace MocchiMacro
             this.Controls.Add(this.statusLabel);
             this.Name = "MainWindow";
             this.Text = "Mocchi Macro";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWindow_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.typingRateBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -155,5 +158,6 @@ namespace MocchiMacro
         private System.Windows.Forms.NumericUpDown typingRateBox;
         private System.Windows.Forms.Label typingRateUnitLabel;
         private System.Windows.Forms.Label statusLabel;
+        private System.Windows.Forms.ToolTip searchTextToolTip;
     }
 }

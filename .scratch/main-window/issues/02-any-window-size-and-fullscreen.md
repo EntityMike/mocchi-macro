@@ -1,6 +1,6 @@
 # 02: Land keys at any window size and in fullscreen
 
-Status: ready-for-agent
+Status: resolved
 
 Blocked by: 01
 
@@ -17,11 +17,11 @@ Make the clicks land on the right keys at every screen setup, not just a 1600×9
 
 ## Acceptance criteria
 
-- [ ] Test: at 854×480 and 1920×1080, every key lands at its reference position scaled to that size.
-- [ ] Test: at a 3440×1441 client area, keys land inside a 2562×1441 picture with 439 px bars on each side.
-- [ ] Test: if the client area's screen position changes partway through, later clicks follow it.
-- [ ] By hand: "Mocchi" types correctly windowed at 854×480 and 1920×1080, and with Windows display scaling above 100%.
-- [ ] By hand: "Mocchi" types correctly in fullscreen on a monitor that isn't 16:9, with the game already in front (focus is ticket 05).
+- [x] Test: at 854×480 and 1920×1080, every key lands at its reference position scaled to that size.
+- [x] Test: at a 3440×1441 client area, keys land inside a 2562×1441 picture with 439 px bars on each side.
+- [x] Test: if the client area's screen position changes partway through, later clicks follow it.
+- [x] By hand: "Mocchi" types correctly windowed at 854×480 and 1920×1080, and with Windows display scaling above 100%.
+- [x] By hand: "Mocchi" types correctly in fullscreen on a monitor that isn't 16:9, with the game already in front (focus is ticket 05).
 
 ## User stories covered
 
@@ -36,3 +36,5 @@ Make the clicks land on the right keys at every screen setup, not just a 1600×9
 - 2026-10-30: the scaling tests type "Mocchi" plus the BS clears, which covers both blocks and several rows, rather than every key.
 - 2026-10-30: the typist can't tell a window from fullscreen, so a window 2 px or more off 16:9 gets thin bars too. For example, 1360×768 gets a 1 px bar above and below. This is harmless at true 16:9 sizes.
 - 2026-10-30: PerMonitorV2 is set in `App.config` (`DpiAwareness`), plus an `app.manifest` that declares Windows 10 support so Windows Forms will turn it on. A launched build reports the PerMonitorV2 awareness context. The by-hand checks against the game (other sizes, scaling above 100%, fullscreen on a monitor that isn't 16:9) are still to do.
+- 2026-10-30, by hand: "Mocchi" typed correctly windowed at 1920×1080 and at 854×480, at 100% display scaling. At 125% the letters typed were always right, but now and then a click looked like it didn't register. Lowering the typing rate from 10 to 5 didn't change that, and switching back to 100% made it go away. Not yet explained. Fullscreen on a monitor that isn't 16:9 was checked under ticket 05.
+- 2026-10-30, closed: the occasional unregistered click at 125% scaling, noted above, stays an open question and doesn't block closing.

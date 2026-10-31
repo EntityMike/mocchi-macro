@@ -1,6 +1,6 @@
 # Main window: type a search text into the keyboard
 
-Status: ready-for-agent
+Status: resolved
 
 ## Problem Statement
 

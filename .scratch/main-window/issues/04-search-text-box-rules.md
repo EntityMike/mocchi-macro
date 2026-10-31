@@ -1,6 +1,6 @@
 # 04: Search text box rules
 
-Status: ready-for-agent
+Status: resolved
 
 Blocked by: 01
 
@@ -18,13 +18,13 @@ Make the search text box accept only what the keyboard can type, and make it qui
 
 ## Acceptance criteria
 
-- [ ] Typing a 13th character does nothing.
-- [ ] Typing a space or an accented letter leaves the box unchanged and shows a note naming the character.
-- [ ] Pasting "Mo cchi é" leaves "Mocchi" in the box and a note naming the space and "é".
-- [ ] Pasting `○ × △ □` keeps them.
-- [ ] Pressing Enter in the box types the search text, the same as Go.
-- [ ] After Go, the search text is still in the box. On a fresh start, the box is empty.
-- [ ] Test: a search text with a character that has no key (for example "Mo cchi") reports that outcome, and nothing is clicked.
+- [x] Typing a 13th character does nothing.
+- [x] Typing a space or an accented letter leaves the box unchanged and shows a note naming the character.
+- [x] Pasting "Mo cchi é" leaves "Mocchi" in the box and a note naming the space and "é".
+- [x] Pasting `○ × △ □` keeps them.
+- [x] Pressing Enter in the box types the search text, the same as Go.
+- [x] After Go, the search text is still in the box. On a fresh start, the box is empty.
+- [x] Test: a search text with a character that has no key (for example "Mo cchi") reports that outcome, and nothing is clicked.
 
 ## User stories covered
 

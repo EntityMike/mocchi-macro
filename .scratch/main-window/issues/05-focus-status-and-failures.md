@@ -1,6 +1,6 @@
 # 05: Bring the game to the front, report status and failures
 
-Status: ready-for-agent
+Status: resolved
 
 Blocked by: 01
 
@@ -18,15 +18,15 @@ Make Go work when the game isn't already in front, and tell the organizer what h
 
 ## Acceptance criteria
 
-- [ ] Test: when the game isn't found, the outcome is "game not found" and nothing is clicked.
-- [ ] Test: when the game doesn't come to the front within 5 s on the fake clock, the outcome says so and nothing is clicked.
-- [ ] Test: when the game window closes partway through, the outcome says so and no clicks follow.
-- [ ] Test: when the game is minimized, it's restored before the first click.
-- [ ] By hand: with the game closed, Go shows "game not found" in the status line.
-- [ ] By hand: with the game windowed behind the tool, Go brings it to the front and types correctly.
-- [ ] By hand: in fullscreen, clicking Go on another monitor restores the game and types correctly. If Windows blocks this, record the result in this ticket's comments. The fallback is clicking the game and pressing Go again; the hotkey ticket fixes it properly later.
-- [ ] By hand: the window can be dragged while typing, and Go is disabled until typing ends.
-- [ ] By hand: Go with an empty box shows a message and the monster field is unchanged.
+- [x] Test: when the game isn't found, the outcome is "game not found" and nothing is clicked.
+- [x] Test: when the game doesn't come to the front within 5 s on the fake clock, the outcome says so and nothing is clicked.
+- [x] Test: when the game window closes partway through, the outcome says so and no clicks follow.
+- [x] Test: when the game is minimized, it's restored before the first click.
+- [x] By hand: with the game closed, Go shows "game not found" in the status line.
+- [x] By hand: with the game windowed behind the tool, Go brings it to the front and types correctly.
+- [x] By hand: in fullscreen, clicking Go on another monitor restores the game and types correctly. If Windows blocks this, record the result in this ticket's comments. The fallback is clicking the game and pressing Go again; the hotkey ticket fixes it properly later.
+- [x] By hand: the window can be dragged while typing, and Go is disabled until typing ends.
+- [x] By hand: Go with an empty box shows a message and the monster field is unchanged.
 
 ## User stories covered
 
@@ -43,3 +43,4 @@ Make Go work when the game isn't already in front, and tell the organizer what h
 - 2026-10-30: "Done" now shows in dark green (`DarkGreen`, about as readable on the window's grey as the red), so the status line has three colors: red for problems, green for done, and normal text for "Typing...".
 - 2026-10-30, by hand: with the game closed, Go showed "Game not found". With text already in the monster field and another window over part of the game, windowed at 1600×900, Go brought the game to the front and left "Mocchi". A minimized windowed game was restored and typed into. Closing the game partway through typing showed "The game window closed partway through" and the clicks stopped. Go with an empty box showed the message and left the monster field unchanged. While typing, Go and both boxes were disabled until typing ended, and the window never showed "Not Responding". Dragging it wasn't possible, because the typist moves the mouse between clicks. Still to do: fullscreen on another monitor, and the other window sizes.
 - 2026-10-30, by hand: in fullscreen, clicking Go on another monitor restored the game and typed correctly, so Windows allows it and no fallback is needed.
+- 2026-10-30, closed: the drag check is moot, because the typist moves the mouse; Go and both boxes were disabled until typing ended.

@@ -1,9 +1,11 @@
 // The tool's window: a search text box and a Go button that types the search text into
 // the game's monster field, and a typing rate box that sets how many keys per second Go
-// clicks. The typing rate is saved in the user settings and restored at startup.
-// The search text box holds at most 12 characters and drops any character the keyboard
-// has no key for, with a note under it naming what was dropped or saying the text was cut
-// to 12. Enter in it runs Go. While Go types, it and both boxes are disabled; then a status
+// clicks. The typing rate is saved in the user settings when the window closes and restored
+// at startup.
+// The search text box swaps stand-ins such as '@' for the symbol keys they stand for, holds
+// at most 12 characters and drops any character the keyboard has no key for, with a note
+// under it naming what was dropped or saying the text was cut to 12. Its tooltip lists the
+// stand-ins. Enter in it runs Go. While Go types, it and both boxes are disabled; then a status
 // line between the search text and the typing rate says how typing went.
 
 using System;
@@ -29,6 +31,10 @@ namespace MocchiMacro
             // which would throw.
             typingRateBox.Value = Math.Max(typingRateBox.Minimum,
                 Math.Min(typingRateBox.Maximum, Settings.Default.TypingRate));
+
+            // Lists the stand-ins, such as "@ ○", so the organizer can find them by hovering.
+            searchTextToolTip.SetToolTip(searchTextBox,
+                string.Join("   ", KeyboardLayout.StandIns.Select(s => s.StandIn + " " + s.Symbol)));
         }
 
         async void GoButton_Click(object sender, EventArgs e)
@@ -92,10 +98,11 @@ namespace MocchiMacro
 
         // A typed character that has a key, and would make a 13th, is stopped here so it does
         // nothing at all. Pastes don't come through KeyPress, so the cut and its note below
-        // only happen for them. Characters without a key go on to be dropped and noted.
+        // only happen for them. Characters without a key go on to be dropped and noted. A
+        // stand-in counts as its symbol key, so it's stopped too.
         void SearchTextBox_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (KeyboardLayout.HasKey(e.KeyChar)
+            if (KeyboardLayout.HasKey(KeyboardLayout.SwapStandIn(e.KeyChar))
                 && searchTextBox.TextLength - searchTextBox.SelectionLength >= MaxSearchTextLength)
             {
                 e.Handled = true;
@@ -105,7 +112,9 @@ namespace MocchiMacro
         // Runs on every edit, typed or pasted, so both are cleaned the same way.
         void SearchTextBox_TextChanged(object sender, EventArgs e)
         {
-            string text = searchTextBox.Text;
+            // Stand-ins are swapped for their symbol keys first, so they're kept and counted
+            // toward the 12 like any other key. The swap is one for one, so the caret stays put.
+            string text = new string(searchTextBox.Text.Select(KeyboardLayout.SwapStandIn).ToArray());
             int caret = searchTextBox.SelectionStart;
             char[] dropped = text.Where(c => !KeyboardLayout.HasKey(c)).ToArray();
 
@@ -125,9 +134,10 @@ namespace MocchiMacro
                 kept = kept.Remove(keptCaret, excess);
             }
 
-            // Setting the text raises this event once more, with nothing to drop, which clears
-            // the note; so the note is set after.
-            if (kept != text)
+            // Compared with the box's own text, not the swapped text, so a swap alone is written
+            // back. Setting the text raises this event once more, with nothing to swap or drop,
+            // which clears the note; so the note is set after.
+            if (kept != searchTextBox.Text)
             {
                 searchTextBox.Text = kept;
                 searchTextBox.SelectionStart = keptCaret;
@@ -152,6 +162,13 @@ namespace MocchiMacro
             }
 
             Settings.Default.TypingRate = (int)whole;
+        }
+
+        // Saved once on close, not on every change: each save rewrites user.config, and a quick
+        // run of arrow clicks rewrote it so fast that anti-ransomware software took the tool for
+        // ransomware and suspended it.
+        void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
+        {
             Settings.Default.Save();
         }
     }
