@@ -1,7 +1,8 @@
 // The tool's window: a search text box and a Go button that types the search text into
 // the game's monster field, a typing rate box that sets how many keys per second Go clicks,
 // and a game dropdown that picks which game Go types into, MR1 DX or MR2 DX. The typing rate
-// is saved in the user settings when the window closes and restored at startup.
+// and the game are saved in the user settings when the window closes and restored at startup.
+// Switching games clears the search text box.
 // The search text box swaps stand-ins such as '@' for the symbol keys they stand for, holds
 // at most 12 characters and drops any character the selected game's keyboard has no key for,
 // with a note under it naming what was dropped or saying the text was cut to 12. Its tooltip
@@ -33,15 +34,35 @@ namespace MocchiMacro
             typingRateBox.Value = Math.Max(typingRateBox.Minimum,
                 Math.Min(typingRateBox.Maximum, Settings.Default.TypingRate));
 
-            // Most organizers play MR2 DX. Selecting it also sets the tooltip, below.
+            // Most organizers play MR2 DX, so it's the default, and it also stands in for a saved
+            // game that isn't one of ours, such as a hand-edited one, rather than throwing.
+            // Selecting the game also sets the tooltip, below.
             gameBox.Items.AddRange(Game.All.ToArray());
-            gameBox.SelectedItem = Game.Mr2Dx;
+            gameBox.SelectedItem = Game.All.FirstOrDefault(g => g.Name == Settings.Default.Game) ?? Game.Mr2Dx;
         }
 
         Game SelectedGame => (Game)gameBox.SelectedItem;
 
+        // So only a real switch clears the search text box.
+        Game lastSelectedGame;
+
         void GameBox_SelectedIndexChanged(object sender, EventArgs e)
         {
+            // The dropdown can raise this without the game changing, such as when the organizer
+            // picks the game that's already selected; that mustn't clear the search text box.
+            if (SelectedGame == lastSelectedGame) return;
+            lastSelectedGame = SelectedGame;
+
+            // Saved with the typing rate, on close.
+            Settings.Default.Game = SelectedGame.Name;
+
+            // A switch means starting over with the other game's monster names, so the old text
+            // is cleared rather than left to be sent to the wrong game. The note is cleared here
+            // too, not left to TextChanged: a box already emptied by dropping raises no
+            // TextChanged on Clear, and would keep its note. The status line stays.
+            searchTextBox.Clear();
+            droppedNoteLabel.Text = "";
+
             // Lists the selected game's stand-ins, such as "@ ○", so the organizer can find them
             // by hovering. Only the ASCII ones: the Japanese middle dot isn't on an ordinary
             // keyboard, only pasted.

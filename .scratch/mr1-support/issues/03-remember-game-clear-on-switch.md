@@ -1,6 +1,6 @@
 # 03: Remember the game, and clear the box on a switch
 
-Status: ready-for-agent
+Status: resolved
 
 Blocked by: 02
 
@@ -13,11 +13,11 @@ Parent: [spec](../spec.md)
 
 ## Acceptance criteria
 
-- [ ] Pick MR1 DX, close the tool, start it again: MR1 DX is still picked, and its tooltip shows.
-- [ ] On a first run, with no saved settings, MR2 DX is picked.
-- [ ] A hand-edited settings file with an unknown game value starts on MR2 DX, without an error.
-- [ ] With text in the box, switching to the other game leaves the box and the note empty, and the status line unchanged.
-- [ ] Picking the game that's already selected doesn't clear the box.
+- [x] Pick MR1 DX, close the tool, start it again: MR1 DX is still picked, and its tooltip shows.
+- [x] On a first run, with no saved settings, MR2 DX is picked.
+- [x] A hand-edited settings file with an unknown game value starts on MR2 DX, without an error.
+- [x] With text in the box, switching to the other game leaves the box and the note empty, and the status line unchanged.
+- [x] Picking the game that's already selected doesn't clear the box.
 
 ## User stories covered
 

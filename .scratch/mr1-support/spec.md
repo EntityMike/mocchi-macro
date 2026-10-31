@@ -1,6 +1,6 @@
 # MR1 support: type a search text into MR1 DX too
 
-Status: ready-for-agent
+Status: resolved
 
 ## Problem Statement
 

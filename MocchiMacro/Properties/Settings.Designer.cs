@@ -41,5 +41,20 @@ namespace MocchiMacro.Properties
                 this["TypingRate"] = value;
             }
         }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("MR2 DX")]
+        public string Game
+        {
+            get
+            {
+                return ((string)(this["Game"]));
+            }
+            set
+            {
+                this["Game"] = value;
+            }
+        }
     }
 }
