@@ -17,23 +17,25 @@ namespace MocchiMacro
         const float LeftBlockX = 270, RightBlockX = 735, ColumnPitch = 75;
         const float TopRowY = 280, RowPitch = 55.9f;
 
-        // One string per row of each block. '\0' marks the left block's key whose character
-        // isn't known yet (it looks like a comma or a raised dot), so it's left out and can't
-        // be typed. Right block row 6 is circle, cross, triangle, square.
-        static readonly string[] LeftBlock = { "ABCDE", "FGHIJ", "KLMNO", "PQRST", "UVWXY", "Z!?()", "'\":\0.", "01234" };
+        // One string per row of each block. Left block row 6 has the middle dot, and right block
+        // row 6 is circle, cross, triangle, square.
+        static readonly string[] LeftBlock = { "ABCDE", "FGHIJ", "KLMNO", "PQRST", "UVWXY", "Z!?()", "'\":\u00B7.", "01234" };
         static readonly string[] RightBlock = { "abcde", "fghij", "klmno", "pqrst", "uvwxy", "z\u25CB\u00D7\u25B3\u25A1", "+-=~%", "56789" };
 
         // Stand-ins: characters the keyboard has no key for, which the search text box swaps for
-        // the symbol keys in row 6 above, so they can be typed on an ordinary keyboard. Each
-        // looks a little like its symbol, and all are Shift + a number key on a US keyboard. The
-        // comma is avoided because the unknown key may turn out to be one. A list, not a
-        // dictionary, so the order is fixed for the box's tooltip.
+        // the symbol keys in row 6 above, so they can be typed on an ordinary keyboard or pasted.
+        // Each looks a little like its symbol. The first four are Shift + a number key on a US
+        // keyboard; the backtick is the only free key left that looks at all like a raised dot,
+        // since a comma sits low. The Japanese middle dot is there so names pasted from Japanese
+        // text work. A list, not a dictionary, so the order is fixed for the box's tooltip.
         public static readonly IReadOnlyList<(char StandIn, char Symbol)> StandIns = new[]
         {
             ('@', '\u25CB'), // ○ round
             ('*', '\u00D7'), // × multiplication sign in code
             ('^', '\u25B3'), // △ pointed top
             ('#', '\u25A1'), // □ boxy
+            ('`', '\u00B7'), // · small raised mark
+            ('\u30FB', '\u00B7'), // · the same dot in Japanese text
         };
 
         // BS sits right of the grid on the digits row, and Ent. one row below it. Their x is
@@ -64,7 +66,7 @@ namespace MocchiMacro
                 float y = TopRowY + row * RowPitch;
                 for (int col = 0; col < 5; col++)
                 {
-                    if (LeftBlock[row][col] != '\0') keys[LeftBlock[row][col]] = new PointF(LeftBlockX + col * ColumnPitch, y);
+                    keys[LeftBlock[row][col]] = new PointF(LeftBlockX + col * ColumnPitch, y);
                     keys[RightBlock[row][col]] = new PointF(RightBlockX + col * ColumnPitch, y);
                 }
             }

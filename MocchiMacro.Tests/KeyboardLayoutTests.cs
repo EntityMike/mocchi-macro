@@ -20,6 +20,7 @@ namespace MocchiMacro.Tests
         [DataRow('\u00D7')] // ×
         [DataRow('\u25B3')] // △
         [DataRow('\u25A1')] // □
+        [DataRow('\u00B7')] // ·
         public void HasKeyFor(char c)
         {
             Assert.IsTrue(KeyboardLayout.HasKey(c));
@@ -29,9 +30,7 @@ namespace MocchiMacro.Tests
         [DataRow(' ')]
         [DataRow('é')]
         [DataRow('Ü')]
-        // The unknown punctuation key looks like a comma or a raised dot, and is left out.
         [DataRow(',')]
-        [DataRow('\u00B7')] // ·
         [DataRow('\0')]
         public void HasNoKeyFor(char c)
         {
@@ -43,6 +42,8 @@ namespace MocchiMacro.Tests
         [DataRow('*', '\u00D7')] // ×
         [DataRow('^', '\u25B3')] // △
         [DataRow('#', '\u25A1')] // □
+        [DataRow('`', '\u00B7')] // ·
+        [DataRow('\u30FB', '\u00B7')] // ·
         public void StandInSwapsForItsSymbolKey(char standIn, char symbol)
         {
             Assert.AreEqual(symbol, KeyboardLayout.SwapStandIn(standIn));

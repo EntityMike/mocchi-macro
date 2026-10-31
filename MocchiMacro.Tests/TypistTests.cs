@@ -115,6 +115,19 @@ namespace MocchiMacro.Tests
         }
 
         [TestMethod]
+        public void TypesTheMiddleDotAtItsKeyOnTheGrid()
+        {
+            var game = new FakeGamePort { ClientArea = new Rectangle(0, 0, 1600, 900) };
+
+            new Typist(game).Type("\u00B7", 10);
+
+            // Left block row 6, column 3, at (495, 615.4) in the 1600x900 screenshot.
+            Point[] expected = Enumerable.Repeat(new Point(1197, 671), 12)
+                .Concat(new[] { new Point(495, 615) }).ToArray();
+            CollectionAssert.AreEqual(expected, game.Clicks.Select(c => c.Point).ToArray());
+        }
+
+        [TestMethod]
         public void WhenTheClientAreaMovesPartwayThroughLaterClicksFollowIt()
         {
             var game = new FakeGamePort { ClientArea = new Rectangle(100, 50, 1600, 900) };

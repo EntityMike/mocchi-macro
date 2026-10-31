@@ -1,6 +1,6 @@
 # 01: The middle dot key
 
-Status: ready-for-agent
+Status: resolved
 
 Parent: [spec](../spec.md)
 
@@ -21,13 +21,13 @@ Make MR2 DX's last untypeable key typeable. The key left out as "unknown" (a com
 
 ## Acceptance criteria
 
-- [ ] Typing `` Mo`chi `` in the box leaves `Mo·chi`, with no note.
-- [ ] Pasting `Mo・chi` or `Mo·chi` leaves `Mo·chi`.
-- [ ] With MR2 DX on the keyboard screen, Go types `Mo·chi` into the monster field.
-- [ ] The tooltip reads `` @ ○   * ×   ^ △   # □   ` · ``.
-- [ ] Test: the layout has a key for `·`. The old "unknown punctuation key has no key" case is replaced.
-- [ ] Test: at 1600×900 with the client area at 0,0, typing `·` clicks (495, 615) after the 12 BS clicks.
-- [ ] Test: `` ` `` and `・` map to `·`, and neither has a key itself.
+- [x] Typing `` Mo`chi `` in the box leaves `Mo·chi`, with no note.
+- [x] Pasting `Mo・chi` or `Mo·chi` leaves `Mo·chi`.
+- [x] With MR2 DX on the keyboard screen, Go types `Mo·chi` into the monster field.
+- [x] The tooltip reads `` @ ○   * ×   ^ △   # □   ` · ``.
+- [x] Test: the layout has a key for `·`. The old "unknown punctuation key has no key" case is replaced.
+- [x] Test: at 1600×900 with the client area at 0,0, typing `·` clicks (495, 615) after the 12 BS clicks.
+- [x] Test: `` ` `` and `・` map to `·`, and neither has a key itself.
 
 ## User stories covered
 

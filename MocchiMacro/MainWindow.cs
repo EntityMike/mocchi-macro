@@ -5,8 +5,9 @@
 // The search text box swaps stand-ins such as '@' for the symbol keys they stand for, holds
 // at most 12 characters and drops any character the keyboard has no key for, with a note
 // under it naming what was dropped or saying the text was cut to 12. Its tooltip lists the
-// stand-ins. Enter in it runs Go. While Go types, it and both boxes are disabled; then a status
-// line between the search text and the typing rate says how typing went.
+// stand-ins you can type. Enter in it runs Go. While Go types, it and both boxes are
+// disabled; then a status line between the search text and the typing rate says how typing
+// went.
 
 using System;
 using System.Collections.Generic;
@@ -32,9 +33,10 @@ namespace MocchiMacro
             typingRateBox.Value = Math.Max(typingRateBox.Minimum,
                 Math.Min(typingRateBox.Maximum, Settings.Default.TypingRate));
 
-            // Lists the stand-ins, such as "@ ○", so the organizer can find them by hovering.
-            searchTextToolTip.SetToolTip(searchTextBox,
-                string.Join("   ", KeyboardLayout.StandIns.Select(s => s.StandIn + " " + s.Symbol)));
+            // Lists the stand-ins, such as "@ ○", so the organizer can find them by hovering. Only
+            // the ASCII ones: the Japanese middle dot isn't on an ordinary keyboard, only pasted.
+            searchTextToolTip.SetToolTip(searchTextBox, string.Join("   ", KeyboardLayout.StandIns
+                .Where(s => s.StandIn < 128).Select(s => s.StandIn + " " + s.Symbol)));
         }
 
         async void GoButton_Click(object sender, EventArgs e)

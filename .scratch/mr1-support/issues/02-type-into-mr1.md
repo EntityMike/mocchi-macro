@@ -36,3 +36,7 @@ A game dropdown, and everything Go needs to type into MR1 DX as well as MR2 DX.
 ## User stories covered
 
 1, 2, 3, 5, 7, 8, 9, 10, 11, 12 (MR1 DX)
+
+## Comments
+
+- From ticket 01: the tooltip keeps `・` out by listing only the ASCII stand-ins (`.Where(s => s.StandIn < 128)` in `MainWindow`), not by naming `・`. When the tooltip switches to the selected game's stand-ins, keep that filter so `・` stays out for both games.
