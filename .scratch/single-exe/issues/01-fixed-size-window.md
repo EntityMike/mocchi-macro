@@ -1,6 +1,6 @@
 # 01: Fixed-size main window
 
-Status: ready-for-agent
+Status: resolved
 
 Parent: [spec](../spec.md)
 
@@ -15,12 +15,12 @@ Stop the organizer from resizing or maximizing the tool's window. Its controls s
 
 ## Acceptance criteria
 
-- [ ] Dragging any edge or corner of the window doesn't resize it, and the cursor doesn't change to a resize arrow there.
-- [ ] The title bar shows minimize and close, with maximize missing or greyed out.
-- [ ] Double-clicking the title bar, Win + ↑, and the window menu (Alt + Space) don't maximize it.
-- [ ] Win + ← / → and dragging it to a screen edge don't resize it.
-- [ ] Minimizing and restoring still work, and the window comes back at the same size and place.
-- [ ] Everything else in the window works as before.
+- [x] Dragging any edge or corner of the window doesn't resize it, and the cursor doesn't change to a resize arrow there.
+- [x] The title bar shows minimize and close, with maximize missing or greyed out.
+- [x] Double-clicking the title bar, Win + ↑, and the window menu (Alt + Space) don't maximize it.
+- [x] Win + ← / → and dragging it to a screen edge don't resize it.
+- [x] Minimizing and restoring still work, and the window comes back at the same size and place.
+- [x] Everything else in the window works as before.
 
 ## User stories covered
 

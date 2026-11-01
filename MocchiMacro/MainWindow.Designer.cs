@@ -151,6 +151,8 @@ namespace MocchiMacro
             this.Controls.Add(this.typingRateUnitLabel);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.gameBox);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "MainWindow";
             this.Text = "Mocchi Macro";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWindow_FormClosed);
