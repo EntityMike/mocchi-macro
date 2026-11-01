@@ -1,0 +1,27 @@
+# 01: Fixed-size main window
+
+Status: ready-for-agent
+
+Parent: [spec](../spec.md)
+
+## What to build
+
+Stop the organizer from resizing or maximizing the tool's window. Its controls sit at fixed places and don't stretch, so a larger window only adds empty space, and a smaller one cuts controls off. A window that only Windows' scaling ever resizes also keeps ticket 03's rescaling simple: there's no size of the organizer's own to preserve.
+
+- **Fixed border:** set the main window's `FormBorderStyle` to `FixedSingle`, in the designer, so its edges and corners can't be dragged. The size grip goes with it.
+- **No maximize:** set `MaximizeBox` to false. This also stops maximizing by double-clicking the title bar, by Win + ↑, and from the window menu.
+- **Minimize stays.** It doesn't change the window's layout, and the organizer may want the tool out of the way between battles.
+- Snapping to a screen edge (Win + ← / →) or to a snap layout doesn't resize a window with a fixed border either.
+
+## Acceptance criteria
+
+- [ ] Dragging any edge or corner of the window doesn't resize it, and the cursor doesn't change to a resize arrow there.
+- [ ] The title bar shows minimize and close, with maximize missing or greyed out.
+- [ ] Double-clicking the title bar, Win + ↑, and the window menu (Alt + Space) don't maximize it.
+- [ ] Win + ← / → and dragging it to a screen edge don't resize it.
+- [ ] Minimizing and restoring still work, and the window comes back at the same size and place.
+- [ ] Everything else in the window works as before.
+
+## User stories covered
+
+6
