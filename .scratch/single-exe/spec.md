@@ -1,6 +1,6 @@
 # Single .exe: ship the tool as one file
 
-Status: ready-for-agent
+Status: resolved
 
 ## Problem Statement
 
@@ -13,18 +13,18 @@ The setting can't just be copied into the .exe. The config file actually turns o
 
 ## Solution
 
-First, the main window gets a fixed size: the organizer can't resize or maximize it, only minimize it. Its controls don't stretch, so other sizes only add empty space or cut controls off, and a window that only Windows' scaling ever resizes keeps the rescaling below simple.
+First, the main window gets a fixed size: the organizer can't resize or maximize it, only minimize it. Its controls don't stretch, so other sizes only add empty space or cut controls off.
 
 The tool turns on per-monitor DPI awareness from its embedded manifest, and `App.config` is deleted, so the build writes only `MocchiMacro.exe`. Typing works exactly as it does today, at any scaling, on any monitor.
 
-To keep the second part, the main window rescales itself: when Windows says the window now sits on a monitor with different scaling, the tool resizes the window's font, which rescales its controls, and moves the window to the size and place Windows suggests. It does the same once at startup if the window opens on a monitor whose scaling differs from the one WinForms scaled it for. This uses only documented Windows and WinForms behaviour, with no private fields or reflection.
+The second part isn't replaced. The tool's window is scaled once at startup for the main monitor's scaling, as before, and keeps that size in pixels on any other monitor. On a monitor at different scaling it looks smaller or larger than on the main one. A window that rescales itself was tried (ticket 03) and dropped: it clipped controls at common scalings.
 
 ## User Stories
 
 1. As an organizer, I want to download one .exe and run it, so that there's no second file to keep next to it or lose.
 2. As an organizer at Windows display scaling above 100%, I want the tool's clicks to land on the right keys, windowed and fullscreen, so that the one-file tool types as well as today's build does.
-3. As an organizer with monitors at different scaling, I want the tool's window to keep a sensible size and sharp text when I drag it from one monitor to another, so that it doesn't turn tiny or huge.
-4. As an organizer whose tool window opens on a monitor at different scaling from the main one, I want it to open at the right size there, so that I don't have to drag it away and back.
+3. As an organizer with monitors at different scaling, I want the tool's window to keep a sensible size and sharp text when I drag it from one monitor to another, so that it doesn't turn tiny or huge. *Not covered: dropped with ticket 03.*
+4. As an organizer whose tool window opens on a monitor at different scaling from the main one, I want it to open at the right size there, so that I don't have to drag it away and back. *Not covered: dropped with ticket 03.*
 5. As an organizer updating from a build that came with `MocchiMacro.exe.config`, I want my saved typing rate and game to carry over, so that dropping the config file changes nothing I set.
 6. As an organizer, I want the tool's window to stay at its own size, with no resizing or maximizing, so that its controls are never cut off or lost in empty space.
 
@@ -37,33 +37,26 @@ To keep the second part, the main window rescales itself: when Windows says the 
 - **No App.config.** It's removed from the project, so the build no longer writes `MocchiMacro.exe.config`. Nothing else is lost.
   - Its `supportedRuntime` line isn't needed: a .NET Framework 4.x .exe with no config runs on the CLR it was built for, and keeps 4.8's behaviour through the target framework attribute MSBuild builds into it.
   - User settings don't need it either: their defaults come from the settings class, and saved values go to `user.config` under `%LOCALAPPDATA%` as before. The settings' storage folder is named after the .exe's path and version, not the config file, so existing saved settings carry over.
-- **The main window rescales itself.** WinForms scales the window once at startup for the system DPI (the main monitor's scaling at sign-in), as today. On top of that:
-  - **Windows' "DPI changed" message** (`WM_DPICHANGED`, sent when the window moves to a monitor with different scaling): the window sets its font to the designer's font size × new DPI ÷ system DPI, then moves to the rectangle the message suggests. With `AutoScaleMode.Font`, changing the font makes WinForms rescale every control. The font size is always worked out from the designer's size, never from the current one, so repeated moves don't drift.
-  - **At startup:** once the window has a handle, if the DPI of the monitor it's on differs from the system DPI, it applies the same font rescale.
-  - Because the organizer can't resize the window, its size always comes from the designer's size and the DPI, so there's no size of theirs to keep across a rescale.
-  - The window is small and uses only the default font and standard controls (labels, a text box, a button, a number box, a drop-down), so the font rescale covers all of it. There are no images or hand-drawn parts to scale.
-  - This lives in the main window. It's the only window, so there's nothing to share.
+- **No rescaling across monitors.** WinForms scales the window once at startup for the system DPI (the main monitor's scaling at sign-in), as before. Moved to a monitor at different scaling, or started there, the window keeps that size in pixels, so it looks smaller or larger there.
+  - Rejected: **the main window rescaling itself** by resizing its font on Windows' "DPI changed" message and at startup ([ticket 03](issues/03-rescale-window-across-monitors.md)). It was built and dropped. At 125%, 175% and 200% the controls outgrew the window and were clipped on the right, and it didn't work well when tried by hand. The ticket's comments have the details for any future attempt.
 - **No ADR.** Moving the setting back into a config file would be easy if ever needed, so this decision is recorded here and in the manifest's comment.
 
 ## Testing Decisions
 
-- Nothing here is in the typist or keyboard layouts, which the automated tests cover; they keep passing unchanged. The fixed window, the manifest, the missing config file and the window's rescaling are checked by hand, like the rest of the main window.
+- Nothing here is in the typist or keyboard layouts, which the automated tests cover; they keep passing unchanged. The fixed window, the manifest and the missing config file are checked by hand, like the rest of the main window.
 - **Fixed size:** dragging the window's edges and corners doesn't resize it. Maximize is unavailable from the title bar button, a double-click on the title bar, Win + ↑ and the window menu. Snapping to a screen edge doesn't resize it. Minimize and restore still work.
 - **One file:** a Release build's output has `MocchiMacro.exe` and no `MocchiMacro.exe.config`. In the same folder as the previous build, it shows the typing rate and game saved by that build. Copied alone into an empty folder, it starts, with defaults, since saved settings are stored per .exe path.
 - **Typing at scaling above 100%,** from the lone .exe, with Windows scaling at 125% or 150% on the monitor the game is on:
   - MR2 DX windowed at 1600×900, and MR2 DX fullscreen.
   - MR1 DX once, windowed.
   - Note whether the occasional missed click seen at 125% still happens. It's not fixed here, but this change could affect it.
-- **The window across monitors,** with two monitors at different scaling (for example 100% and 150%):
-  - Dragging the tool's window from one to the other resizes it so it looks the same size on both, with sharp text and no clipped or overlapping controls.
-  - Dragging it back and forth several times leaves it at the same size each time it returns.
-  - Starting the tool on the monitor that isn't the main one opens it at the right size there.
 
 ## Out of Scope
 
 - **The occasional missed click at 125% scaling** (seen in earlier testing by hand). This spec only records whether it still happens.
 - **The release itself:** the README, the download, the update notice, and whether the `.pdb` ships.
 - **Keeping saved settings across version updates and .exe moves** (`.scratch/program-updates/issues/01-keep-settings-across-updates.md`).
+- **Rescaling the tool's window across monitors at different scaling** (user stories 3 and 4). See "No rescaling across monitors" above.
 - **Turning on WinForms' high-DPI handling** some other way, such as setting its private configuration field through reflection. It works today, but a .NET update could break it silently.
 
 ## Further Notes
@@ -72,4 +65,4 @@ To keep the second part, the main window rescales itself: when Windows says the 
   - **Manifest or code awareness without the config file:** the process was per-monitor aware, but WinForms' DPI-change handling stayed off.
   - **No config file at all:** user settings still loaded their defaults, saved, and reloaded.
 
-  The probes ran at 100% scaling, so the window rescale itself is untested until ticket 03.
+  The probes ran at 100% scaling.

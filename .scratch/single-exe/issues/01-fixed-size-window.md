@@ -6,7 +6,7 @@ Parent: [spec](../spec.md)
 
 ## What to build
 
-Stop the organizer from resizing or maximizing the tool's window. Its controls sit at fixed places and don't stretch, so a larger window only adds empty space, and a smaller one cuts controls off. A window that only Windows' scaling ever resizes also keeps ticket 03's rescaling simple: there's no size of the organizer's own to preserve.
+Stop the organizer from resizing or maximizing the tool's window. Its controls sit at fixed places and don't stretch, so a larger window only adds empty space, and a smaller one cuts controls off. (It was also meant to keep ticket 03's rescaling simple, but that ticket was dropped.)
 
 - **Fixed border:** set the main window's `FormBorderStyle` to `FixedSingle`, in the designer, so its edges and corners can't be dragged. The size grip goes with it.
 - **No maximize:** set `MaximizeBox` to false. This also stops maximizing by double-clicking the title bar, by Win + ↑, and from the window menu.

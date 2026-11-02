@@ -12,7 +12,7 @@ Make the build a single .exe that types correctly at any Windows display scaling
 - **Rewrite the manifest's header comment.** The current one says DPI awareness lives in App.config and warns against putting it here. The new one says PerMonitorV2 is declared here so the .exe can ship alone, and that it's the manifest rather than a call in `Main` because the manifest always applies before any window exists.
 - **Remove `App.config`** from the project and delete the file, so the build no longer writes `MocchiMacro.exe.config`.
 
-After this ticket the tool window is scaled once at startup, as today, but no longer rescales when dragged to a monitor with different scaling. Ticket 03 adds that back.
+After this ticket the tool window is scaled once at startup, as today, but no longer rescales when dragged to a monitor with different scaling. Ticket 03 was to add that back, but was dropped, so it stays this way.
 
 ## Acceptance criteria
 
