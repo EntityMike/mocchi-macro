@@ -59,3 +59,7 @@ _Avoid_: Click rate, speed, rate of button presses
 **Hotkey**:
 The key combination that brings the tool's window to the front from any program, with the search text selected so the organizer can type over it. It doesn't type anything itself; Enter or Go does.
 _Avoid_: Shortcut, keybind, trigger
+
+**Mascot**:
+The pixel-art Mocchi in the tool's window, which animates while Go types. Not the monster Mocchi, which is search text like any other monster name.
+_Avoid_: Mocchi (for the art), sprite, logo
