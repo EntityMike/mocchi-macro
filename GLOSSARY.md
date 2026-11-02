@@ -53,3 +53,9 @@ _Avoid_: Shortcut, alias
 **Typing rate**:
 How many keys the tool clicks on the keyboard per second.
 _Avoid_: Click rate, speed, rate of button presses
+
+## The tool
+
+**Hotkey**:
+The key combination that brings the tool's window to the front from any program, with the search text selected so the organizer can type over it. It doesn't type anything itself; Enter or Go does.
+_Avoid_: Shortcut, keybind, trigger
