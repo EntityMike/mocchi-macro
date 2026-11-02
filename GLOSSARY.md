@@ -56,6 +56,10 @@ _Avoid_: Click rate, speed, rate of button presses
 
 ## The tool
 
+**Footer band**:
+The strip of pixel-art grass along the bottom of the tool's window, which the update notice takes the place of.
+_Avoid_: Footer, banner, grass strip
+
 **Hotkey**:
 The key combination that brings the tool's window to the front from any program, with the search text selected so the organizer can type over it. It doesn't type anything itself; Enter or Go does.
 _Avoid_: Shortcut, keybind, trigger
@@ -63,3 +67,11 @@ _Avoid_: Shortcut, keybind, trigger
 **Mascot**:
 The pixel-art Mocchi in the tool's window, which animates while Go types. Not the monster Mocchi, which is search text like any other monster name.
 _Avoid_: Mocchi (for the art), sprite, logo
+
+**Release**:
+A published build of the tool that organizers download, named by its version number, such as `1.1.0`.
+_Avoid_: Build, drop
+
+**Update notice**:
+The link in the tool's window saying a newer release is out.
+_Avoid_: Update alert, version warning

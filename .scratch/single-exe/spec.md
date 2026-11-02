@@ -55,7 +55,7 @@ The second part isn't replaced. The tool's window is scaled once at startup for 
 
 - **The occasional missed click at 125% scaling** (seen in earlier testing by hand). This spec only records whether it still happens.
 - **The release itself:** the README, the download, the update notice, and whether the `.pdb` ships.
-- **Keeping saved settings across version updates and .exe moves** (`.scratch/program-updates/issues/01-keep-settings-across-updates.md`).
+- **Keeping saved settings across version updates and .exe moves.** It had a ticket, dropped on 2026-11-20 with nothing replacing it.
 - **Rescaling the tool's window across monitors at different scaling** (user stories 3 and 4). See "No rescaling across monitors" above.
 - **Turning on WinForms' high-DPI handling** some other way, such as setting its private configuration field through reflection. It works today, but a .NET update could break it silently.
 
