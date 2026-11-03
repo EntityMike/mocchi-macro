@@ -17,6 +17,13 @@ namespace MocchiMacro
         // back to back can both land between two frames, so the game never sees the press.
         const int ClickHoldMs = 50;
 
+        // The game only takes a press on the key the cursor was already over in an earlier
+        // frame, so the cursor rests on the key before the press. Without this, a press sent
+        // right after the move was often lost in fullscreen, where frames are slower: 30 ms
+        // fixed it at 3440x1441, and 50 leaves margin. It fits the 100 ms per key at the
+        // highest typing rate, with the hold.
+        const int CursorSettleMs = 50;
+
         readonly Stopwatch clock = Stopwatch.StartNew();
         IntPtr gameWindow;
 
@@ -55,6 +62,7 @@ namespace MocchiMacro
         public void Click(Point screenPoint)
         {
             SetCursorPos(screenPoint.X, screenPoint.Y);
+            Thread.Sleep(CursorSettleMs);
             SendMouseButton(MOUSEEVENTF_LEFTDOWN);
             Thread.Sleep(ClickHoldMs);
             SendMouseButton(MOUSEEVENTF_LEFTUP);

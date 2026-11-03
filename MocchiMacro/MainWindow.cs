@@ -9,11 +9,15 @@
 // lists the stand-ins you can type in the selected game. Enter in it runs Go. While Go types,
 // it, both boxes and the dropdown are disabled; then a status line between the search text
 // and the typing rate says how typing went.
+// The hotkey, Ctrl+Alt+Shift+M, brings the window to the front from any program with the search
+// text selected, so the organizer can type the next one over it. If another program already
+// has the combination, the tool runs without a hotkey.
 
 using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MocchiMacro.Properties;
@@ -210,5 +214,56 @@ namespace MocchiMacro
         {
             Settings.Default.Save();
         }
+
+        // Identifies the hotkey in WM_HOTKEY. Any number works, since the window has only one.
+        const int HotkeyId = 1;
+
+        // Registered with the window's handle and released with it, so Ctrl+Alt+Shift+M reaches
+        // other programs again once the tool closes. A failed registration is ignored for now:
+        // the tool just has no hotkey. No auto-repeat, so holding the keys fires once.
+        // Not Ctrl+Shift+M: other programs often take it, and most Ctrl+Shift+letters, by default.
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+            RegisterHotKey(Handle, HotkeyId, MOD_CONTROL | MOD_ALT | MOD_SHIFT | MOD_NOREPEAT, (uint)Keys.M);
+        }
+
+        protected override void OnHandleDestroyed(EventArgs e)
+        {
+            UnregisterHotKey(Handle, HotkeyId);
+            base.OnHandleDestroyed(e);
+        }
+
+        protected override void WndProc(ref Message m)
+        {
+            if (m.Msg == WM_HOTKEY && m.WParam == (IntPtr)HotkeyId) BringUpSearchText();
+            base.WndProc(ref m);
+        }
+
+        void BringUpSearchText()
+        {
+            // The search text box is disabled while Go types. Taking focus then would pull the
+            // game out of the front partway through a name.
+            if (!searchTextBox.Enabled) return;
+
+            if (WindowState == FormWindowState.Minimized) WindowState = FormWindowState.Normal;
+
+            // Windows normally stops a background program from taking the front, but the
+            // program that receives a hotkey is allowed to: the key press was meant for it.
+            Activate();
+            searchTextBox.Focus();
+            searchTextBox.SelectAll();
+        }
+
+        // ---- Win32 interop (user32.dll) ----
+
+        const int WM_HOTKEY = 0x0312;
+        const uint MOD_ALT = 0x0001;
+        const uint MOD_CONTROL = 0x0002;
+        const uint MOD_SHIFT = 0x0004;
+        const uint MOD_NOREPEAT = 0x4000;
+
+        [DllImport("user32.dll")] static extern bool RegisterHotKey(IntPtr hwnd, int id, uint modifiers, uint key);
+        [DllImport("user32.dll")] static extern bool UnregisterHotKey(IntPtr hwnd, int id);
     }
 }

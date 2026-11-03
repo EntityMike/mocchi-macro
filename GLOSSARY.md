@@ -37,7 +37,7 @@ The keyboard's backspace key; deletes the last character in the monster field. L
 The keyboard's enter key; runs the search on what's in the monster field. Labelled `Ent.` in MR2 DX and `END` in MR1 DX.
 
 **Monster field**:
-The text field at the top of the keyboard screen that the keys type into, labelled `Monster:` in MR2 DX.
+The text field at the top of the keyboard screen that the keys type into, labelled `Monster:` in MR2 DX. It holds at most 12 characters, and the 12th moves the game on to the next screen, as Ent. does.
 _Avoid_: Search box, name field
 
 ## Typing

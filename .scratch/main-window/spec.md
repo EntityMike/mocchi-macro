@@ -30,7 +30,7 @@ A small window the organizer can put on any monitor. It has a box for the search
 16. As an organizer, I want the search text to be empty when the tool starts, so that I don't send an old name by accident.
 17. As an organizer, I want the search text to stay in the box after Go, so that I can send it again if something went wrong.
 18. As an organizer, I want Go to bring the game window to the front itself, so that the first key isn't lost on focusing the game.
-19. As an organizer, I want Go to restore a minimized fullscreen game, so that typing works when I played fullscreen and clicked over to the tool.
+19. As an organizer, I want Go to bring a fullscreen game back to the front, restoring it if it's minimized, so that typing works when I played fullscreen and clicked over to the tool.
 20. As an organizer, I want the keys to land in the right place whatever window size the game runs at (any of its seven 16:9 sizes), so that I don't have to calibrate anything.
 21. As an organizer, I want the keys to land correctly in fullscreen on a monitor that isn't 16:9, so that the black bars around the picture don't throw the clicks off.
 22. As an organizer, I want the keys to land correctly at Windows display scaling above 100%, so that the tool works on high-DPI monitors.
@@ -113,5 +113,5 @@ A small window the organizer can put on any monitor. It has a box for the search
 
 ## Further Notes
 
-- In fullscreen, clicking Go on another monitor takes focus away from the game, so the game minimizes. The typist restores it and brings it to the front. The keyboard test couldn't do that from Git Bash, because Windows only lets the program you last used change which window is in front. Clicking Go makes this tool that program, so it should work, but this is untested. If it fails, the organizer clicks the game and presses Go again, and the hotkey ticket later fixes it properly.
+- In fullscreen, clicking Go on another monitor takes focus away from the game. It doesn't minimize (corrected 2026-11-02, it was first assumed to): it stays behind the window in front. The typist brings it to the front, restoring it first if the organizer minimized it. The keyboard test couldn't do that from Git Bash, because Windows only lets the program you last used change which window is in front. Clicking Go makes this tool that program, so it should work, but this is untested. If it fails, the organizer clicks the game and presses Go again, and the hotkey ticket later fixes it properly.
 - Typing takes over the mouse, which the hub accepts.
