@@ -9,9 +9,10 @@
 // lists the stand-ins you can type in the selected game. Enter in it runs Go. While Go types,
 // it, both boxes and the dropdown are disabled; then a status line between the search text
 // and the typing rate says how typing went.
-// The hotkey, Ctrl+Alt+Shift+M, brings the window to the front from any program with the search
-// text selected, so the organizer can type the next one over it. If another program already
-// has the combination, the tool runs without a hotkey.
+// The hotkey brings the window to the front from any program with the search text selected,
+// so the organizer can type the next one over it. It's Ctrl+Alt+Shift+M, or a fallback when
+// another program already has that, or none when all three are taken; a label at the bottom
+// shows which, and the status line says so at startup when it isn't the default.
 
 using System;
 using System.Collections.Generic;
@@ -218,14 +219,42 @@ namespace MocchiMacro
         // Identifies the hotkey in WM_HOTKEY. Any number works, since the window has only one.
         const int HotkeyId = 1;
 
-        // Registered with the window's handle and released with it, so Ctrl+Alt+Shift+M reaches
-        // other programs again once the tool closes. A failed registration is ignored for now:
-        // the tool just has no hotkey. No auto-repeat, so holding the keys fires once.
+        // The hotkey's combinations, tried in order; the first no other program has is kept.
         // Not Ctrl+Shift+M: other programs often take it, and most Ctrl+Shift+letters, by default.
+        // The global-hotkey spec says why each of these was picked.
+        static readonly (string Name, uint Modifiers, Keys Key)[] HotkeyCombinations =
+        {
+            ("Ctrl+Alt+Shift+M", MOD_CONTROL | MOD_ALT | MOD_SHIFT, Keys.M),
+            ("Ctrl+Shift+F9", MOD_CONTROL | MOD_SHIFT, Keys.F9),
+            ("Ctrl+Alt+Shift+F9", MOD_CONTROL | MOD_ALT | MOD_SHIFT, Keys.F9),
+        };
+
+        // Registered with the window's handle and released with it, so the combination reaches
+        // other programs again once the tool closes. Tried once, at startup: one that another
+        // program lets go of later isn't picked up. No auto-repeat, so holding the keys fires once.
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
-            RegisterHotKey(Handle, HotkeyId, MOD_CONTROL | MOD_ALT | MOD_SHIFT | MOD_NOREPEAT, (uint)Keys.M);
+
+            string hotkeyName = null;
+            foreach (var combination in HotkeyCombinations)
+            {
+                if (RegisterHotKey(Handle, HotkeyId, combination.Modifiers | MOD_NOREPEAT, (uint)combination.Key))
+                {
+                    hotkeyName = combination.Name;
+                    break;
+                }
+            }
+
+            hotkeyLabel.Text = "Hotkey: " + (hotkeyName ?? "none");
+
+            // Said once, so the organizer isn't left pressing a combination that does nothing.
+            // The first Go replaces it with its own status. The default needs nothing beyond the label.
+            string defaultHotkey = HotkeyCombinations[0].Name;
+            if (hotkeyName == null)
+                ShowStatus("All three hotkeys are taken by other programs. Use the Go button.", ProblemColor);
+            else if (hotkeyName != defaultHotkey)
+                ShowStatus(defaultHotkey + " is taken by another program, so the hotkey is " + hotkeyName + ".", ProblemColor);
         }
 
         protected override void OnHandleDestroyed(EventArgs e)

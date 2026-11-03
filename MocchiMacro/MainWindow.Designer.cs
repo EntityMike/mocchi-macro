@@ -39,6 +39,7 @@ namespace MocchiMacro
             this.statusLabel = new System.Windows.Forms.Label();
             this.gameBox = new System.Windows.Forms.ComboBox();
             this.searchTextToolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.hotkeyLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.typingRateBox)).BeginInit();
             this.SuspendLayout();
             //
@@ -136,12 +137,20 @@ namespace MocchiMacro
             this.gameBox.TabIndex = 8;
             this.gameBox.SelectedIndexChanged += new System.EventHandler(this.GameBox_SelectedIndexChanged);
             //
+            // hotkeyLabel
+            //
+            this.hotkeyLabel.AutoSize = true;
+            this.hotkeyLabel.Location = new System.Drawing.Point(12, 120);
+            this.hotkeyLabel.Name = "hotkeyLabel";
+            this.hotkeyLabel.Size = new System.Drawing.Size(0, 13);
+            this.hotkeyLabel.TabIndex = 9;
+            //
             // MainWindow
             //
             this.AcceptButton = this.goButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(300, 122);
+            this.ClientSize = new System.Drawing.Size(300, 142);
             this.Controls.Add(this.searchTextLabel);
             this.Controls.Add(this.searchTextBox);
             this.Controls.Add(this.goButton);
@@ -151,6 +160,7 @@ namespace MocchiMacro
             this.Controls.Add(this.typingRateUnitLabel);
             this.Controls.Add(this.statusLabel);
             this.Controls.Add(this.gameBox);
+            this.Controls.Add(this.hotkeyLabel);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainWindow";
@@ -173,5 +183,6 @@ namespace MocchiMacro
         private System.Windows.Forms.Label statusLabel;
         private System.Windows.Forms.ToolTip searchTextToolTip;
         private System.Windows.Forms.ComboBox gameBox;
+        private System.Windows.Forms.Label hotkeyLabel;
     }
 }

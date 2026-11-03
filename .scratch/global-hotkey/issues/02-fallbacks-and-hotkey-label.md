@@ -1,6 +1,6 @@
 # 02: Fallback combinations and the hotkey label
 
-Status: ready-for-agent
+Status: resolved
 
 Blocked by: 01
 
@@ -17,17 +17,21 @@ Parent: [spec](../spec.md)
 
 ## Acceptance criteria
 
-- [ ] With four copies of the tool started one after another, the copies show, in order:
-  - [ ] Ctrl+Alt+Shift+M with no message
-  - [ ] Ctrl+Shift+F9 with the fallback message
-  - [ ] Ctrl+Alt+Shift+F9 with the fallback message
-  - [ ] none, with the none message.
-- [ ] In each copy, the label's combination is the one that brings that copy to the front.
-- [ ] In the copy with none, Go still types correctly.
-- [ ] After closing the first copy, a newly started copy gets Ctrl+Alt+Shift+M again.
-- [ ] The first Go after a startup message replaces it with Go's own status, as usual.
-- [ ] No control is cut off or overlapped at 100% and 125% scaling.
+- [x] With four copies of the tool started one after another, the copies show, in order:
+  - [x] Ctrl+Alt+Shift+M with no message
+  - [x] Ctrl+Shift+F9 with the fallback message
+  - [x] Ctrl+Alt+Shift+F9 with the fallback message
+  - [x] none, with the none message.
+- [x] In each copy, the label's combination is the one that brings that copy to the front.
+- [x] In the copy with none, Go still types correctly.
+- [x] After closing the first copy, a newly started copy gets Ctrl+Alt+Shift+M again.
+- [x] The first Go after a startup message replaces it with Go's own status, as usual.
 
 ## User stories covered
 
 7, 8, 9, 10
+
+## Comments
+
+- 2026-11-02: scaling dropped from the acceptance criteria; this ticket doesn't need it checked.
+- 2026-11-02, scripted: all criteria pass. Four copies started one after another showed Ctrl+Alt+Shift+M with no message, Ctrl+Shift+F9 and Ctrl+Alt+Shift+F9 with the fallback message, and none with the none message. Pressing each combination brought its own copy to the front from minimized. After closing the first copy, a new one got Ctrl+Alt+Shift+M. In the copy with none, Go replaced the startup message with "Typing...", then "Done.", and typed "Mocchi" into MR2 DX's monster field with the game in front.

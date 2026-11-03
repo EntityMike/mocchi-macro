@@ -1,6 +1,6 @@
 # Global hotkey: bring the tool to the front from anywhere
 
-Status: ready-for-agent
+Status: resolved
 
 ## Problem Statement
 
