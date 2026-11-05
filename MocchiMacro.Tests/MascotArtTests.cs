@@ -1,5 +1,5 @@
 // Mascot art tests: a frame comes out of the .exe at 96 px, with its pixels enlarged into sharp,
-// square blocks.
+// square blocks, and the icon is embedded for the window and set on the .exe itself.
 
 using System.Drawing;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -38,9 +38,55 @@ namespace MocchiMacro.Tests
             }
         }
 
-        static void AssertPixel(Color expected, Bitmap frame, int x, int y)
+        // Checked against the grid in art/icon-16.txt. Its left eye has a white pixel at column 3,
+        // row 8, with outline to its right and skin to its left, so a face shrunk from a larger
+        // size would blur them.
+        [TestMethod]
+        public void LoadIconGivesTheHandPlacedFaceAtSmallSize()
         {
-            Assert.AreEqual(expected.ToArgb(), frame.GetPixel(x, y).ToArgb(), "Pixel at " + x + ", " + y);
+            Color white = Color.FromArgb(0xFF, 0xFF, 0xFF);
+            Color outline = Color.FromArgb(0x3A, 0x24, 0x30);
+            Color skin = Color.FromArgb(0xF5, 0xC9, 0xC6);
+
+            using (Icon icon = MascotArt.LoadIcon())
+            using (var small = new Icon(icon, 16, 16))
+            using (Bitmap face = small.ToBitmap())
+            {
+                Assert.AreEqual(16, face.Width);
+                Assert.AreEqual(16, face.Height);
+                Assert.AreEqual(0, face.GetPixel(0, 0).A, "The corner should be transparent.");
+                AssertPixel(white, face, 3, 8);
+                AssertPixel(outline, face, 4, 8);
+                AssertPixel(skin, face, 2, 8);
+            }
+        }
+
+        // An .exe with no icon of its own gets Windows' generic one, which wouldn't match. The
+        // embedded icon is asked for at the size Windows returned, which can vary with scaling.
+        [TestMethod]
+        public void TheExeCarriesTheEmbeddedIcon()
+        {
+            using (Icon exeIcon = Icon.ExtractAssociatedIcon(typeof(MascotArt).Assembly.Location))
+            using (Bitmap exeFace = exeIcon.ToBitmap())
+            using (Icon embeddedIcon = MascotArt.LoadIcon())
+            using (var embeddedAtExeSize = new Icon(embeddedIcon, exeFace.Size))
+            using (Bitmap embeddedFace = embeddedAtExeSize.ToBitmap())
+            {
+                for (int y = 0; y < exeFace.Height; y++)
+                {
+                    for (int x = 0; x < exeFace.Width; x++)
+                    {
+                        // A fully transparent pixel's colour can't be seen, and Windows doesn't keep it.
+                        if (exeFace.GetPixel(x, y).A == 0 && embeddedFace.GetPixel(x, y).A == 0) continue;
+                        AssertPixel(embeddedFace.GetPixel(x, y), exeFace, x, y);
+                    }
+                }
+            }
+        }
+
+        static void AssertPixel(Color expected, Bitmap bitmap, int x, int y)
+        {
+            Assert.AreEqual(expected.ToArgb(), bitmap.GetPixel(x, y).ToArgb(), "Pixel at " + x + ", " + y);
         }
     }
 }

@@ -1,6 +1,6 @@
 # 03: The icon on the .exe and the window
 
-Status: ready-for-agent
+Status: resolved
 
 Blocked by: 01
 
@@ -15,10 +15,16 @@ Make `Mocchi.ico` from ticket 01 both:
 
 ## Acceptance criteria
 
-- [ ] The Release `MocchiMacro.exe` shows the Mocchi face in Explorer at small, medium, large and extra large icon sizes, and as a Desktop shortcut.
-- [ ] The running tool shows it in the title bar, the taskbar and Alt+Tab.
-- [ ] The build output is still the single `MocchiMacro.exe`, with no `.ico` beside it.
+- [x] The Release `MocchiMacro.exe` shows the Mocchi face in Explorer at small, medium, large and extra large icon sizes, and as a Desktop shortcut.
+- [x] The running tool shows it in the title bar, the taskbar and Alt+Tab.
+- [x] The build output is still the single `MocchiMacro.exe`, with no `.ico` beside it.
 
 ## User stories covered
 
 3
+
+## Comments
+
+**2026-11-05, closed by the repo owner:** The owner did the hand checks and the display scaling checks, and they looked good.
+
+The spec's Out of Scope said Windows shrinks the 32 px icon for the title bar at 125% and 150%. In review, asking the icon for 20 or 24 px returned the 16 px face, so that face is probably what gets enlarged there instead, and the spec now says so. No sizes were added, as the title bar looked fine to the owner.

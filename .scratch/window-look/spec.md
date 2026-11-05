@@ -104,7 +104,7 @@ The art is original, drawn for this tool in Mocchi's likeness, not taken from th
 ## Out of Scope
 
 - A custom theme, dark mode, or custom-drawn controls.
-- Hand-drawn 20, 24 and 40 px icon sizes. At 125% and 150% scaling, Windows shrinks the 32 px icon for the title bar, which softens it slightly; add those sizes later if it looks poor.
+- Hand-drawn 20, 24 and 40 px icon sizes. At 125% and 150% scaling, the title bar probably enlarges the 16 px face, which makes it slightly blockier; add those sizes later if it looks poor.
 - The README screenshot, the version in the title, and the update notice (release-1.0.0 spec).
 
 ## Further Notes

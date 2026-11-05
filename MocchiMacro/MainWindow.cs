@@ -41,6 +41,10 @@ namespace MocchiMacro
             // shows the default font as a result.
             Font = new Font("Segoe UI", 9F);
 
+            // For the title bar, taskbar and Alt+Tab. The .exe's own icon doesn't reach these:
+            // without this the window shows WinForms' default icon.
+            Icon = MascotArt.LoadIcon();
+
             // Clamped so a hand-edited settings file can't push the box out of its range,
             // which would throw.
             typingRateBox.Value = Math.Max(typingRateBox.Minimum,

@@ -13,6 +13,7 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>..\art\Mocchi.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -87,6 +88,11 @@
     <!-- The mascot's frames, named so MascotArt can find them, such as Mascot.idle-1.png. -->
     <EmbeddedResource Include="..\art\png\*.png">
       <LogicalName>Mascot.%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <!-- The window's icon. It's embedded as well as being the application icon because .NET can
+         only read the application icon back at one size, which would lose the hand-placed 16 px face. -->
+    <EmbeddedResource Include="..\art\Mocchi.ico">
+      <LogicalName>Mocchi.ico</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
