@@ -50,3 +50,5 @@ Feedback that shaped it, from the previews:
 - The leaf comes down to a soft-edged V between the eyes, with skin above each eye.
 
 **2026-11-02, repo owner:** The 48 px icon is the 32 px face at its own size, centred with an 8 px border, rather than the 16 px face at 3×. 48 isn't a whole multiple of 32, and the centred face keeps the detail of the 32 and 256 sizes. Spec and ticket text updated to match.
+
+**2026-11-05:** The preview's 4× size no longer applies. The window now shows the mascot at a fixed 3× at every display scaling; see ticket 02's comments.

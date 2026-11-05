@@ -52,7 +52,7 @@ The hotkey is fixed, not changeable. The tool tries three key combinations in or
 - **What the window shows.**
   - **The hotkey label**, always visible, for example `Hotkey: Ctrl+Alt+Shift+M`, or `Hotkey: none` when nothing registered. Its final place comes with the window-look spec. Here it goes somewhere sensible in today's window, which may grow taller to fit it.
   - **On a fallback**, the status line shows, once at startup and in the problem red: "Ctrl+Alt+Shift+M is taken by another program, so the hotkey is Ctrl+Shift+F9." (or Ctrl+Alt+Shift+F9).
-  - **With none**, it shows: "All three hotkeys are taken by other programs. Use the Go button."
+  - **With none**, it shows: "All three hotkeys are taken by other programs, so there's no hotkey. Typing still works."
   - **With the default**, nothing is said beyond the label.
   - Rejected: **a popup at startup.** It interrupts stream setup and leaves nothing behind once closed. The label answers "what's my hotkey?" at any time.
 - **The cost of a global hotkey.** While the tool runs, its combination no longer reaches other programs, even the one in front. Three modifiers make that unlikely to matter for Ctrl+Alt+Shift+M; a fallback such as Ctrl+Shift+F9 is likelier to be some program's shortcut. The release spec's README says so.
@@ -87,3 +87,4 @@ The hotkey is fixed, not changeable. The tool tries three key combinations in or
 - 2026-11-02: the order changed from Ctrl+Shift+M, Ctrl+Alt+Shift+M, Ctrl+Shift+F9 to today's, after another program's default hotkeys were found holding Ctrl+Shift+M (see the combinations table).
 - 2026-11-02: testing showed a fullscreen game doesn't minimize when it loses focus, as first assumed; it stays behind the window in front. The fullscreen wording was corrected to match.
 - The hotkey was first planned as a second way to trigger typing, like Go. That meaning was replaced here.
+- 2026-11-05: the none message used to end "Use the Go button.", which read as if Go replaced the hotkey. Go is needed with or without one, so the wording was corrected.

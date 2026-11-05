@@ -50,9 +50,9 @@ The art is original, drawn for this tool in Mocchi's likeness, not taken from th
   - a local HTML page that plays each animation at its real timing
   - the icon at its real sizes.
 - **Sprite size.** 32×32 pixels per frame, with a transparent background.
-  - It's shown at 3× (96 px) at 100% scaling.
-  - At higher scaling, the window grows, but a 32-pixel sprite only stays crisp at whole multiples. So the scale is the window's scale times 3, rounded to the nearest whole number, with halves rounding down. That gives 4× at 125% and 150%, and 6× at 200%.
-  - It's drawn without smoothing (nearest neighbour), and the mascot's area in the window is sized from the chosen scale.
+  - It's shown at a fixed 3× (96 px) at every display scaling. A 32-pixel sprite only stays crisp at whole multiples, and the repo owner was happy with 3× once they'd seen it at 150%. The controls and the window still grow with scaling, so the mascot looks smaller beside them the higher scaling goes.
+  - It's drawn without smoothing (nearest neighbour), and the mascot's area in the window is sized from the frame.
+  - Rejected: **a scale that grows with display scaling** (4× at 125% and 150%, 6× at 200%). It was the first plan. It's one more rule to keep, and 3× looked fine.
 - **The animations.**
 
   | Animation | When | Plays | Frames (rough) |
@@ -76,7 +76,8 @@ The art is original, drawn for this tool in Mocchi's likeness, not taken from th
   - It holds 16, 32, 48 and 256 px. The 16 and 32 are hand-placed grids; 256 is the 32 enlarged 8×, and 48 is the 32 at its own size, centred, since 48 isn't a whole multiple of 32.
   - One `.ico` serves as the .exe's icon (the project's application icon) and the main window's icon, so the title bar and taskbar match the Desktop.
 - **The layout.**
-  - **Font:** Segoe UI 9pt for the whole window.
+  - **Font:** Segoe UI 9pt for the whole window. It's set in the window's constructor, after `InitializeComponent`, and not in the designer. Set in the designer, it arrives while WinForms still has scaling to do, so the fixed-size labels scale twice above 100%, and the oversized status line covers the game dropdown. So the designer's view shows the default font.
+  - **Scaling:** WinForms scales the layout by the exact DPI (`AutoScaleMode.Dpi`). The usual `AutoScaleMode.Font` left the controls too small for Segoe UI's text above 100%.
   - **Arrangement:** the mascot on the left, the controls in a column to its right, even margins. The Go button is bigger. The hotkey label from the global-hotkey spec gets its final place here.
   - **Width:** about 420 px of client area, enough for "Mocchi Macro 1.0.0" (the release spec puts the version in the title) to show in full in the title bar.
   - **What stays:** the window is still fixed-size, with no maximize (single-exe spec), and every control keeps its behaviour.
@@ -110,3 +111,6 @@ The art is original, drawn for this tool in Mocchi's likeness, not taken from th
 
 - Decided in a grilling session on 2026-11-01, along with the global-hotkey and release-1.0.0 specs. `GLOSSARY.md` gained **Mascot** then: "Mocchi" alone stays a monster name an organizer types.
 - The loading screen reference is the repo owner's description: Mocchi curling into a ball and back out, over and over. The owner isn't attached to that exact motion, only to it looking good.
+- 2026-11-05, from ticket 02 at real 150% scaling:
+  - The mascot's scale changed from growing with display scaling to a fixed 3×. The growing scale was built on `Form.DeviceDpi`, which reports 96 at every scaling unless the app's config file turns on .NET's DPI handling, and the tool ships without one. So the mascot stayed at 3× by accident, and the owner chose to keep that size.
+  - Check layout changes at real display scaling. A simulation with a larger font and a faked DPI passed at 125% and 150%, and hid both this and the double-scaled labels.

@@ -102,3 +102,8 @@ The development machine's two monitors share one scaling, so the handler was che
 - The search box's tooltip isn't covered by the font rescale.
 - `GetDpiForSystem` is the right base: in a PerMonitorV2 process the screen DC reports the system DPI, which is what WinForms measured the font against at startup.
 - Handle recreation is safe: rescaling always starts from `designerFont`, and setting an equal font does nothing.
+
+### Learned since, from window-look ticket 02 (2026-11-05)
+
+- The window now uses `AutoScaleMode.Dpi`, not `AutoScaleMode.Font`, and sets its font in the constructor, after `InitializeComponent`. The notes above describe the window as it was then, so anyone picking this up should re-measure.
+- `Form.DeviceDpi` reports 96 at every scaling without the config file, not the DPI WinForms scaled for. Use `GetDpiForSystem` or `CurrentAutoScaleDimensions` instead.

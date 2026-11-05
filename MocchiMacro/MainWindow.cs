@@ -13,6 +13,7 @@
 // so the organizer can type the next one over it. It's Ctrl+Alt+Shift+M, or a fallback when
 // another program already has that, or none when all three are taken; a label at the bottom
 // shows which, and the status line says so at startup when it isn't the default.
+// The mascot stands to the left of the controls, in its still idle pose.
 
 using System;
 using System.Collections.Generic;
@@ -34,6 +35,12 @@ namespace MocchiMacro
         {
             InitializeComponent();
 
+            // Set here, after InitializeComponent, not in the designer. A form font set while
+            // WinForms still has scaling to do makes the fixed-size labels scale twice above 100%,
+            // and the oversized status line then covers the game dropdown. The designer's view
+            // shows the default font as a result.
+            Font = new Font("Segoe UI", 9F);
+
             // Clamped so a hand-edited settings file can't push the box out of its range,
             // which would throw.
             typingRateBox.Value = Math.Max(typingRateBox.Minimum,
@@ -44,6 +51,22 @@ namespace MocchiMacro
             // Selecting the game also sets the tooltip, below.
             gameBox.Items.AddRange(Game.All.ToArray());
             gameBox.SelectedItem = Game.All.FirstOrDefault(g => g.Name == Settings.Default.Game) ?? Game.Mr2Dx;
+
+            LayOutAroundMascot();
+        }
+
+        // By now WinForms has scaled the designer's layout for the display, but the mascot keeps
+        // its fixed size at every scaling. So the mascot's area takes the frame's real size here,
+        // and the controls and the window follow it to keep the margins even.
+        // That scaling is AutoScaleMode.Dpi, not the usual Font, which left the controls too small
+        // for Segoe UI's text above 100%.
+        void LayOutAroundMascot()
+        {
+            int margin = mascotBox.Left;
+            mascotBox.Image = MascotArt.LoadFrame("idle-1");
+            controlsColumn.Left = mascotBox.Right + margin;
+            ClientSize = new Size(controlsColumn.Right + margin, ClientSize.Height);
+            mascotBox.Top = (ClientSize.Height - mascotBox.Height) / 2;
         }
 
         Game SelectedGame => (Game)gameBox.SelectedItem;
@@ -96,7 +119,7 @@ namespace MocchiMacro
                 // Typing takes seconds, so it runs off the UI thread to keep the window responsive.
                 TypingOutcome outcome = await Task.Run(
                     () => new Typist(new User32GamePort(game.WindowTitle), game.Layout).Type(searchText, typingRate));
-                ShowStatus(DescribeOutcome(outcome, game), outcome == TypingOutcome.Done ? DoneColor : ProblemColor);
+                ShowStatus(DescribeOutcome(outcome, game, searchText), outcome == TypingOutcome.Done ? DoneColor : ProblemColor);
             }
             finally
             {
@@ -123,11 +146,16 @@ namespace MocchiMacro
             gameBox.Enabled = enabled;
         }
 
-        static string DescribeOutcome(TypingOutcome outcome, Game game)
+        static string DescribeOutcome(TypingOutcome outcome, Game game, string searchText)
         {
             switch (outcome)
             {
-                case TypingOutcome.Done: return "Done. Check the monster field, then press Ent. in the game.";
+                case TypingOutcome.Done:
+                    // The 12th character moves the game on by itself, as Ent. does, so by then
+                    // there's no monster field to check and pressing the key would hit the next screen.
+                    return searchText.Length == MaxSearchTextLength
+                        ? "Done. The game has moved on to the next screen."
+                        : "Done. Check the monster field, then press " + game.EntKeyLabel + " in the game.";
                 // Names the game, so an organizer who picked the wrong one can tell.
                 case TypingOutcome.GameNotFound: return game.Name + " not found. Start it, then press Go again.";
                 case TypingOutcome.CharacterWithoutKey: return "The search text has a character without a key.";
@@ -186,6 +214,8 @@ namespace MocchiMacro
                 searchTextBox.Text = kept;
                 searchTextBox.SelectionStart = keptCaret;
             }
+            // The label has UseMnemonic off, so a dropped & shows as itself rather than as an
+            // underline on the next character.
             var note = new List<string>();
             if (dropped.Length > 0)
                 note.Add("No key, dropped: " + string.Join(", ", dropped.Distinct().Select(c => c == ' ' ? "space" : c.ToString())));
@@ -252,7 +282,7 @@ namespace MocchiMacro
             // The first Go replaces it with its own status. The default needs nothing beyond the label.
             string defaultHotkey = HotkeyCombinations[0].Name;
             if (hotkeyName == null)
-                ShowStatus("All three hotkeys are taken by other programs. Use the Go button.", ProblemColor);
+                ShowStatus("All three hotkeys are taken by other programs, so there's no hotkey. Typing still works.", ProblemColor);
             else if (hotkeyName != defaultHotkey)
                 ShowStatus(defaultHotkey + " is taken by another program, so the hotkey is " + hotkeyName + ".", ProblemColor);
         }

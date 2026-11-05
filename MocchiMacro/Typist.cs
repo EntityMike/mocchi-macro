@@ -1,9 +1,10 @@
 // Types a search text into the game's monster field by clicking keys on its keyboard, using
 // the keyboard layout of the game it was given: it brings the game to the front (restoring it
 // if minimized), clicks BS enough times to clear the field, then each key of the search text.
-// It stops before Ent., so the organizer can check the text and run the search themselves. A
-// search text with a character the keyboard has no key for is refused before any click. It
-// reports how typing went, and clicks nothing more once something has gone wrong.
+// It never clicks Ent., so the organizer can check the text and run the search themselves,
+// except that a 12th character moves the game on by itself, as Ent. does. A search text with a
+// character the keyboard has no key for is refused before any click. It reports how typing
+// went, and clicks nothing more once something has gone wrong.
 
 using System.Drawing;
 using System.Linq;

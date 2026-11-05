@@ -12,7 +12,7 @@ Parent: [spec](../spec.md)
 - **The hotkey label.** It's always visible in the window: `Hotkey: Ctrl+Alt+Shift+M` (or whichever registered), or `Hotkey: none`. Place it sensibly in today's window, growing the window taller if needed. Its final place comes with the window-look spec.
 - **One-time status line at startup**, in the problem red:
   - **On a fallback:** "Ctrl+Alt+Shift+M is taken by another program, so the hotkey is Ctrl+Shift+F9." (or Ctrl+Alt+Shift+F9).
-  - **With none:** "All three hotkeys are taken by other programs. Use the Go button."
+  - **With none:** "All three hotkeys are taken by other programs, so there's no hotkey. Typing still works." (Reworded on 2026-11-05; see the spec's Further Notes.)
   - **With the default:** no message.
 
 ## Acceptance criteria

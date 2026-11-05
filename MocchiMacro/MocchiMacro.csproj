@@ -56,6 +56,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="IGamePort.cs" />
     <Compile Include="KeyboardLayout.cs" />
+    <Compile Include="MascotArt.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Typist.cs" />
     <Compile Include="User32GamePort.cs" />
@@ -81,6 +82,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- The mascot's frames, named so MascotArt can find them, such as Mascot.idle-1.png. -->
+    <EmbeddedResource Include="..\art\png\*.png">
+      <LogicalName>Mascot.%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

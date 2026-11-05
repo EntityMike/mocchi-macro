@@ -29,6 +29,8 @@ namespace MocchiMacro
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
+            this.controlsColumn = new System.Windows.Forms.Panel();
+            this.mascotBox = new System.Windows.Forms.PictureBox();
             this.searchTextLabel = new System.Windows.Forms.Label();
             this.searchTextBox = new System.Windows.Forms.TextBox();
             this.goButton = new System.Windows.Forms.Button();
@@ -40,32 +42,60 @@ namespace MocchiMacro
             this.gameBox = new System.Windows.Forms.ComboBox();
             this.searchTextToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.hotkeyLabel = new System.Windows.Forms.Label();
+            this.controlsColumn.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mascotBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.typingRateBox)).BeginInit();
             this.SuspendLayout();
+            //
+            // controlsColumn
+            //
+            this.controlsColumn.Controls.Add(this.searchTextLabel);
+            this.controlsColumn.Controls.Add(this.searchTextBox);
+            this.controlsColumn.Controls.Add(this.goButton);
+            this.controlsColumn.Controls.Add(this.droppedNoteLabel);
+            this.controlsColumn.Controls.Add(this.typingRateLabel);
+            this.controlsColumn.Controls.Add(this.typingRateBox);
+            this.controlsColumn.Controls.Add(this.typingRateUnitLabel);
+            this.controlsColumn.Controls.Add(this.statusLabel);
+            this.controlsColumn.Controls.Add(this.gameBox);
+            this.controlsColumn.Controls.Add(this.hotkeyLabel);
+            this.controlsColumn.Location = new System.Drawing.Point(120, 12);
+            this.controlsColumn.Name = "controlsColumn";
+            this.controlsColumn.Size = new System.Drawing.Size(288, 146);
+            this.controlsColumn.TabIndex = 0;
+            //
+            // mascotBox
+            //
+            this.mascotBox.Location = new System.Drawing.Point(12, 37);
+            this.mascotBox.Name = "mascotBox";
+            this.mascotBox.Size = new System.Drawing.Size(96, 96);
+            this.mascotBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
+            this.mascotBox.TabIndex = 1;
+            this.mascotBox.TabStop = false;
             //
             // searchTextLabel
             //
             this.searchTextLabel.AutoSize = true;
-            this.searchTextLabel.Location = new System.Drawing.Point(12, 15);
+            this.searchTextLabel.Location = new System.Drawing.Point(0, 0);
             this.searchTextLabel.Name = "searchTextLabel";
-            this.searchTextLabel.Size = new System.Drawing.Size(66, 13);
+            this.searchTextLabel.Size = new System.Drawing.Size(67, 15);
             this.searchTextLabel.TabIndex = 0;
             this.searchTextLabel.Text = "Search text:";
             //
             // searchTextBox
             //
-            this.searchTextBox.Location = new System.Drawing.Point(84, 12);
+            this.searchTextBox.Location = new System.Drawing.Point(0, 18);
             this.searchTextBox.Name = "searchTextBox";
-            this.searchTextBox.Size = new System.Drawing.Size(138, 20);
+            this.searchTextBox.Size = new System.Drawing.Size(206, 23);
             this.searchTextBox.TabIndex = 1;
             this.searchTextBox.TextChanged += new System.EventHandler(this.SearchTextBox_TextChanged);
             this.searchTextBox.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.SearchTextBox_KeyPress);
             //
             // goButton
             //
-            this.goButton.Location = new System.Drawing.Point(228, 10);
+            this.goButton.Location = new System.Drawing.Point(214, 0);
             this.goButton.Name = "goButton";
-            this.goButton.Size = new System.Drawing.Size(60, 23);
+            this.goButton.Size = new System.Drawing.Size(74, 41);
             this.goButton.TabIndex = 2;
             this.goButton.Text = "Go";
             this.goButton.UseVisualStyleBackColor = true;
@@ -73,25 +103,26 @@ namespace MocchiMacro
             //
             // droppedNoteLabel
             //
-            this.droppedNoteLabel.AutoSize = true;
+            this.droppedNoteLabel.AutoEllipsis = true;
             this.droppedNoteLabel.ForeColor = System.Drawing.Color.Firebrick;
-            this.droppedNoteLabel.Location = new System.Drawing.Point(84, 36);
+            this.droppedNoteLabel.Location = new System.Drawing.Point(0, 45);
             this.droppedNoteLabel.Name = "droppedNoteLabel";
-            this.droppedNoteLabel.Size = new System.Drawing.Size(0, 13);
+            this.droppedNoteLabel.Size = new System.Drawing.Size(288, 17);
             this.droppedNoteLabel.TabIndex = 3;
+            this.droppedNoteLabel.UseMnemonic = false;
             //
             // typingRateLabel
             //
             this.typingRateLabel.AutoSize = true;
-            this.typingRateLabel.Location = new System.Drawing.Point(12, 92);
+            this.typingRateLabel.Location = new System.Drawing.Point(0, 104);
             this.typingRateLabel.Name = "typingRateLabel";
-            this.typingRateLabel.Size = new System.Drawing.Size(64, 13);
+            this.typingRateLabel.Size = new System.Drawing.Size(69, 15);
             this.typingRateLabel.TabIndex = 4;
             this.typingRateLabel.Text = "Typing rate:";
             //
             // typingRateBox
             //
-            this.typingRateBox.Location = new System.Drawing.Point(84, 90);
+            this.typingRateBox.Location = new System.Drawing.Point(72, 100);
             this.typingRateBox.Maximum = new decimal(new int[] {
             10,
             0,
@@ -103,7 +134,7 @@ namespace MocchiMacro
             0,
             0});
             this.typingRateBox.Name = "typingRateBox";
-            this.typingRateBox.Size = new System.Drawing.Size(45, 20);
+            this.typingRateBox.Size = new System.Drawing.Size(42, 23);
             this.typingRateBox.TabIndex = 5;
             this.typingRateBox.Value = new decimal(new int[] {
             10,
@@ -115,57 +146,52 @@ namespace MocchiMacro
             // typingRateUnitLabel
             //
             this.typingRateUnitLabel.AutoSize = true;
-            this.typingRateUnitLabel.Location = new System.Drawing.Point(135, 92);
+            this.typingRateUnitLabel.Location = new System.Drawing.Point(116, 104);
             this.typingRateUnitLabel.Name = "typingRateUnitLabel";
-            this.typingRateUnitLabel.Size = new System.Drawing.Size(82, 13);
+            this.typingRateUnitLabel.Size = new System.Drawing.Size(91, 15);
             this.typingRateUnitLabel.TabIndex = 6;
             this.typingRateUnitLabel.Text = "keys per second";
             //
             // statusLabel
             //
-            this.statusLabel.Location = new System.Drawing.Point(12, 56);
+            this.statusLabel.Location = new System.Drawing.Point(0, 63);
             this.statusLabel.Name = "statusLabel";
-            this.statusLabel.Size = new System.Drawing.Size(276, 26);
+            this.statusLabel.Size = new System.Drawing.Size(288, 34);
             this.statusLabel.TabIndex = 7;
             //
             // gameBox
             //
             this.gameBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.gameBox.Location = new System.Drawing.Point(223, 89);
+            this.gameBox.Location = new System.Drawing.Point(214, 100);
             this.gameBox.Name = "gameBox";
-            this.gameBox.Size = new System.Drawing.Size(65, 21);
+            this.gameBox.Size = new System.Drawing.Size(74, 23);
             this.gameBox.TabIndex = 8;
             this.gameBox.SelectedIndexChanged += new System.EventHandler(this.GameBox_SelectedIndexChanged);
             //
             // hotkeyLabel
             //
             this.hotkeyLabel.AutoSize = true;
-            this.hotkeyLabel.Location = new System.Drawing.Point(12, 120);
+            this.hotkeyLabel.Location = new System.Drawing.Point(0, 128);
             this.hotkeyLabel.Name = "hotkeyLabel";
-            this.hotkeyLabel.Size = new System.Drawing.Size(0, 13);
+            this.hotkeyLabel.Size = new System.Drawing.Size(0, 15);
             this.hotkeyLabel.TabIndex = 9;
             //
             // MainWindow
             //
             this.AcceptButton = this.goButton;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(300, 142);
-            this.Controls.Add(this.searchTextLabel);
-            this.Controls.Add(this.searchTextBox);
-            this.Controls.Add(this.goButton);
-            this.Controls.Add(this.droppedNoteLabel);
-            this.Controls.Add(this.typingRateLabel);
-            this.Controls.Add(this.typingRateBox);
-            this.Controls.Add(this.typingRateUnitLabel);
-            this.Controls.Add(this.statusLabel);
-            this.Controls.Add(this.gameBox);
-            this.Controls.Add(this.hotkeyLabel);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
+            this.ClientSize = new System.Drawing.Size(420, 170);
+            this.Controls.Add(this.controlsColumn);
+            this.Controls.Add(this.mascotBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainWindow";
             this.Text = "Mocchi Macro";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainWindow_FormClosed);
+            this.controlsColumn.ResumeLayout(false);
+            this.controlsColumn.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.mascotBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.typingRateBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -173,6 +199,8 @@ namespace MocchiMacro
 
         #endregion
 
+        private System.Windows.Forms.Panel controlsColumn;
+        private System.Windows.Forms.PictureBox mascotBox;
         private System.Windows.Forms.Label searchTextLabel;
         private System.Windows.Forms.TextBox searchTextBox;
         private System.Windows.Forms.Button goButton;
