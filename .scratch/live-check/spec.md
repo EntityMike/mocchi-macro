@@ -1,6 +1,6 @@
 # Live check: test the real window without the game
 
-Status: ready-for-agent
+Status: resolved
 
 Blocked by: window-look 04 (the check covers its mascot animations)
 

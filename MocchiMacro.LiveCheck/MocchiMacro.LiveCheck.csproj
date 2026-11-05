@@ -1,0 +1,24 @@
+<!--
+  The live check: runs the real tool against a fake game window. It takes over the mouse, so it's
+  run by hand rather than with the tests; Program.cs says how.
+-->
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net48</TargetFramework>
+    <OutputType>Exe</OutputType>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Also copies MocchiMacro.exe next to this program, which is the copy the check runs. -->
+    <ProjectReference Include="..\MocchiMacro\MocchiMacro.csproj" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="..\docs\screenshots\mr1\ingamekeyboard.png" Link="screenshots\MF.png" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="..\docs\screenshots\mr2\ingamekeyboard.png" Link="screenshots\MF2.png" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>
