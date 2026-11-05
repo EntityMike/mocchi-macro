@@ -13,10 +13,13 @@
 // so the organizer can type the next one over it. It's Ctrl+Alt+Shift+M, or a fallback when
 // another program already has that, or none when all three are taken; a label at the bottom
 // shows which, and the status line says so at startup when it isn't the default.
-// The mascot stands to the left of the controls, in its still idle pose.
+// The mascot stands to the left of the controls and reacts to Go: it curls in a loop while Go
+// types, then hops if the outcome is Done and droops on any problem, including an empty box.
+// Startup messages don't make it droop, since that's only about Go.
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Runtime.InteropServices;
@@ -67,10 +70,37 @@ namespace MocchiMacro
         void LayOutAroundMascot()
         {
             int margin = mascotBox.Left;
-            mascotBox.Image = MascotArt.LoadFrame("idle-1");
+            ShowMascotFrame();
             controlsColumn.Left = mascotBox.Right + margin;
             ClientSize = new Size(controlsColumn.Right + margin, ClientSize.Height);
             mascotBox.Top = (ClientSize.Height - mascotBox.Height) / 2;
+        }
+
+        readonly MascotAnimation mascotAnimation = new MascotAnimation();
+
+        // Starts with the animation, whose idle counts from time 0.
+        readonly Stopwatch mascotClock = Stopwatch.StartNew();
+
+        // Each frame is enlarged once and kept, rather than again on every showing.
+        readonly Dictionary<string, Bitmap> mascotFrames = new Dictionary<string, Bitmap>();
+
+        long MascotNowMs => mascotClock.ElapsedMilliseconds;
+
+        void MascotTimer_Tick(object sender, EventArgs e)
+        {
+            ShowMascotFrame();
+        }
+
+        // Most ticks land on the frame already showing, and those don't repaint.
+        void ShowMascotFrame()
+        {
+            string name = mascotAnimation.FrameAt(MascotNowMs);
+            if (!mascotFrames.TryGetValue(name, out Bitmap frame))
+            {
+                frame = MascotArt.LoadFrame(name);
+                mascotFrames[name] = frame;
+            }
+            if (mascotBox.Image != frame) mascotBox.Image = frame;
         }
 
         Game SelectedGame => (Game)gameBox.SelectedItem;
@@ -108,6 +138,7 @@ namespace MocchiMacro
             if (searchTextBox.TextLength == 0)
             {
                 ShowStatus("Type a search text first.", ProblemColor);
+                mascotAnimation.PlayProblem(MascotNowMs);
                 return;
             }
 
@@ -118,12 +149,23 @@ namespace MocchiMacro
             // Disabled so a second Go can't start typing on top of the first.
             SetInputsEnabled(false);
             ShowStatus("Typing...", SystemColors.ControlText);
+            mascotAnimation.PlayTyping(MascotNowMs);
             try
             {
                 // Typing takes seconds, so it runs off the UI thread to keep the window responsive.
                 TypingOutcome outcome = await Task.Run(
                     () => new Typist(new User32GamePort(game.WindowTitle), game.Layout).Type(searchText, typingRate));
-                ShowStatus(DescribeOutcome(outcome, game, searchText), outcome == TypingOutcome.Done ? DoneColor : ProblemColor);
+                string description = DescribeOutcome(outcome, game, searchText);
+                if (outcome == TypingOutcome.Done)
+                {
+                    ShowStatus(description, DoneColor);
+                    mascotAnimation.PlayDone(MascotNowMs);
+                }
+                else
+                {
+                    ShowStatus(description, ProblemColor);
+                    mascotAnimation.PlayProblem(MascotNowMs);
+                }
             }
             finally
             {

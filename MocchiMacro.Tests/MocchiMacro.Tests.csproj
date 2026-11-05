@@ -24,4 +24,9 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
 
+  <ItemGroup>
+    <!-- So the tests can check MascotAnimation's timings against the art files' "play" lines. -->
+    <None Include="..\art\*.txt" Link="art\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
 </Project>

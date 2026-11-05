@@ -42,6 +42,7 @@ namespace MocchiMacro
             this.gameBox = new System.Windows.Forms.ComboBox();
             this.searchTextToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.hotkeyLabel = new System.Windows.Forms.Label();
+            this.mascotTimer = new System.Windows.Forms.Timer(this.components);
             this.controlsColumn.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mascotBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.typingRateBox)).BeginInit();
@@ -176,6 +177,12 @@ namespace MocchiMacro
             this.hotkeyLabel.Size = new System.Drawing.Size(0, 15);
             this.hotkeyLabel.TabIndex = 9;
             //
+            // mascotTimer
+            //
+            this.mascotTimer.Enabled = true;
+            this.mascotTimer.Interval = 30;
+            this.mascotTimer.Tick += new System.EventHandler(this.MascotTimer_Tick);
+            //
             // MainWindow
             //
             this.AcceptButton = this.goButton;
@@ -212,5 +219,6 @@ namespace MocchiMacro
         private System.Windows.Forms.ToolTip searchTextToolTip;
         private System.Windows.Forms.ComboBox gameBox;
         private System.Windows.Forms.Label hotkeyLabel;
+        private System.Windows.Forms.Timer mascotTimer;
     }
 }

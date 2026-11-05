@@ -99,7 +99,7 @@ static class MakeArt
 
     // A grid file holds one or more "frame N" blocks, numbered from 1, each followed by its
     // rows. An animation file also has a "play" line: the frame order and each frame's time in
-    // ms, for whoever writes the window's animation code. Here it's only skipped.
+    // ms, which MocchiMacro/MascotAnimation.cs copies. Here it's only skipped.
     static List<string[]> ReadGrids(string path, int size)
     {
         var frames = new List<string[]>();

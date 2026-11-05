@@ -1,6 +1,6 @@
 # Window look: a mascot, an icon and a tidier window
 
-Status: ready-for-agent
+Status: resolved
 
 Blocked by: global-hotkey (its hotkey label gets its final place here)
 
