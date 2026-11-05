@@ -1,6 +1,6 @@
 # 01: Mascot and icon art
 
-Status: ready-for-agent
+Status: resolved
 
 Parent: [spec](../spec.md)
 
@@ -18,7 +18,7 @@ Release-quality pixel art of Mocchi, original and drawn in its likeness, plus a 
   Give each animation a frame timing.
 - **Icon:** Mocchi's face, as hand-placed 16×16 and 32×32 grids.
 - **Generator:** `art/make-art.cs`, compiled with .NET Framework's own `csc.exe` (C# 5 only) and using `System.Drawing`.
-  - It writes one PNG per frame, and `Mocchi.ico` with 16, 32, 48 and 256 px. The 48 and 256 are the 32 enlarged by whole steps, without smoothing.
+  - It writes one PNG per frame, and `Mocchi.ico` with 16, 32, 48 and 256 px. The 256 is the 32 enlarged 8× without smoothing; the 48 is the 32 at its own size, centred.
   - A header comment says how to build and run it.
   - Commit the generated files too.
 - **Previews** for approval, outside the repo:
@@ -30,11 +30,23 @@ Iterate on the previews until the art looks right, then show them to the repo ow
 
 ## Acceptance criteria
 
-- [ ] The generator builds with .NET Framework's `csc.exe` and regenerates every PNG and the `.ico` from the grids, byte for byte the same as the committed files.
-- [ ] The `.ico` holds 16, 32, 48 and 256 px images, and the face reads clearly at 16.
-- [ ] Each animation plays smoothly in the preview, and the typing loop has no visible jump where it repeats.
-- [ ] The repo owner has approved the art (noted in this ticket's comments with the date).
+- [x] The generator builds with .NET Framework's `csc.exe` and regenerates every PNG and the `.ico` from the grids, byte for byte the same as the committed files.
+- [x] The `.ico` holds 16, 32, 48 and 256 px images, and the face reads clearly at 16.
+- [x] Each animation plays smoothly in the preview, and the typing loop has no visible jump where it repeats.
+- [x] The repo owner has approved the art (noted in this ticket's comments with the date).
 
 ## User stories covered
 
 8, 9
+
+## Comments
+
+**2026-11-02, repo owner:** Approved the art.
+
+Feedback that shaped it, from the previews:
+- Proportions after reference photos: a tall, penguin-like body, and a striped leaf that covers the head and runs down the back.
+- Facing front, chosen over a three-quarter side view and a head turned toward the viewer.
+- A smaller bill, symmetric feet, arms raised two rows, a rounder face.
+- The leaf comes down to a soft-edged V between the eyes, with skin above each eye.
+
+**2026-11-02, repo owner:** The 48 px icon is the 32 px face at its own size, centred with an 8 px border, rather than the 16 px face at 3×. 48 isn't a whole multiple of 32, and the centred face keeps the detail of the 32 and 256 sizes. Spec and ticket text updated to match.

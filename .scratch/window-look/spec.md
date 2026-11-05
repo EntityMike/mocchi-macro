@@ -73,7 +73,7 @@ The art is original, drawn for this tool in Mocchi's likeness, not taken from th
   - Rejected: **Python with Pillow.** It's a new tool to install.
   - Rejected: **drawing the grids at runtime.** It leaves no PNGs for an artist to edit, and the `.ico` has to exist at build time anyway.
 - **The icon.** It shows Mocchi's face, not the whole body, so it reads at small sizes.
-  - It holds 16, 32, 48 and 256 px. The 16 and 32 are hand-placed grids; 48 and 256 are the 32 enlarged by whole steps.
+  - It holds 16, 32, 48 and 256 px. The 16 and 32 are hand-placed grids; 256 is the 32 enlarged 8×, and 48 is the 32 at its own size, centred, since 48 isn't a whole multiple of 32.
   - One `.ico` serves as the .exe's icon (the project's application icon) and the main window's icon, so the title bar and taskbar match the Desktop.
 - **The layout.**
   - **Font:** Segoe UI 9pt for the whole window.

@@ -1,0 +1,19 @@
+# The mascot's colours, one character per colour, shared by every grid in this folder.
+# Matched by eye to Mocchi's official art: a pale pink body, a green leaf cap and tail,
+# a yellow bill. Lit from the top left.
+
+. transparent
+K #3a2430
+P #f5c9c6
+L #fde6e2
+S #e09ea3
+G #3f9140
+H #73bd55
+D #26592c
+Y #f9d540
+O #dd9a1f
+M #e2604a
+W #ffffff
+B #5aaee8
+C #c4ecff
+A #fff2a8
