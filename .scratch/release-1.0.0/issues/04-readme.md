@@ -1,6 +1,6 @@
 # 04: README for organizers
 
-Status: ready-for-agent
+Status: resolved
 
 Blocked by: 01, 02, window-look 04 (the screenshot shows the title and the footer band)
 
@@ -30,9 +30,9 @@ Use the glossary's words where they fit: organizer, game, keyboard, key, search 
 
 ## Acceptance criteria
 
-- [ ] The README covers all twelve points, in order, and reads well to someone who has never seen the tool.
-- [ ] Someone who has never seen the tool could type a search text from the how-to alone, in either game, including one with a symbol.
-- [ ] The hotkey section lists Ctrl+Alt+Shift+M, Ctrl+Shift+F9 and Ctrl+Alt+Shift+F9 in order, and says the one in use doesn't reach other programs while the tool runs.
+- [x] The README covers all twelve points, in order, and reads well to someone who has never seen the tool.
+- [x] Someone who has never seen the tool could type a search text from the how-to alone, in either game, including one with a symbol.
+- [x] The hotkey section lists Ctrl+Alt+Shift+M, Ctrl+Shift+F9 and Ctrl+Alt+Shift+F9 in order, and says the one in use doesn't reach other programs while the tool runs.
 - [ ] The SmartScreen steps match what Windows 11 shows for the downloaded .exe.
 - [ ] The animated screenshot is in `docs/` and shows in the README.
 - [ ] It renders correctly on GitHub (checked once the repo is public, in ticket 05).
@@ -40,3 +40,7 @@ Use the glossary's words where they fit: organizer, game, keyboard, key, search 
 ## User stories covered
 
 2, 3, 4
+
+## Comments
+
+**2026-11-21, closed by the repo owner:** The first three criteria were checked by review against the code and the spec, and the repo owner read the README. The SmartScreen and GitHub rendering criteria are checked in ticket 07, and the animated screenshot is deferred.

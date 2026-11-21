@@ -3,6 +3,7 @@
 The steps every release repeats, done by the repo owner. A release's one-time steps, if it has any, live in its own ticket.
 
 1. **Bump the version.** In `MocchiMacro/Properties/AssemblyInfo.cs`, set both `AssemblyVersion` and `AssemblyFileVersion` to the new version, such as `1.1.0.0`.
+   In `CHANGELOG.md`, add an entry for the new version, such as `## 1.1.0`, listing what changed. The changes live there, not in the GitHub release's description.
 2. **Build Release.** From the repo root in Git Bash:
 
    ```bash
