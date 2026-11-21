@@ -16,6 +16,7 @@
 // The mascot stands to the left of the controls and reacts to Go: it curls in a loop while Go
 // types, then hops if the outcome is Done and droops on any problem, including an empty box.
 // Startup messages don't make it droop, since that's only about Go.
+// The title bar shows the tool's version, such as "Mocchi Macro 1.0.0".
 
 using System;
 using System.Collections.Generic;
@@ -43,6 +44,11 @@ namespace MocchiMacro
             // and the oversized status line then covers the game dropdown. The designer's view
             // shows the default font as a result.
             Font = new Font("Segoe UI", 9F);
+
+            // "Mocchi Macro 1.0.0", so an organizer asking for help can say which version they're
+            // on. Read from AssemblyVersion rather than written out, so a release only bumps the
+            // version in AssemblyInfo.cs. Three parts, since the fourth is always 0.
+            Text = "Mocchi Macro " + typeof(MainWindow).Assembly.GetName().Version.ToString(3);
 
             // For the title bar, taskbar and Alt+Tab. The .exe's own icon doesn't reach these:
             // without this the window shows WinForms' default icon.

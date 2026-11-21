@@ -2,15 +2,19 @@
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// General Information about an assembly is controlled through the following
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
-[assembly: AssemblyTitle("MocchiMacro")]
-[assembly: AssemblyDescription("")]
+// The .exe's file details. Windows shows the title as the file's description in
+// Properties → Details and as the tool's name in Task Manager.
+[assembly: AssemblyTitle("Mocchi Macro")]
+[assembly: AssemblyDescription("Types monster names into MR1 DX's and MR2 DX's on-screen keyboards")]
 [assembly: AssemblyConfiguration("")]
+// Left blank on purpose. .NET Framework names the settings folder after the company, or
+// after the program when there's none, so blank keeps user.config in
+// %LOCALAPPDATA%\MocchiMacro\. Setting one would move the settings to a folder named
+// after the company, and every organizer's saved typing rate and game would go back to
+// their defaults.
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("MocchiMacro")]
-[assembly: AssemblyCopyright("Copyright ©  2026")]
+[assembly: AssemblyProduct("Mocchi Macro")]
+[assembly: AssemblyCopyright("© 2026 EntityMike")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
