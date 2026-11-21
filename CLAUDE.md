@@ -38,6 +38,10 @@ MocchiMacro/bin/Debug/MocchiMacro.exe
 
 The header of `art/make-art.cs` has the commands. It's compiled with the C# 5 `csc.exe` that ships with .NET Framework, so it can't use newer syntax.
 
+### Releasing
+
+`docs/releasing.md` has the steps. The release's tag must match `AssemblyVersion` as a plain version such as `1.1.0`, with no `v`, or the update notice never shows.
+
 ## Architecture
 
 ### Typing: `Typist` behind the `IGamePort` seam

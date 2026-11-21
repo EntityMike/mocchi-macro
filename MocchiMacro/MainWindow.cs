@@ -17,7 +17,9 @@
 // types, then hops if the outcome is Done and droops on any problem, including an empty box.
 // Startup messages don't make it droop, since that's only about Go.
 // The title bar shows the tool's version, such as "Mocchi Macro 1.0.0".
-// A footer row along the bottom shows the footer band, a still strip of pixel-art grass.
+// A footer row along the bottom shows the footer band, a still strip of pixel-art grass. At
+// startup the tool asks GitHub for its latest release; if it's newer, the update notice, a link
+// to the releases page, takes the band's place.
 
 using System;
 using System.Collections.Generic;
@@ -36,6 +38,9 @@ namespace MocchiMacro
         // The monster field holds at most 12 characters.
         const int MaxSearchTextLength = 12;
 
+        // AssemblyVersion, for the title bar and the update check.
+        static readonly Version RunningVersion = typeof(MainWindow).Assembly.GetName().Version;
+
         public MainWindow()
         {
             InitializeComponent();
@@ -49,7 +54,7 @@ namespace MocchiMacro
             // "Mocchi Macro 1.0.0", so an organizer asking for help can say which version they're
             // on. Read from AssemblyVersion rather than written out, so a release only bumps the
             // version in AssemblyInfo.cs. Three parts, since the fourth is always 0.
-            Text = "Mocchi Macro " + typeof(MainWindow).Assembly.GetName().Version.ToString(3);
+            Text = "Mocchi Macro " + RunningVersion.ToString(3);
 
             // For the title bar, taskbar and Alt+Tab. The .exe's own icon doesn't reach these:
             // without this the window shows WinForms' default icon.
@@ -93,6 +98,42 @@ namespace MocchiMacro
             footerBand.Image = FooterBand.Build(footerRow.Width);
             footerBand.Bounds = new Rectangle(0, footerRow.Height - footerBand.Image.Height,
                 footerRow.Width, footerBand.Image.Height);
+        }
+
+        // Once per start, after the window is set up. The window opens and works at once, and
+        // only swaps the band for the update notice when the answer comes, so a slow or missing
+        // answer changes nothing.
+        protected override async void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+
+            // Task.Run, not just the async call: on .NET Framework, the start of an HttpClient
+            // request (finding a proxy, looking up the address) runs on the calling thread before
+            // its first await, which could hold up the window for seconds.
+            Version newer = await Task.Run(() => UpdateCheck.FindNewerReleaseAsync(RunningVersion));
+            if (newer == null || IsDisposed) return;
+
+            // The whole text is the link, a bigger target with nothing in it that reads as plain
+            // text. The row keeps its size, so the window doesn't change.
+            footerBand.Visible = false;
+            updateNoticeLink.Text = "Version " + newer + " is out: download";
+            updateNoticeLink.LinkArea = new LinkArea(0, updateNoticeLink.Text.Length);
+            updateNoticeLink.Visible = true;
+        }
+
+        // Opens the releases page in the default browser. The link stays, in case the organizer
+        // closes the page before downloading.
+        void UpdateNoticeLink_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            // Without a default browser this throws, and WinForms' crash dialog would come up
+            // mid-tournament. Nothing happens instead, as when the check fails.
+            try
+            {
+                Process.Start(UpdateCheck.LatestReleasePageUrl);
+            }
+            catch (Exception)
+            {
+            }
         }
 
         readonly MascotAnimation mascotAnimation = new MascotAnimation();

@@ -45,6 +45,7 @@ namespace MocchiMacro
             this.mascotTimer = new System.Windows.Forms.Timer(this.components);
             this.footerRow = new System.Windows.Forms.Panel();
             this.footerBand = new System.Windows.Forms.PictureBox();
+            this.updateNoticeLink = new System.Windows.Forms.LinkLabel();
             this.controlsColumn.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mascotBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.typingRateBox)).BeginInit();
@@ -190,6 +191,7 @@ namespace MocchiMacro
             // footerRow
             //
             this.footerRow.Controls.Add(this.footerBand);
+            this.footerRow.Controls.Add(this.updateNoticeLink);
             this.footerRow.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.footerRow.Location = new System.Drawing.Point(0, 170);
             this.footerRow.Name = "footerRow";
@@ -203,6 +205,17 @@ namespace MocchiMacro
             this.footerBand.Size = new System.Drawing.Size(420, 18);
             this.footerBand.TabIndex = 0;
             this.footerBand.TabStop = false;
+            //
+            // updateNoticeLink
+            //
+            this.updateNoticeLink.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.updateNoticeLink.Location = new System.Drawing.Point(0, 0);
+            this.updateNoticeLink.Name = "updateNoticeLink";
+            this.updateNoticeLink.Size = new System.Drawing.Size(420, 18);
+            this.updateNoticeLink.TabIndex = 1;
+            this.updateNoticeLink.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.updateNoticeLink.Visible = false;
+            this.updateNoticeLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.UpdateNoticeLink_LinkClicked);
             //
             // MainWindow
             //
@@ -246,5 +259,6 @@ namespace MocchiMacro
         private System.Windows.Forms.Timer mascotTimer;
         private System.Windows.Forms.Panel footerRow;
         private System.Windows.Forms.PictureBox footerBand;
+        private System.Windows.Forms.LinkLabel updateNoticeLink;
     }
 }

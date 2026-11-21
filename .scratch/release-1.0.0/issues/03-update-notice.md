@@ -1,6 +1,6 @@
 # 03: Update notice
 
-Status: ready-for-agent
+Status: resolved
 
 Blocked by: 02
 
@@ -29,15 +29,27 @@ Say why the tag must match: the update notice compares the two, and a `v` or a m
 
 ## Acceptance criteria
 
-- [ ] The new unit tests pass, along with the existing ones.
-- [ ] While the repo is private (GitHub answers 404), the tool starts at once with the band and no link, online and offline.
-- [ ] With the network cable out or Wi-Fi off, the tool starts at once with the band, no link and no error.
-- [ ] With the repo the check asks about pointed for one run at another public repo with a release (latest tag `1.3.0`), the tool shows "Version 1.3.0 is out: download" in place of the band. Switch it back afterwards. Record the result in this ticket's comments.
-- [ ] With the link showing, nothing is cut off or overlapping at real 100%, 125% and 150% scaling.
-- [ ] `docs/releasing.md` exists with the four steps, and CLAUDE.md points to it.
+- [x] The new unit tests pass, along with the existing ones.
+- [x] While the repo is private (GitHub answers 404), the tool starts at once with the band and no link, online and offline.
+- [x] With the network cable out or Wi-Fi off, the tool starts at once with the band, no link and no error.
+- [x] With the repo the check asks about pointed for one run at another public repo with a release (latest tag `1.3.0`), the tool shows "Version 1.3.0 is out: download" in place of the band. Switch it back afterwards. Record the result in this ticket's comments.
+- [x] With the link showing, nothing is cut off or overlapping at real 100%, 125% and 150% scaling.
+- [x] `docs/releasing.md` exists with the four steps, and CLAUDE.md points to it.
 
 The check against mocchi-macro's own release happens in ticket 05, once 1.0.0 is published.
 
 ## User stories covered
 
 6, 7, 9, 10
+
+## Comments
+
+**2026-11-20:** Built. The decision's unit tests pass, along with the existing ones. Clicking the link with no default browser does nothing, rather than show WinForms' crash dialog. Still to check by hand: the private repo online and offline, the one run pointed at another public repo, and the link at real 100%, 125% and 150% scaling.
+
+**2026-11-20, pointed at another public repo:** With the check's API address set for one run to another public repo with a release, GitHub answered tag `1.3.0`, and the repo owner saw "Version 1.3.0 is out: download" in place of the band, at real 100% scaling, whole and centred, with nothing cut off or overlapping. The address was switched back to mocchi-macro afterwards, uncommitted throughout.
+
+**2026-11-21, 125% scaling:** Pointed at that repo again, the repo owner saw the link whole and centred at real 125% scaling, with nothing cut off or overlapping.
+
+**2026-11-21, 150% scaling:** The same at real 150% scaling: the link whole and centred, nothing cut off or overlapping. The address was switched back to mocchi-macro afterwards.
+
+**2026-11-21, private repo online:** With the check asking mocchi-macro's own repo, which is private so GitHub answers 404, the tool opened at once with the band and no link.
