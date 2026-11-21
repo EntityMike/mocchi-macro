@@ -43,9 +43,13 @@ namespace MocchiMacro
             this.searchTextToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.hotkeyLabel = new System.Windows.Forms.Label();
             this.mascotTimer = new System.Windows.Forms.Timer(this.components);
+            this.footerRow = new System.Windows.Forms.Panel();
+            this.footerBand = new System.Windows.Forms.PictureBox();
             this.controlsColumn.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mascotBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.typingRateBox)).BeginInit();
+            this.footerRow.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.footerBand)).BeginInit();
             this.SuspendLayout();
             //
             // controlsColumn
@@ -183,14 +187,32 @@ namespace MocchiMacro
             this.mascotTimer.Interval = 30;
             this.mascotTimer.Tick += new System.EventHandler(this.MascotTimer_Tick);
             //
+            // footerRow
+            //
+            this.footerRow.Controls.Add(this.footerBand);
+            this.footerRow.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.footerRow.Location = new System.Drawing.Point(0, 170);
+            this.footerRow.Name = "footerRow";
+            this.footerRow.Size = new System.Drawing.Size(420, 18);
+            this.footerRow.TabIndex = 2;
+            //
+            // footerBand
+            //
+            this.footerBand.Location = new System.Drawing.Point(0, 0);
+            this.footerBand.Name = "footerBand";
+            this.footerBand.Size = new System.Drawing.Size(420, 18);
+            this.footerBand.TabIndex = 0;
+            this.footerBand.TabStop = false;
+            //
             // MainWindow
             //
             this.AcceptButton = this.goButton;
             this.AutoScaleDimensions = new System.Drawing.SizeF(96F, 96F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Dpi;
-            this.ClientSize = new System.Drawing.Size(420, 170);
+            this.ClientSize = new System.Drawing.Size(420, 188);
             this.Controls.Add(this.controlsColumn);
             this.Controls.Add(this.mascotBox);
+            this.Controls.Add(this.footerRow);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainWindow";
@@ -200,6 +222,8 @@ namespace MocchiMacro
             this.controlsColumn.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mascotBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.typingRateBox)).EndInit();
+            this.footerRow.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.footerBand)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
         }
@@ -220,5 +244,7 @@ namespace MocchiMacro
         private System.Windows.Forms.ComboBox gameBox;
         private System.Windows.Forms.Label hotkeyLabel;
         private System.Windows.Forms.Timer mascotTimer;
+        private System.Windows.Forms.Panel footerRow;
+        private System.Windows.Forms.PictureBox footerBand;
     }
 }

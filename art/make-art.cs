@@ -1,9 +1,11 @@
-// Turns the mascot's text pixel grids into PNG frames and the tool's icon, Mocchi.ico.
+// Turns the text pixel grids into PNGs (the mascot's frames and the footer band's tiles) and
+// the tool's icon, Mocchi.ico.
 //
 // The grids in this folder are the source of truth: palette.txt maps each character to a
 // colour, each animation file (idle.txt, typing.txt, done.txt, problem.txt) holds its frames
-// and play order, and icon-16.txt and icon-32.txt hold the hand-placed icon faces. This
-// writes png/<animation>-<frame>.png for every frame, and Mocchi.ico with 16, 32, 48 and
+// and play order, footer-band.txt holds the band's tiles and their order, and icon-16.txt and
+// icon-32.txt hold the hand-placed icon faces. This writes png/<animation>-<frame>.png for
+// every frame, png/footer-band-<tile>.png for every tile, and Mocchi.ico with 16, 32, 48 and
 // 256 px images. Running it again on unchanged grids gives byte-for-byte the same files.
 //
 // It's compiled with the C# 5 compiler that ships with .NET Framework, so nothing new is
@@ -27,6 +29,8 @@ static class MakeArt
 {
     static readonly string[] Animations = { "idle", "typing", "done", "problem" };
 
+    const int TileWidth = 20, TileHeight = 6;
+
     static int Main(string[] args)
     {
         if (args.Length != 1)
@@ -48,12 +52,21 @@ static class MakeArt
                 File.Delete(oldPng);
             foreach (string animation in Animations)
             {
-                List<string[]> frames = ReadGrids(Path.Combine(artFolder, animation + ".txt"), 32);
+                List<string[]> frames = ReadGrids(Path.Combine(artFolder, animation + ".txt"), "frame", 32, 32);
                 for (int i = 0; i < frames.Count; i++)
                 {
                     string pngPath = Path.Combine(pngFolder, animation + "-" + (i + 1) + ".png");
                     File.WriteAllBytes(pngPath, ToPng(ToBitmap(frames[i], palette, 1)));
                 }
+            }
+
+            string bandPath = Path.Combine(artFolder, "footer-band.txt");
+            List<string[]> tiles = ReadGrids(bandPath, "tile", TileWidth, TileHeight);
+            CheckEdgesMatch(bandPath, tiles);
+            for (int i = 0; i < tiles.Count; i++)
+            {
+                string pngPath = Path.Combine(pngFolder, "footer-band-" + (i + 1) + ".png");
+                File.WriteAllBytes(pngPath, ToPng(ToBitmap(tiles[i], palette, 1)));
             }
 
             string[] face16 = ReadSingleGrid(Path.Combine(artFolder, "icon-16.txt"), 16);
@@ -97,34 +110,37 @@ static class MakeArt
         return palette;
     }
 
-    // A grid file holds one or more "frame N" blocks, numbered from 1, each followed by its
-    // rows. An animation file also has a "play" line: the frame order and each frame's time in
-    // ms, which MocchiMacro/MascotAnimation.cs copies. Here it's only skipped.
-    static List<string[]> ReadGrids(string path, int size)
+    // A grid file holds one or more blocks, each a heading such as "frame 1" or "tile 1",
+    // numbered from 1, then its rows. An animation file also has a "play" line: the frame order
+    // and each frame's time in ms, which MocchiMacro/MascotAnimation.cs copies. The footer
+    // band's file has an "order" line, which MocchiMacro/FooterBand.cs copies. Here both are
+    // only skipped.
+    static List<string[]> ReadGrids(string path, string blockName, int width, int height)
     {
-        var frames = new List<string[]>();
+        string heading = blockName + " ";
+        var grids = new List<string[]>();
         List<string> rows = null;
         foreach (string line in ReadLines(path))
         {
-            if (line.StartsWith("frame "))
+            if (line.StartsWith(heading))
             {
                 int number;
-                if (!int.TryParse(line.Substring(6).Trim(), out number) || number != frames.Count + 1)
-                    throw new ArtException(path + ": expected \"frame " + (frames.Count + 1) + "\", got \"" + line + "\"");
+                if (!int.TryParse(line.Substring(heading.Length).Trim(), out number) || number != grids.Count + 1)
+                    throw new ArtException(path + ": expected \"" + heading + (grids.Count + 1) + "\", got \"" + line + "\"");
                 rows = new List<string>();
-                frames.Add(null);
+                grids.Add(null);
             }
-            else if (line.StartsWith("play "))
+            else if (line.StartsWith("play ") || line.StartsWith("order "))
             {
                 rows = null;
             }
             else if (rows != null)
             {
                 rows.Add(line);
-                if (rows.Count == size)
-                    frames[frames.Count - 1] = rows.ToArray();
-                else if (rows.Count > size)
-                    throw new ArtException(path + ": frame " + frames.Count + " has more than " + size + " rows");
+                if (rows.Count == height)
+                    grids[grids.Count - 1] = rows.ToArray();
+                else if (rows.Count > height)
+                    throw new ArtException(path + ": " + heading + grids.Count + " has more than " + height + " rows");
             }
             else
             {
@@ -132,22 +148,22 @@ static class MakeArt
             }
         }
 
-        for (int i = 0; i < frames.Count; i++)
+        for (int i = 0; i < grids.Count; i++)
         {
-            if (frames[i] == null)
-                throw new ArtException(path + ": frame " + (i + 1) + " has fewer than " + size + " rows");
-            foreach (string row in frames[i])
-                if (row.Length != size)
-                    throw new ArtException(path + ": frame " + (i + 1) + " has a row " + row.Length + " wide, not " + size + ": \"" + row + "\"");
+            if (grids[i] == null)
+                throw new ArtException(path + ": " + heading + (i + 1) + " has fewer than " + height + " rows");
+            foreach (string row in grids[i])
+                if (row.Length != width)
+                    throw new ArtException(path + ": " + heading + (i + 1) + " has a row " + row.Length + " wide, not " + width + ": \"" + row + "\"");
         }
-        if (frames.Count == 0)
-            throw new ArtException(path + ": no frames");
-        return frames;
+        if (grids.Count == 0)
+            throw new ArtException(path + ": no " + blockName + "s");
+        return grids;
     }
 
     static string[] ReadSingleGrid(string path, int size)
     {
-        List<string[]> frames = ReadGrids(path, size);
+        List<string[]> frames = ReadGrids(path, "frame", size, size);
         if (frames.Count != 1)
             throw new ArtException(path + ": expected one frame, got " + frames.Count);
         return frames[0];
@@ -162,6 +178,16 @@ static class MakeArt
         return File.ReadAllLines(path)
             .Select(line => line.TrimEnd())
             .Where(line => line.Length > 0 && !line.StartsWith("#"));
+    }
+
+    // The tiles sit side by side in any order, so a tile whose edge column differed from the
+    // others' would leave a seam beside some of them. Tile 1's edges are the ones to match.
+    static void CheckEdgesMatch(string path, List<string[]> tiles)
+    {
+        for (int i = 1; i < tiles.Count; i++)
+            for (int y = 0; y < TileHeight; y++)
+                if (tiles[i][y][0] != tiles[0][y][0] || tiles[i][y][TileWidth - 1] != tiles[0][y][TileWidth - 1])
+                    throw new ArtException(path + ": tile " + (i + 1) + "'s edge columns differ from tile 1's in row " + (y + 1));
     }
 
     // The grid in the middle of a larger, transparent one.
@@ -182,14 +208,14 @@ static class MakeArt
     // Each grid pixel becomes a scale × scale block, with no smoothing.
     static Bitmap ToBitmap(string[] grid, Dictionary<char, Color> palette, int scale)
     {
-        int size = grid.Length;
-        var bitmap = new Bitmap(size * scale, size * scale, PixelFormat.Format32bppArgb);
+        int width = grid[0].Length, height = grid.Length;
+        var bitmap = new Bitmap(width * scale, height * scale, PixelFormat.Format32bppArgb);
         // A new Bitmap takes the screen's DPI, which the PNG records, so the files would differ
         // between machines at different display scaling. Fix it at 96.
         bitmap.SetResolution(96, 96);
-        for (int y = 0; y < size; y++)
+        for (int y = 0; y < height; y++)
         {
-            for (int x = 0; x < size; x++)
+            for (int x = 0; x < width; x++)
             {
                 Color colour;
                 if (!palette.TryGetValue(grid[y][x], out colour))

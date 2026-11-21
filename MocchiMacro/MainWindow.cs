@@ -17,6 +17,7 @@
 // types, then hops if the outcome is Done and droops on any problem, including an empty box.
 // Startup messages don't make it droop, since that's only about Go.
 // The title bar shows the tool's version, such as "Mocchi Macro 1.0.0".
+// A footer row along the bottom shows the footer band, a still strip of pixel-art grass.
 
 using System;
 using System.Collections.Generic;
@@ -79,7 +80,19 @@ namespace MocchiMacro
             ShowMascotFrame();
             controlsColumn.Left = mascotBox.Right + margin;
             ClientSize = new Size(controlsColumn.Right + margin, ClientSize.Height);
-            mascotBox.Top = (ClientSize.Height - mascotBox.Height) / 2;
+            mascotBox.Top = (footerRow.Top - mascotBox.Height) / 2;
+            ShowFooterBand();
+        }
+
+        // The footer row is docked along the window's bottom, so it grows with the window at
+        // higher scaling (about 27 px tall at 150%), while the band, like the mascot, stays 18 px.
+        // The band sits on the row's bottom edge, so the grass meets the bottom of the window.
+        // It's built once, as wide as the row, now the window has its final width.
+        void ShowFooterBand()
+        {
+            footerBand.Image = FooterBand.Build(footerRow.Width);
+            footerBand.Bounds = new Rectangle(0, footerRow.Height - footerBand.Image.Height,
+                footerRow.Width, footerBand.Image.Height);
         }
 
         readonly MascotAnimation mascotAnimation = new MascotAnimation();

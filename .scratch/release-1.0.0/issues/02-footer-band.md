@@ -1,6 +1,6 @@
 # 02: Footer row and footer band
 
-Status: ready-for-agent
+Status: resolved
 
 Parent: [spec](../spec.md)
 
@@ -29,14 +29,20 @@ The row is where ticket 03's link goes, in place of the band. This ticket only a
 
 ## Acceptance criteria
 
-- [ ] The repo owner approved the band's art from the previews.
-- [ ] Running `make-art.cs` again on unchanged grids gives byte-for-byte the same files.
-- [ ] The window is one row taller and still fixed-size, and the band fills the row's full width.
+- [x] The repo owner approved the band's art from the previews.
+- [x] Running `make-art.cs` again on unchanged grids gives byte-for-byte the same files.
+- [x] The window is one row taller and still fixed-size, and the band fills the row's full width.
 - [ ] At real 100%, 125% and 150% scaling, the band is crisp, sits on the window's bottom edge, its tiles meet without a visible seam, and nothing is cut off or overlapping.
-- [ ] The test comparing the band's order in the grid file and in the code passes, and fails if either one changes alone.
+- [x] The test comparing the band's order in the grid file and in the code passes, and fails if either one changes alone.
 - [ ] Everything else in the window works as before: Go, Enter, the hotkey, the typing rate, the game dropdown and the mascot.
-- [ ] The existing automated tests pass unchanged.
+- [x] The existing automated tests pass unchanged.
 
 ## User stories covered
 
 10
+
+## Comments
+
+**2026-11-20:** Built. The repo owner approved the band's art from the previews, after the blue flower's pale top petal was made the same blue as the others (white or pale blue vanishes against the window's grey). Running `make-art.cs` twice gave byte-for-byte the same files, and the mascot frames and icon came out unchanged. `make-art.cs` also refuses tiles whose edge columns differ from tile 1's. The order test fails when either the order line or the code's copy changes alone. At real 100% scaling, the band fills the row's width on the window's bottom edge, with no visible seam and nothing cut off or overlapping. Still to check by hand: 125% and 150% scaling, and Go, Enter, the hotkey, the typing rate, the game dropdown and the mascot in the new window. The automated tests pass unchanged.
+
+**2026-11-20, closed by the repo owner:** Closed with two criteria unchecked: the band at real 125% and 150% scaling, and a hands-on pass of Go, Enter, the hotkey, the typing rate, the game dropdown and the mascot in the new window.

@@ -54,6 +54,7 @@
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="FooterBand.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="IGamePort.cs" />
     <Compile Include="KeyboardLayout.cs" />
@@ -87,8 +88,12 @@
   </ItemGroup>
   <ItemGroup>
     <!-- The mascot's frames, named so MascotArt can find them, such as Mascot.idle-1.png. -->
-    <EmbeddedResource Include="..\art\png\*.png">
+    <EmbeddedResource Include="..\art\png\*.png" Exclude="..\art\png\footer-band-*.png">
       <LogicalName>Mascot.%(Filename)%(Extension)</LogicalName>
+    </EmbeddedResource>
+    <!-- The footer band's tiles, named so FooterBand can find them, such as footer-band-1.png. -->
+    <EmbeddedResource Include="..\art\png\footer-band-*.png">
+      <LogicalName>%(Filename)%(Extension)</LogicalName>
     </EmbeddedResource>
     <!-- The window's icon. It's embedded as well as being the application icon because .NET can
          only read the application icon back at one size, which would lose the hand-placed 16 px face. -->

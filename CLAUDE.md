@@ -60,11 +60,12 @@ Stand-ins (`@` for ○ and so on) are swapped by the search text box in `MainWin
 
 Settings are saved once on close, not on each change. Rapid rewrites of `user.config` got the tool suspended by anti-ransomware software.
 
-### The mascot: text grids to frames to animation
+### The art: text grids to the mascot and the footer band
 
 - `art/*.txt` pixel grids are the source of truth. `art/make-art.cs` turns them into `art/png/*.png` and `art/Mocchi.ico`, which are committed. Never edit the PNGs or the icon by hand.
-- The main project embeds those files as resources (`Mascot.<frame>.png`, `Mocchi.ico`); `MascotArt` loads and enlarges them.
+- The main project embeds those files as resources: the mascot's frames as `Mascot.<frame>.png`, the footer band's tiles as `footer-band-<n>.png`, and `Mocchi.ico`. `MascotArt` loads them and enlarges them 3× without smoothing.
 - `MascotAnimation` picks the frame from the time passed in, with no clock or window of its own. Its timings are copied from each grid file's `play` line, and a test fails if the two differ, so change them together.
+- `FooterBand` lays the tiles side by side, in the order copied from `art/footer-band.txt`'s `order` line, into one image as wide as the footer row. It's built once at startup. As with `play` lines, a test fails if the two orders differ. `make-art.cs` refuses tiles whose edge columns don't match, since any tile can sit beside any other.
 
 ### Project constraints worth knowing
 

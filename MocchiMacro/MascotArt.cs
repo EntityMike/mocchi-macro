@@ -1,6 +1,6 @@
 // The mascot's art as the window shows it. The frames are the PNGs from art/png and the icon is
 // art/Mocchi.ico, all embedded in the .exe so it stays a single file; art/make-art.cs says how
-// those are made.
+// those are made. The footer band's tiles are enlarged here too, so they match the mascot.
 
 using System.Drawing;
 using System.Drawing.Drawing2D;
@@ -18,9 +18,13 @@ namespace MocchiMacro
         // The frame named like its PNG, such as "idle-1". It's enlarged once here, rather than
         // each time it's drawn, so the window can show it at its own size and nothing later gets
         // a chance to smooth it.
-        public static Bitmap LoadFrame(string name)
+        public static Bitmap LoadFrame(string name) => LoadEnlarged("Mascot." + name + ".png");
+
+        // Any embedded PNG, enlarged as the frames are. FooterBand's tiles use it too, so they
+        // match the mascot's pixel size.
+        internal static Bitmap LoadEnlarged(string resourceName)
         {
-            using (Stream png = typeof(MascotArt).Assembly.GetManifestResourceStream("Mascot." + name + ".png"))
+            using (Stream png = typeof(MascotArt).Assembly.GetManifestResourceStream(resourceName))
             using (var frame = new Bitmap(png))
             {
                 var enlarged = new Bitmap(frame.Width * Scale, frame.Height * Scale);

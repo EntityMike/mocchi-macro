@@ -1,0 +1,48 @@
+# The footer band: a still strip of grass with a few small flowers, along the bottom of the
+# window. It's built from the tiles below, laid side by side in the order line's order.
+#
+# Every tile is 20 wide and 6 tall, and shares the same left and right edge columns (three
+# transparent pixels, then the dark grass edge, the lit grass top and the grass), so any tile
+# can sit beside any other without a seam.
+#
+# The order line is long enough to fill the row at 200% scaling: 14 tiles of 20 pixels at 3×
+# is 840 px. A wider row starts over from the first tile. MocchiMacro/FooterBand.cs copies
+# the order, and a test fails if the two differ.
+
+# Plain grass, with a couple of short blades.
+tile 1
+....................
+....D..........D....
+.....D.D......D.....
+DDDDDHDHDDDDDDHDDDDD
+HHHHHHHHHHGHHHHHHHHH
+GGGGGGGGGGGGGGGGDGGG
+
+# A tuft.
+tile 2
+.........D..........
+......D..D..D.......
+.......D.D.D........
+DDDDDDDHDHDHDDDDDDDD
+HHHHHHHHHHHHHHHHHHHH
+GGGGGGGGGGGGGGGGGGGG
+
+# A blue flower. White or pale blue would vanish against the window's light grey.
+tile 3
+.......B............
+......BYB...........
+..D....B.......D.D..
+DDHDDDDGDDDDDDDHDHDD
+HHHHHHHHHHHHHHHHHHHH
+GGGGDGGGGGGGGGGGGGGG
+
+# A red tulip and a yellow buttercup.
+tile 4
+....M.M.............
+....MMM.......Y.....
+.....D.......YOY....
+DDDDDGDDDDDDDDGDDDDD
+HHHHHHHHHHHHHHHHHHHH
+GGGGGGGGGGDGGGGGGGGG
+
+order 1 3 1 2 1 4 1 1 2 3 1 4 2 1
