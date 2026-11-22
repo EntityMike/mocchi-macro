@@ -20,8 +20,9 @@ Version 1.0.0 ships as one `MocchiMacro.exe` on the repo's GitHub Releases page,
 - **The version in its title bar:** "Mocchi Macro 1.0.0".
 - **Proper file details:** product name, description, copyright and version.
 - **An update notice:** at startup, the tool asks GitHub for the latest release. If it's newer, a link in a new footer row reads "Version 1.1.0 is out: download" and opens the releases page. Otherwise the row shows a still band of pixel-art grass.
+- **An About box:** a small "?" button in the window's top-left corner opens a window saying what the tool is and who made it, with links to help, support and the game.
 
-The README is rewritten for organizers. The repo owner builds and publishes the release from written steps, kept for every later release too, and release notes.
+The README is rewritten for organizers. The repo owner builds and publishes the release from written steps, kept for every later release too, and release notes. What changed in each release goes in a new `CHANGELOG.md`, which the release notes link to. Before publishing, the whole codebase is audited for glaring issues, and the fixes the repo owner picks are made.
 
 ## User Stories
 
@@ -35,6 +36,8 @@ The README is rewritten for organizers. The repo owner builds and publishes the 
 8. As an organizer, I want the .exe's details to name the tool and its author, so that Task Manager and the file's Properties show something recognisable.
 9. As the repo owner, I want written steps for building and publishing the release, so that I can do it, and every later release, without guessing.
 10. As an organizer, I want the window to keep its size and look finished whether or not a newer version is out, so that nothing jumps or looks empty after startup.
+11. As an organizer, I want an About box in the tool, saying who made it and where to get help, so that I know where to turn without hunting for the README.
+12. As the repo owner, I want the whole codebase audited before the first public release, so that glaring problems are fixed before organizers run into them.
 
 ## Implementation Decisions
 
@@ -82,8 +85,8 @@ The README is rewritten for organizers. The repo owner builds and publishes the 
 - **Settings across updates aren't needed yet.** The fix, calling `Settings.Default.Upgrade()` on a new version's first run, is code that ships in that new version and reads the old one's saved settings. So a later version can still add it and carry over 1.0.0's settings, if it's ever wanted. There's no ticket for it: the one there was got dropped on 2026-11-20.
 - **The README,** for organizers, in this order:
   1. What the tool does, with an animated screenshot of it typing.
-  2. A download link to the latest release.
-  3. Requirements: Windows 10/11 and MR1 DX or MR2 DX. .NET Framework 4.8 is already part of Windows.
+  2. A download link to the latest release, and a link to the changelog.
+  3. Requirements: Windows 10 (version 1903+) or Windows 11, and MR1 DX or MR2 DX. .NET Framework 4.8 is already part of Windows.
   4. How to use it, hotkey loop first, then what an organizer needs around it:
      - Have the game on its keyboard screen, and pick the game in the dropdown.
      - Leave the mouse alone while Go types: the tool moves the real cursor and clicks.
@@ -94,29 +97,35 @@ The README is rewritten for organizers. The repo owner builds and publishes the 
   5. The three hotkeys and their fallback order. While the tool runs, the hotkey doesn't reach other programs, even the one in front.
   6. Typing rate advice: 10 keys/s is tested; slow it down if keys get missed.
   7. "Windows protected your PC": the .exe isn't signed, so choose More info → Run anyway.
-  8. Antivirus: the tool sends clicks like a person would, which some antivirus finds suspicious. Anti-ransomware software once suspended it, which is fixed.
+  8. Antivirus: the tool sends clicks like a person would, which some antivirus finds suspicious, and what to do if it's blocked. Same goes for anti-ransomware software.
   9. The update notice: at startup, the tool asks GitHub once for the latest release, which is the only network use. A link appears when a newer one is out, and nothing happens if GitHub can't be reached.
   10. Where settings are saved (`%LOCALAPPDATA%\MocchiMacro\`), and that a new version, or moving the .exe, starts them over from the defaults.
   11. Not affiliated with or endorsed by Koei Tecmo; Monster Rancher and Mocchi are theirs. The mascot art is original and under the repo's MIT license. The game screenshots in `docs/screenshots/` are theirs too, and the license doesn't cover them.
   12. One line on building from source: open `mocchi-macro.slnx` in Visual Studio and build Release.
-  - The animated screenshot is recorded by the repo owner with a screen recorder of their choice. The ticket doesn't add a recording tool.
+  - The animated screenshot is recorded by the repo owner with a screen recorder of their choice. The ticket doesn't add a recording tool. It's deferred and doesn't block the release: until it's recorded, the README keeps a hidden marked spot, and adding it later needs no release.
 - **Building and publishing,** by the repo owner.
-  - **`docs/releasing.md`** holds the steps every release repeats: bump `AssemblyVersion` and `AssemblyFileVersion`, build Release, create the release on GitHub with a tag that matches, and attach the .exe. CLAUDE.md gets one line pointing to it and saying the tag must match `AssemblyVersion`. It's written with the update notice (ticket 03), since that's what makes the tag rule matter. The publish ticket adds 1.0.0's one-time steps and links to it for the rest.
+  - **`docs/releasing.md`** holds the steps every release repeats: bump `AssemblyVersion` and `AssemblyFileVersion` and add the version's entry to `CHANGELOG.md`, build Release, create the release on GitHub with a tag that matches, and attach the .exe. CLAUDE.md gets one line pointing to it and saying the tag must match `AssemblyVersion`. It's written with the update notice (ticket 03), since that's what makes the tag rule matter. The publish ticket adds 1.0.0's one-time steps and links to it for the rest.
     - Rejected: **the steps in the README,** which is for organizers, and **in CLAUDE.md**, by the repo owner's choice; it gets the pointer instead.
   - **Build:** a Release build on their machine.
   - **Tag:** `1.0.0`, a plain version with no `v`, matching `AssemblyVersion`. A `v` tag would show no update notice.
   - **Asset:** one, the bare `MocchiMacro.exe`. No zip and no `.pdb`.
-  - **Where:** the release is created on GitHub's website, with release notes written in the ticket.
+  - **Where:** the release is created on GitHub's website, with release notes written in the ticket. They say what the tool does and give the SmartScreen note, and link to `CHANGELOG.md` for what's in the release rather than listing it.
   - **Before going public:** Go types into both real games, which needs the VS mode server up. Typing into a real game in the new window is still unseen (window-look tickets 02 and 04), and the first public version shouldn't be its first real test.
   - **Visibility:** the repo goes public as it is (history, `.scratch/`, `CLAUDE.md`, game screenshots), just before the release is published. The live check's fake game window needs those screenshots, and the window-look spec names game art in a public repo as the likeliest way to get a takedown. It's accepted here, with the README saying whose they are.
   - Rejected: **a GitHub Actions build.** Worth it if releases get frequent, not for the first one.
   - Rejected: **installing the `gh` CLI.** It's a new tool, for a step done once per release.
   - Rejected: **code signing.** It costs about $10 a month (Azure Artifact Signing, formerly Trusted Signing); the README explains SmartScreen instead.
+- **The About box,** opened by a small "?" button in the window's top-left corner. Ticket 05 has the full contents.
+  - **A small window, not a message box.** It shows the idle mascot, the text, clickable links and an OK button.
+    - Rejected: **a message box.** It's one line of code, but its URLs can't be clicked, the same reason the update notice doesn't use one.
+  - **What it says:** the name and version, what the tool does, the copyright and license, links to the repo's page (for the README and changelog), the Monster Rancher Discord and the game on Steam, thanks to Koei Tecmo and the Monster Rancher community, the README's not-affiliated line, and "Enjoy!". The name, description and copyright are read from the .exe's file details, so they're written once.
+    - The support link is the Discord, since organizers are already there and the repo doesn't use GitHub issues.
+  - **No network use.** The links only open the browser when clicked, so the update check is still the tool's only network use.
 - **No ADR.** Release mechanics are recorded here and in `docs/releasing.md`.
 
 ## Testing Decisions
 
-- The typist and the keyboard layouts are unchanged, so their automated tests keep passing.
+- The typist and the keyboard layouts are unchanged by the new features, so their automated tests keep passing. A fix from the audit that touches them comes with its own test.
 - **The live check** (`live-check` spec) passes before publishing.
 - **Go in the real games:** typing works in both, in the new window, and window-look's unseen Done messages read correctly: `END` in MR1 DX, `Ent.` in MR2 DX, and the 12-character message.
 - **Title and details:** the title reads "Mocchi Macro 1.0.0". The Release .exe's Properties → Details show the description, product, copyright and version, and Task Manager shows "Mocchi Macro".
@@ -128,7 +137,9 @@ The README is rewritten for organizers. The repo owner builds and publishes the 
   - **A newer release, for real:** once 1.0.0 is published, a build with its version temporarily set to `0.9.0` shows "Version 1.0.0 is out: download", and the link opens the releases page.
   - **Up to date:** the real 1.0.0 shows the band, no link.
 - **The footer band:** the repo owner approves its art before the window uses it, as with the mascot. An automated test fails if its order in the grid file and in the code differ.
-- **Layout:** with the footer row added, nothing is cut off or overlapping at real 100%, 125% and 150% scaling, with the band and with the link, and the band fills the row's width.
+- **Layout:** with the footer row and the "?" button added, nothing is cut off or overlapping at real 100%, 125% and 150% scaling, with the band and with the link, and the band fills the row's width.
+- **The About box,** by hand at real 100%, 125% and 150%: nothing cut off, its details match the .exe's file details, each link opens the right page, and the hotkey closes it.
+- **The audit's fixes** are tested as the audit ticket says, and the live check passes after them.
 - **The README** renders correctly on GitHub, and its download link reaches the release.
 - **The published release** has the tag `1.0.0` and one asset, `MocchiMacro.exe`. Downloaded fresh on another machine or user account, it runs after SmartScreen's Run anyway.
 
@@ -147,7 +158,7 @@ The README is rewritten for organizers. The repo owner builds and publishes the 
   - The update link moved to its own row, since the row beside the hotkey label had no room for it.
   - `AssemblyCompany` was found to move the settings folder, checked by asking .NET Framework for the path with and without it, so it stays blank.
   - The README list gained what the how-to was missing, and the update notice.
-  - SmartScreen's dialog was corrected from web sources, not tested on a real download. Ticket 05's download step will show it first-hand.
+  - SmartScreen's dialog was corrected from web sources, not tested on a real download. Ticket 07's download step will show it first-hand.
   - Going public now waits for Go to be seen working in both real games, and for the live check to pass.
 - 2026-11-20, the update notice was grilled again against the earlier tool's code and release:
   - The empty row became the footer row, with the band when there's no update.
@@ -155,3 +166,6 @@ The README is rewritten for organizers. The repo owner builds and publishes the 
   - Octokit's real cost was recorded: it can be packed into the .exe, but isn't worth it.
   - `GLOSSARY.md` gained **Release** and **Update notice**.
   - The tickets were renumbered in build order: the band became 02, the notice 03, the README 04 and publishing 05.
+- 2026-11-21, while writing the README, the repo owner chose to keep the changes out of the GitHub release: `CHANGELOG.md` was added, newest release first, and the release notes link to it.
+- 2026-11-21, after the README was written, the repo owner added the About box as ticket 05, so publishing became 06.
+- 2026-11-21, the repo owner then added a whole-codebase audit as ticket 06, after the About box, so publishing became 07.

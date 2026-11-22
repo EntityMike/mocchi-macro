@@ -56,6 +56,10 @@ _Avoid_: Click rate, speed, rate of button presses
 
 ## The tool
 
+**About box**:
+The small window the "?" button in the tool's window opens, saying what the tool is, who made it and where to get help.
+_Avoid_: Help box, info dialog
+
 **Footer band**:
 The strip of pixel-art grass along the bottom of the tool's window, which the update notice takes the place of.
 _Avoid_: Footer, banner, grass strip

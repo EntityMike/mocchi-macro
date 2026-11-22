@@ -36,7 +36,7 @@ Say why the tag must match: the update notice compares the two, and a `v` or a m
 - [x] With the link showing, nothing is cut off or overlapping at real 100%, 125% and 150% scaling.
 - [x] `docs/releasing.md` exists with the four steps, and CLAUDE.md points to it.
 
-The check against mocchi-macro's own release happens in ticket 05, once 1.0.0 is published.
+The check against mocchi-macro's own release happens in ticket 07, once 1.0.0 is published.
 
 ## User stories covered
 

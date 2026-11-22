@@ -26,7 +26,7 @@ Rewrite `README.md` for organizers, covering the twelve points in the spec's REA
 Use the glossary's words where they fit: organizer, game, keyboard, key, search text, stand-in, typing rate, hotkey, mascot, monster field, Ent., release, update notice.
 
 - **Download link:** `https://github.com/EntityMike/mocchi-macro/releases/latest`.
-- **Screenshot:** the animated screenshot of the tool typing is recorded by the repo owner, with any screen recorder they already have. Save it under `docs/`. Until it exists, leave a marked spot for it.
+- **Screenshot:** the animated screenshot of the tool typing is recorded by the repo owner, with any screen recorder they already have. Save it under `docs/`. Until it exists, leave a marked spot for it. Record it after ticket 05 lands, so it shows the "?" button.
 
 ## Acceptance criteria
 
@@ -34,13 +34,15 @@ Use the glossary's words where they fit: organizer, game, keyboard, key, search 
 - [x] Someone who has never seen the tool could type a search text from the how-to alone, in either game, including one with a symbol.
 - [x] The hotkey section lists Ctrl+Alt+Shift+M, Ctrl+Shift+F9 and Ctrl+Alt+Shift+F9 in order, and says the one in use doesn't reach other programs while the tool runs.
 - [ ] The SmartScreen steps match what Windows 11 shows for the downloaded .exe.
-- [ ] The animated screenshot is in `docs/` and shows in the README.
-- [ ] It renders correctly on GitHub (checked once the repo is public, in ticket 05).
+- [ ] The animated screenshot is in `docs/` and shows in the README. **Deferred**, see Comments.
+- [ ] It renders correctly on GitHub (checked once the repo is public, in ticket 07).
 
 ## User stories covered
 
 2, 3, 4
 
 ## Comments
+
+**2026-11-21, screenshot deferred by the repo owner:** the animated screenshot will be recorded later, after ticket 05 lands, so it shows the "?" button. It doesn't hold up closing this ticket or publishing. Until then, the README keeps its hidden marked spot, and adding the GIF later is a README change that needs no release.
 
 **2026-11-21, closed by the repo owner:** The first three criteria were checked by review against the code and the spec, and the repo owner read the README. The SmartScreen and GitHub rendering criteria are checked in ticket 07, and the animated screenshot is deferred.

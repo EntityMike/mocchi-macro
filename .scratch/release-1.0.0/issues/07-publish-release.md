@@ -1,23 +1,23 @@
-# 05: Publish 1.0.0
+# 07: Publish 1.0.0
 
 Status: ready-for-human
 
-Blocked by: 03, 04
+Blocked by: 03, 04, 05, 06. Only ticket 04's README text is needed. Its animated screenshot is deferred and doesn't block publishing, and its GitHub rendering and SmartScreen checks happen here.
 
 Parent: [spec](../spec.md)
 
 ## What to build
 
-The agent writes the release notes into this ticket's comments: what the tool does, what's in 1.0.0, and the SmartScreen note. The repo owner then publishes, following `docs/releasing.md` (ticket 03) for the steps every release repeats, plus 1.0.0's one-time steps:
+The agent writes the release notes into this ticket's comments: what the tool does, the SmartScreen note, and a link to `CHANGELOG.md` for what's in 1.0.0. The changes themselves live in the changelog, not in the release. The repo owner then publishes, following `docs/releasing.md` (ticket 03) for the steps every release repeats, plus 1.0.0's one-time steps:
 
-1. Merge everything for 1.0.0 to `main`, and check that `AssemblyVersion` and `AssemblyFileVersion` are `1.0.0.0`.
+1. Merge everything for 1.0.0 to `main`, and check that `AssemblyVersion` and `AssemblyFileVersion` are `1.0.0.0`. Check that `CHANGELOG.md`'s 1.0.0 entry covers everything shipping, including the About box.
 2. Build Release, as `docs/releasing.md` says. Check `MocchiMacro/bin/Release/` holds `MocchiMacro.exe` and that its title reads "Mocchi Macro 1.0.0".
 3. Run the live check (`MocchiMacro.LiveCheck/Program.cs` says how). It must pass.
 4. With that Release .exe, press Go in both real games, which needs the VS mode server up. Check that typing works and that the Done messages read correctly: `END` in MR1 DX, `Ent.` in MR2 DX, and the 12-character message.
 5. Make the repo public: GitHub → Settings → General → Danger Zone → Change visibility.
 6. Create the release on GitHub as `docs/releasing.md` says, with these for 1.0.0:
    - Tag `1.0.0`, created on `main`, and the title "Mocchi Macro 1.0.0"
-   - The release notes from this ticket
+   - The release notes from this ticket, which link to the changelog
    - Not a pre-release.
 7. Check the update notice against the live release:
    - A build with `AssemblyVersion` temporarily set to `0.9.0.0` shows "Version 1.0.0 is out: download" in place of the footer band, and clicking it opens the releases page.
