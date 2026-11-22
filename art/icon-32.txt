@@ -1,4 +1,4 @@
-# The icon at 32 px: Mocchi's face, front on. The .ico's 48 px image is this centred,
+# The icon at 32 px: Mocchi's face, front on. The .ico's 48 px image is this centered,
 # and its 256 px image is this at 8×.
 
 frame 1

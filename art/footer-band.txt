@@ -27,7 +27,7 @@ DDDDDDDHDHDHDDDDDDDD
 HHHHHHHHHHHHHHHHHHHH
 GGGGGGGGGGGGGGGGGGGG
 
-# A blue flower. White or pale blue would vanish against the window's light grey.
+# A blue flower. White or pale blue would vanish against the window's light gray.
 tile 3
 .......B............
 ......BYB...........

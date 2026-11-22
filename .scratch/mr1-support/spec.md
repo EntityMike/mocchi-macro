@@ -4,7 +4,7 @@ Status: resolved
 
 ## Problem Statement
 
-The tool only types into MR2 DX. Organizers who run Monster Rancher 1 DX tournaments still click out every monster name on MR1 DX's keyboard by hand. The two games run the same multiplayer search flow from the same launcher, with the same resolutions and fullscreen option, but MR1 DX's keyboard looks different: its keys sit in other places, it has a different set of symbols, and its BS and Ent. are labelled `←` and `END`.
+The tool only types into MR2 DX. Organizers who run Monster Rancher 1 DX tournaments still click out every monster name on MR1 DX's keyboard by hand. The two games run the same multiplayer search flow from the same launcher, with the same resolutions and fullscreen option, but MR1 DX's keyboard looks different: its keys sit in other places, it has a different set of symbols, and its BS and Ent. are labeled `←` and `END`.
 
 Both keyboards also have a middle dot key that the tool can't type yet. In MR2 DX it was left out as "unknown" (a comma or a raised dot); it turned out to be a middle dot, and MR1 DX has the same one.
 

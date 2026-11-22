@@ -6,7 +6,7 @@
 // It takes over the mouse for about two minutes, so it's run by hand, not with the tests:
 //   dotnet build mocchi-macro.slnx
 //   MocchiMacro.LiveCheck/bin/Debug/net48/MocchiMacro.LiveCheck.exe
-// Watch the cursor land on each key, or look afterwards at the pictures it saves in live-check-output
+// Watch the cursor land on each key, or look afterward at the pictures it saves in live-check-output
 // next to the .exe. It exits with 0 if everything passed.
 //
 // It can't show that the game accepts the clicks: the fake game window only records them. And the

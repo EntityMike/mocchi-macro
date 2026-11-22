@@ -234,7 +234,7 @@ namespace MocchiMacro
         }
 
         // Problems use the dropped-characters note's red, so red means one thing across the window.
-        // Done is a dark green, about as easy to read on the window's grey as that red.
+        // Done is a dark green, about as easy to read on the window's gray as that red.
         Color ProblemColor => droppedNoteLabel.ForeColor;
         static readonly Color DoneColor = Color.DarkGreen;
 

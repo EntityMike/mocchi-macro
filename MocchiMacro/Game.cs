@@ -1,6 +1,6 @@
 // The Monster Rancher DX games the tool can type into: MR1 DX and MR2 DX. Each has the name
 // shown in the main window's game dropdown, the title of its game window, its keyboard layout,
-// and what its Ent. key is labelled on screen.
+// and what its Ent. key is labeled on screen.
 
 using System.Collections.Generic;
 

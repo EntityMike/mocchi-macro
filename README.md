@@ -25,7 +25,7 @@ The tool needs .NET Framework 4.8, which is already part of these versions of Wi
    1. Press the **hotkey**, Ctrl+Alt+Shift+M, or the one shown in the tool's window if it had to use another (see [The hotkey](#the-hotkey)). The tool comes to the front with the search text selected, so you can type straight over the last one.
    2. Type the monster's name, or just enough of it to narrow the search, and press Enter (or click **Go**).
    3. The tool brings the game to the front, clears the monster field and clicks out the name on the keyboard. Leave the mouse alone while it types: the tool moves your real mouse cursor and clicks with it.
-   4. When it's done, the game is in front again. Check the monster field and press Ent. in the game yourself (it's labelled `END` in MR1 DX). The tool never presses it for you.
+   4. When it's done, the game is in front again. Check the monster field and press Ent. in the game yourself (it's labeled `END` in MR1 DX). The tool never presses it for you.
 
 ### Good to know
 

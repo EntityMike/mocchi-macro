@@ -8,7 +8,7 @@ Parent: [spec](../spec.md)
 
 Make MR2 DX's last untypeable key typeable. The key left out as "unknown" (a comma or a raised dot) is a middle dot, and MR1 DX has the same one, so ticket 02 reuses what this ticket adds.
 
-- Add `·` (U+00B7) to MR2 DX's keyboard layout at the left block's row 6, column 3, where the unknown key was. Its center is (495, 615.4) in the 1600×900 reference picture, on the grid like its neighbours.
+- Add `·` (U+00B7) to MR2 DX's keyboard layout at the left block's row 6, column 3, where the unknown key was. Its center is (495, 615.4) in the 1600×900 reference picture, on the grid like its neighbors.
 - Two new stand-ins for it:
 
   | Stand-in | Becomes | Why |

@@ -31,13 +31,13 @@ One clickable character or command on the keyboard, including **BS** and **Ent.*
 _Avoid_: Button (reserved for this tool's own window), letter
 
 **BS**:
-The keyboard's backspace key; deletes the last character in the monster field. Labelled `BS` in MR2 DX and `←` in MR1 DX.
+The keyboard's backspace key; deletes the last character in the monster field. Labeled `BS` in MR2 DX and `←` in MR1 DX.
 
 **Ent.**:
-The keyboard's enter key; runs the search on what's in the monster field. Labelled `Ent.` in MR2 DX and `END` in MR1 DX.
+The keyboard's enter key; runs the search on what's in the monster field. Labeled `Ent.` in MR2 DX and `END` in MR1 DX.
 
 **Monster field**:
-The text field at the top of the keyboard screen that the keys type into, labelled `Monster:` in MR2 DX. It holds at most 12 characters, and the 12th moves the game on to the next screen, as Ent. does.
+The text field at the top of the keyboard screen that the keys type into, labeled `Monster:` in MR2 DX. It holds at most 12 characters, and the 12th moves the game on to the next screen, as Ent. does.
 _Avoid_: Search box, name field
 
 ## Typing

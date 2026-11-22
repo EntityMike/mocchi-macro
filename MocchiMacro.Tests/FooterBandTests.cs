@@ -29,7 +29,7 @@ namespace MocchiMacro.Tests
                 Assert.AreEqual(18, band.Height);
 
                 // The second tile is tile 3, whose flower's top petal is one blue pixel at column
-                // 7, row 0, with nothing either side and the yellow centre below. Smoothing or a
+                // 7, row 0, with nothing either side and the yellow center below. Smoothing or a
                 // half-pixel shift would change its block or the pixels just outside it.
                 int left = tileWidth + 7 * blockSize;
                 for (int y = 0; y < blockSize; y++)

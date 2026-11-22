@@ -31,7 +31,7 @@ namespace MocchiMacro
                 using (Graphics graphics = Graphics.FromImage(enlarged))
                 {
                     graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
-                    // Without this, GDI+ samples from pixel corners rather than centres, which
+                    // Without this, GDI+ samples from pixel corners rather than centers, which
                     // shifts the picture by half a source pixel and trims its top and left edges.
                     graphics.PixelOffsetMode = PixelOffsetMode.Half;
                     graphics.DrawImage(frame, 0, 0, enlarged.Width, enlarged.Height);

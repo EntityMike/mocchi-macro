@@ -26,7 +26,7 @@ Review the code that will ship as 1.0.0 for glaring issues, so they're fixed bef
 
 **Screen size and key positions.** The repo owner has wondered for a while whether the way key positions follow the game's size is generic enough. Answer that question as part of the audit.
 
-Each game's key positions are measured in a 1600×900 picture. Before each click, the typist finds the game's picture: the largest 16:9 area that fits the client area, centred. It then scales the key's position into that picture. Check whether this holds up, and whether anything depends on 1600×900 more than it should. In particular:
+Each game's key positions are measured in a 1600×900 picture. Before each click, the typist finds the game's picture: the largest 16:9 area that fits the client area, centered. It then scales the key's position into that picture. Check whether this holds up, and whether anything depends on 1600×900 more than it should. In particular:
 
 - Is 1600×900 only a unit of measure, with nothing else assuming that size?
 - Does the game really draw its keyboard scaled evenly with the picture, at every size it offers, windowed and fullscreen? Say which sizes were checked against the real game and which are only assumed.

@@ -37,7 +37,7 @@ Checked while implementing, at 100% scaling:
 - Copied alone into an empty folder, the .exe starts with 10 keys per second and MR2 DX, and Windows reports the process as PerMonitorV2.
 - All 81 automated tests pass, unchanged.
 
-Checked by hand afterwards, at higher scaling:
+Checked by hand afterward, at higher scaling:
 
 - The lone .exe types correctly into MR2 DX windowed at 1600×900, into MR2 DX fullscreen, and into MR1 DX windowed.
 - The tool's window text is sharp.

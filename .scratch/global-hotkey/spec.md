@@ -61,7 +61,7 @@ The hotkey is fixed, not changeable. The tool tries three key combinations in or
 ## Testing Decisions
 
 - Nothing here touches the typist or the keyboard layouts, so their automated tests keep passing unchanged. The hotkey and the window are checked by hand, like the rest of the main window.
-- **The loop:** with MR2 DX windowed and the tool behind it or on another monitor, the hotkey brings the tool up with the old text selected. Typing a new search text and pressing Enter types it into the monster field, and the game is in front afterwards. Repeat a few times.
+- **The loop:** with MR2 DX windowed and the tool behind it or on another monitor, the hotkey brings the tool up with the old text selected. Typing a new search text and pressing Enter types it into the monster field, and the game is in front afterward. Repeat a few times.
 - **Fullscreen:** the same loop with MR2 DX fullscreen. The game stays behind the tool on the hotkey and comes back to the front on Enter.
 - **Minimized:** with the tool minimized, the hotkey restores it.
 - **While typing:** pressing the hotkey partway through typing changes nothing, and the name is typed correctly.

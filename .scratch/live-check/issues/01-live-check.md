@@ -38,7 +38,7 @@ It refuses to start while a real game is running.
 
 **2026-11-05:** Built. Run at real 125% scaling: all checks pass, and each of those breaks made it fail. The rings sit on the right keys for `Mocchi+Tiger` and BS on both keyboards.
 
-**2026-11-05:** Added the whole-keyboard run the repo owner asked for: 80 keys on MR2 DX and 74 on MR1 DX, each over 7 Go runs. Every typeable key gets a ring on the saved pictures, centred on its cell, so small marks like `.` and `_` sit a little off it. Only Ent. has none, since the typist never clicks it. Clicks 5 px off failed these runs too, and no settings file was written during a run.
+**2026-11-05:** Added the whole-keyboard run the repo owner asked for: 80 keys on MR2 DX and 74 on MR1 DX, each over 7 Go runs. Every typeable key gets a ring on the saved pictures, centered on its cell, so small marks like `.` and `_` sit a little off it. Only Ent. has none, since the typist never clicks it. Clicks 5 px off failed these runs too, and no settings file was written during a run.
 
 What it can't show:
 

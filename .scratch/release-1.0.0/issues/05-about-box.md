@@ -15,7 +15,7 @@ A small "?" button in the top-left corner of the tool's window, above the mascot
 - It comes last in the tab order, so Tab from the search text still reaches Go first.
 - Like the other inputs, it's disabled while Go types. Opening a window then would take the game out of the front partway through a name.
 
-**The About box** is a small fixed-size window titled "About Mocchi Macro", centred on the tool's window. The idle mascot's still pose stands on the left, at the same fixed 3× as in the main window. On the right, in this order:
+**The About box** is a small fixed-size window titled "About Mocchi Macro", centered on the tool's window. The idle mascot's still pose stands on the left, at the same fixed 3× as in the main window. On the right, in this order:
 
 1. **Mocchi Macro 1.0.0**: the name and version, as in the title bar.
 2. What the tool does, in one line.

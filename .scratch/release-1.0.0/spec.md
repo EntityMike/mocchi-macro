@@ -33,7 +33,7 @@ The README is rewritten for organizers. The repo owner builds and publishes the 
 5. As an organizer, I want to see the version in the title bar, so that I can say which one I'm on when asking for help.
 6. As an organizer, I want the tool to tell me quietly when a newer version is out, with a link to it, so that I don't miss fixes.
 7. As an organizer who is offline, or when GitHub doesn't answer, I want the update check to fail silently, so that it never gets in my way.
-8. As an organizer, I want the .exe's details to name the tool and its author, so that Task Manager and the file's Properties show something recognisable.
+8. As an organizer, I want the .exe's details to name the tool and its author, so that Task Manager and the file's Properties show something recognizable.
 9. As the repo owner, I want written steps for building and publishing the release, so that I can do it, and every later release, without guessing.
 10. As an organizer, I want the window to keep its size and look finished whether or not a newer version is out, so that nothing jumps or looks empty after startup.
 11. As an organizer, I want an About box in the tool, saying who made it and where to get help, so that I know where to turn without hunting for the README.
@@ -54,7 +54,7 @@ The README is rewritten for organizers. The repo owner builds and publishes the 
   | `AssemblyVersion`, `AssemblyFileVersion` | `1.0.0.0` | File and product version |
 
   `AssemblyTitle` is the one that matters most, since Windows shows it as the file's description. SmartScreen doesn't use these: for an unsigned file, it shows the file's name and "Unknown publisher".
-- **`AssemblyCompany` stays blank.** .NET Framework names the settings folder after the company, or after the program when there's none. Blank keeps `user.config` in `%LOCALAPPDATA%\MocchiMacro\`, a folder an organizer can recognise. The author's name still shows, in the copyright, the field Explorer displays.
+- **`AssemblyCompany` stays blank.** .NET Framework names the settings folder after the company, or after the program when there's none. Blank keeps `user.config` in `%LOCALAPPDATA%\MocchiMacro\`, a folder an organizer can recognize. The author's name still shows, in the copyright, the field Explorer displays.
   - Rejected: **`EntityMike` as the company.** It shows nowhere an organizer looks, and it moves the settings to `%LOCALAPPDATA%\EntityMike\`.
   - Setting a company in a later version would move the settings too, so organizers' saved values would go back to their defaults.
 - **The update notice.**
@@ -73,7 +73,7 @@ The README is rewritten for organizers. The repo owner builds and publishes the 
       - The order is long enough for the window at 200% scaling and starts over if the row is wider. The row's image is built once at startup, at the mascot's fixed 3×, so the band fills the row at any display scaling.
       - It's still, because the mascot already moves while Go types.
     - **Its place:** above 100% the row grows with the window (about 27 px tall at 150%) while the band stays 18 px, so the band sits on the row's bottom edge, keeping the grass at the very bottom of the window.
-    - **A newer release:** the band gives way to a link label centred in the row, both ways: "Version 1.1.0 is out: download". The whole text is the link, not just "download", so it's a bigger target and nothing in it reads as plain text. Clicking it opens `https://github.com/EntityMike/mocchi-macro/releases/latest` in the default browser, and it stays after a click. No blinking and no message box, so nothing distracts mid-tournament.
+    - **A newer release:** the band gives way to a link label centered in the row, both ways: "Version 1.1.0 is out: download". The whole text is the link, not just "download", so it's a bigger target and nothing in it reads as plain text. Clicking it opens `https://github.com/EntityMike/mocchi-macro/releases/latest` in the default browser, and it stays after a click. No blinking and no message box, so nothing distracts mid-tournament.
     - Rejected: **an empty row when there's no update** (this spec's first plan). Most of the time it would look like a layout mistake.
     - Rejected: **the link beside the hotkey label.** The label takes up to 145 px and the link 163 px, in a 288 px column. Shorter text ("1.1.0 is out: download") fits with about 21 px to spare, but the repo owner chose the full wording.
     - Rejected: **one band grid as wide as the window.** The window grows with display scaling while the art stays at 3×, so a band drawn 420 px wide would fall short at 125% and above.
@@ -90,7 +90,7 @@ The README is rewritten for organizers. The repo owner builds and publishes the 
   4. How to use it, hotkey loop first, then what an organizer needs around it:
      - Have the game on its keyboard screen, and pick the game in the dropdown.
      - Leave the mouse alone while Go types: the tool moves the real cursor and clicks.
-     - The search text holds 12 characters. The 12th moves the game on by itself, so there's no Ent. to press. Ent. is labelled `END` in MR1 DX.
+     - The search text holds 12 characters. The 12th moves the game on by itself, so there's no Ent. to press. Ent. is labeled `END` in MR1 DX.
      - Characters the keyboard has no key for are dropped, with a note saying so. Stand-ins type its symbols, such as `@` for ○, and the box's tooltip lists them.
      - The status line and the mascot both say how typing went.
      - In fullscreen, the tool shows over the game for a few seconds, so viewers on a stream may see it.

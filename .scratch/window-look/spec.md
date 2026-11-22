@@ -23,7 +23,7 @@ A pixel-art Mocchi, the **mascot** (see `GLOSSARY.md`), sits on the left of the 
 - **Done:** it hops.
 - **A problem:** it droops with a sweat drop.
 
-The window gets a modern stock Windows look. Segoe UI 9pt, even margins, a bigger Go button, the controls to the right of the mascot, and a width of about 420 px, so the title shows in full. The look stays stock: no custom colours or custom-drawn controls. The tool gets a Mocchi-face icon in its title bar and taskbar, and on the .exe itself.
+The window gets a modern stock Windows look. Segoe UI 9pt, even margins, a bigger Go button, the controls to the right of the mascot, and a width of about 420 px, so the title shows in full. The look stays stock: no custom colors or custom-drawn controls. The tool gets a Mocchi-face icon in its title bar and taskbar, and on the .exe itself.
 
 The art is original, drawn for this tool in Mocchi's likeness, not taken from the game. It's made release-quality, not as a placeholder, and the organizer (the repo owner) approves it before any window code uses it.
 
@@ -44,14 +44,14 @@ The art is original, drawn for this tool in Mocchi's likeness, not taken from th
 - **Original art, not game sprites.** Mocchi belongs to Koei Tecmo. Taking sprites from the game files would put their art in a public MIT repo, the most likely way to get a takedown. Original art in Mocchi's likeness is what fan tools commonly do; the release spec's README adds a not-affiliated line.
   - Rejected: **sprites taken from the game files.**
   - Rejected: **no Mocchi** (a plain keyboard icon). It loses the character that makes the tool feel like part of the community.
-- **Release quality, from the start.** The art is drawn to ship, not as a placeholder. Mocchi's shape and colours are matched from official art, looked up as reference while drawing. The animations borrow the loading screen's motion, a curl into a ball and back; a motion idea isn't anyone's art.
+- **Release quality, from the start.** The art is drawn to ship, not as a placeholder. Mocchi's shape and colors are matched from official art, looked up as reference while drawing. The animations borrow the loading screen's motion, a curl into a ball and back; a motion idea isn't anyone's art.
 - **Approval comes first.** The art is the first ticket, and the repo owner's approval is its acceptance criterion. The window tickets wait for it. Previews for approval:
   - an enlarged sheet of every frame
   - a local HTML page that plays each animation at its real timing
   - the icon at its real sizes.
 - **Sprite size.** 32×32 pixels per frame, with a transparent background.
   - It's shown at a fixed 3× (96 px) at every display scaling. A 32-pixel sprite only stays crisp at whole multiples, and the repo owner was happy with 3× once they'd seen it at 150%. The controls and the window still grow with scaling, so the mascot looks smaller beside them the higher scaling goes.
-  - It's drawn without smoothing (nearest neighbour), and the mascot's area in the window is sized from the frame.
+  - It's drawn without smoothing (nearest neighbor), and the mascot's area in the window is sized from the frame.
   - Rejected: **a scale that grows with display scaling** (4× at 125% and 150%, 6× at 200%). It was the first plan. It's one more rule to keep, and 3× looked fine.
 - **The animations.**
 
@@ -66,22 +66,22 @@ The art is original, drawn for this tool in Mocchi's likeness, not taken from th
   - The typing loop runs at its own steady speed, not one frame per key click. Tying it to clicks would mean the typist reporting every key to the window, for a difference nobody sees at 10 keys/s.
   - Startup messages, such as a taken hotkey, don't trigger Problem: that animation is about Go.
 - **How the art is made and kept.**
-  - **The source of truth** is the frames written as text pixel grids, one character per palette colour, in an `art/` folder at the repo root.
+  - **The source of truth** is the frames written as text pixel grids, one character per palette color, in an `art/` folder at the repo root.
   - **A small generator,** `art/make-art.cs`, turns them into the PNG frames and the `.ico`. It's compiled with the `csc.exe` that ships with .NET Framework (`C:\Windows\Microsoft.NET\Framework64\v4.0.30319\`) and uses `System.Drawing`, so nothing new is installed. That compiler only knows C# 5: no `$"..."` strings, no `=>` members, no `?.`. Its header says how to build and run it.
   - **The generated files,** the PNGs and the `.ico`, are committed too, so a future artist can redraw them in a pixel editor and skip the grids.
   - **In the .exe,** the PNGs and the icon are embedded as resources, so it stays a single file.
   - Rejected: **Python with Pillow.** It's a new tool to install.
   - Rejected: **drawing the grids at runtime.** It leaves no PNGs for an artist to edit, and the `.ico` has to exist at build time anyway.
 - **The icon.** It shows Mocchi's face, not the whole body, so it reads at small sizes.
-  - It holds 16, 32, 48 and 256 px. The 16 and 32 are hand-placed grids; 256 is the 32 enlarged 8×, and 48 is the 32 at its own size, centred, since 48 isn't a whole multiple of 32.
+  - It holds 16, 32, 48 and 256 px. The 16 and 32 are hand-placed grids; 256 is the 32 enlarged 8×, and 48 is the 32 at its own size, centered, since 48 isn't a whole multiple of 32.
   - One `.ico` serves as the .exe's icon (the project's application icon) and the main window's icon, so the title bar and taskbar match the Desktop.
 - **The layout.**
   - **Font:** Segoe UI 9pt for the whole window. It's set in the window's constructor, after `InitializeComponent`, and not in the designer. Set in the designer, it arrives while WinForms still has scaling to do, so the fixed-size labels scale twice above 100%, and the oversized status line covers the game dropdown. So the designer's view shows the default font.
   - **Scaling:** WinForms scales the layout by the exact DPI (`AutoScaleMode.Dpi`). The usual `AutoScaleMode.Font` left the controls too small for Segoe UI's text above 100%.
   - **Arrangement:** the mascot on the left, the controls in a column to its right, even margins. The Go button is bigger. The hotkey label from the global-hotkey spec gets its final place here.
   - **Width:** about 420 px of client area, enough for "Mocchi Macro 1.0.0" (the release spec puts the version in the title) to show in full in the title bar.
-  - **What stays:** the window is still fixed-size, with no maximize (single-exe spec), and every control keeps its behaviour.
-  - Rejected: **a custom MR2-coloured theme** with custom-drawn buttons. A lot more WinForms code, and custom drawing tends to break at high scaling, the trouble that sank single-exe ticket 03.
+  - **What stays:** the window is still fixed-size, with no maximize (single-exe spec), and every control keeps its behavior.
+  - Rejected: **a custom MR2-colored theme** with custom-drawn buttons. A lot more WinForms code, and custom drawing tends to break at high scaling, the trouble that sank single-exe ticket 03.
 - **No ADR.** Every choice here is cheap to change later.
 
 ## Testing Decisions

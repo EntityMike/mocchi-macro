@@ -16,7 +16,7 @@ Stop the organizer from resizing or maximizing the tool's window. Its controls s
 ## Acceptance criteria
 
 - [x] Dragging any edge or corner of the window doesn't resize it, and the cursor doesn't change to a resize arrow there.
-- [x] The title bar shows minimize and close, with maximize missing or greyed out.
+- [x] The title bar shows minimize and close, with maximize missing or grayed out.
 - [x] Double-clicking the title bar, Win + ↑, and the window menu (Alt + Space) don't maximize it.
 - [x] Win + ← / → and dragging it to a screen edge don't resize it.
 - [x] Minimizing and restoring still work, and the window comes back at the same size and place.

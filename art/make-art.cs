@@ -2,7 +2,7 @@
 // the tool's icon, Mocchi.ico.
 //
 // The grids in this folder are the source of truth: palette.txt maps each character to a
-// colour, each animation file (idle.txt, typing.txt, done.txt, problem.txt) holds its frames
+// color, each animation file (idle.txt, typing.txt, done.txt, problem.txt) holds its frames
 // and play order, footer-band.txt holds the band's tiles and their order, and icon-16.txt and
 // icon-32.txt hold the hand-placed icon faces. This writes png/<animation>-<frame>.png for
 // every frame, png/footer-band-<tile>.png for every tile, and Mocchi.ico with 16, 32, 48 and
@@ -75,8 +75,8 @@ static class MakeArt
             {
                 ToBitmap(face16, palette, 1),
                 ToBitmap(face32, palette, 1),
-                // 48 isn't a whole multiple of 32, so it's the 32 face at 1×, centred.
-                ToBitmap(Centred(face32, 48), palette, 1),
+                // 48 isn't a whole multiple of 32, so it's the 32 face at 1×, centered.
+                ToBitmap(Centered(face32, 48), palette, 1),
                 ToBitmap(face32, palette, 8),
             });
         }
@@ -88,7 +88,7 @@ static class MakeArt
         return 0;
     }
 
-    // Each line is a character, then the colour as #RRGGBB, or "transparent". Lines starting
+    // Each line is a character, then the color as #RRGGBB, or "transparent". Lines starting
     // with # are comments.
     static Dictionary<char, Color> ReadPalette(string path)
     {
@@ -105,7 +105,7 @@ static class MakeArt
             else if (parts[1].Length == 7 && parts[1][0] == '#')
                 palette[key] = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(parts[1].Substring(1), 16)));
             else
-                throw new ArtException(path + ": can't read colour \"" + parts[1] + "\"");
+                throw new ArtException(path + ": can't read color \"" + parts[1] + "\"");
         }
         return palette;
     }
@@ -191,7 +191,7 @@ static class MakeArt
     }
 
     // The grid in the middle of a larger, transparent one.
-    static string[] Centred(string[] grid, int size)
+    static string[] Centered(string[] grid, int size)
     {
         int margin = (size - grid.Length) / 2;
         string blankRow = new string('.', size);
@@ -217,12 +217,12 @@ static class MakeArt
         {
             for (int x = 0; x < width; x++)
             {
-                Color colour;
-                if (!palette.TryGetValue(grid[y][x], out colour))
-                    throw new ArtException("No palette colour for '" + grid[y][x] + "' in row " + (y + 1) + ": \"" + grid[y] + "\"");
+                Color color;
+                if (!palette.TryGetValue(grid[y][x], out color))
+                    throw new ArtException("No palette color for '" + grid[y][x] + "' in row " + (y + 1) + ": \"" + grid[y] + "\"");
                 for (int dy = 0; dy < scale; dy++)
                     for (int dx = 0; dx < scale; dx++)
-                        bitmap.SetPixel(x * scale + dx, y * scale + dy, colour);
+                        bitmap.SetPixel(x * scale + dx, y * scale + dy, color);
             }
         }
         return bitmap;
@@ -255,9 +255,9 @@ static class MakeArt
             {
                 writer.Write((byte)(images[i].Width % 256));    // 0 means 256
                 writer.Write((byte)(images[i].Height % 256));
-                writer.Write((byte)0);          // colour count, 0 for 32-bit
+                writer.Write((byte)0);          // color count, 0 for 32-bit
                 writer.Write((byte)0);          // reserved
-                writer.Write((short)1);         // colour planes
+                writer.Write((short)1);         // color planes
                 writer.Write((short)32);        // bits per pixel
                 writer.Write(encodedImages[i].Length);
                 writer.Write(offset);
@@ -290,8 +290,8 @@ static class MakeArt
             writer.Write(size * size * 4 + maskRowBytes * size);
             writer.Write(0);                    // horizontal resolution, unused
             writer.Write(0);                    // vertical resolution, unused
-            writer.Write(0);                    // palette colours
-            writer.Write(0);                    // important colours
+            writer.Write(0);                    // palette colors
+            writer.Write(0);                    // important colors
 
             for (int y = size - 1; y >= 0; y--)
             {

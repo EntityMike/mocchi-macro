@@ -10,7 +10,7 @@
   silently if anything sets awareness first.
 
   Also declares Windows 10 support, so Windows runs the tool as a Windows 10 app. Without it,
-  Windows applies compatibility behaviour meant for older apps and reports an older version.
+  Windows applies compatibility behavior meant for older apps and reports an older version.
 -->
 <assembly manifestVersion="1.0" xmlns="urn:schemas-microsoft-com:asm.v1">
   <assemblyIdentity version="1.0.0.0" name="MocchiMacro.app"/>

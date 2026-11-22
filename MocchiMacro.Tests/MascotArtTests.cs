@@ -76,7 +76,7 @@ namespace MocchiMacro.Tests
                 {
                     for (int x = 0; x < exeFace.Width; x++)
                     {
-                        // A fully transparent pixel's colour can't be seen, and Windows doesn't keep it.
+                        // A fully transparent pixel's color can't be seen, and Windows doesn't keep it.
                         if (exeFace.GetPixel(x, y).A == 0 && embeddedFace.GetPixel(x, y).A == 0) continue;
                         AssertPixel(embeddedFace.GetPixel(x, y), exeFace, x, y);
                     }
