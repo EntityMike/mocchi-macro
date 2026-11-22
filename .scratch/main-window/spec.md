@@ -48,7 +48,7 @@ A small window the organizer can put on any monitor. It has a box for the search
 
 ## Implementation Decisions
 
-- **Target game:** MR2 DX only, found by its window title `MF2`. MR1 DX (`MF1`) comes later, since its graphics and some details differ.
+- **Target game:** MR2 DX only, found by its window title `MF2`. MR1 DX (`MF`) comes later, since its graphics and some details differ.
 - **Keyboard layout module.** Holds the keyboard's layout as measured in the keyboard test, in a 1600×900 reference picture: two blocks of 5 columns × 8 rows, each with its own left edge, plus BS and Ent. The keyboard test never clicked BS or Ent., so their centers are measured from the same 1600×900 screenshot it used (`docs/screenshots/mr2/ingamekeyboard.png`). It answers two questions: does a character have a key, and where is that key's center in reference coordinates? The left block's punctuation key whose character isn't known yet is left out, so it can't be typed. Ent. is in the layout so a later ticket can use it, but nothing clicks it yet.
 - **Typist module (the deep module).** It has one operation: type this search text into the game at this typing rate. In order, it:
   1. Checks that every character of the search text has a key. If one doesn't, it clicks nothing, not even BS. The search text box already removes such characters, but this guards text that reaches the typist another way.
