@@ -34,7 +34,7 @@ Let the organizer type the keyboard's four symbol keys from an ordinary keyboard
 ## Acceptance criteria
 
 - [x] Typing `Mocchi@` leaves `Mocchi○` in the box, with no note.
-- [x] Typing `*`, `^` and `#` gives `×`, `△` and `□`.
+- [x] Typing `*`, `^`, and `#` gives `×`, `△`, and `□`.
 - [x] Pasting `@*^#` leaves `○×△□`; pasting `Mo cchi@` leaves `Mocchi○` and a note naming only the space.
 - [x] Typing a stand-in in the middle of the text leaves the caret just after the new symbol.
 - [x] At 12 characters, typing a stand-in does nothing and shows no note.

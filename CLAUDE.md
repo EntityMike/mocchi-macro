@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 A Windows tool that types monster names into Monster Rancher 1 & 2 DX's on-screen keyboard by clicking its keys with the mouse, so tournament organizers set up battles faster. It's a WinForms app on .NET Framework 4.8 that ships as a single `.exe`.
 
-Use the words defined in `GLOSSARY.md` in code, comments, tickets and commit messages.
+Use the words defined in `GLOSSARY.md` in code, comments, tickets, and commit messages.
 
 ## Commands
 
@@ -46,7 +46,7 @@ The header of `art/make-art.cs` has the commands. It's compiled with the C# 5 `c
 
 ### Typing: `Typist` behind the `IGamePort` seam
 
-`Typist` holds all the typing logic and reaches the game only through `IGamePort`. `User32GamePort` is the real one (user32.dll calls); `FakeGamePort` in the tests records clicks against a virtual clock, so the typist tests need no game and no real time. Anything that needs the window, mouse or clock goes through the port, including waiting: `Typist` must never sleep or read time itself.
+`Typist` holds all the typing logic and reaches the game only through `IGamePort`. `User32GamePort` is the real one (user32.dll calls); `FakeGamePort` in the tests records clicks against a virtual clock, so the typist tests need no game and no real time. Anything that needs the window, mouse, or clock goes through the port, including waiting: `Typist` must never sleep or read time itself.
 
 One Go: refuse text the keyboard can't type, find the game window by title, restore it if minimized, bring it to the front and confirm it got there, click BS 12 times to clear the monster field, then click each key. It never clicks Ent. Clicks are scheduled against the clock rather than by fixed gaps, and the client area is re-read before every click so typing follows a moved window.
 
@@ -54,7 +54,7 @@ One Go: refuse text the keyboard can't type, find the game window by title, rest
 
 `KeyboardLayout` holds each game's key centers as measured in a 1600×900 picture (the screenshots in `docs/screenshots/`). `Typist` scales them to whatever the game window is now: it first finds the 16:9 picture inside the client area (fullscreen on a non-16:9 monitor has black bars), then scales into it. Layouts never hold screen coordinates.
 
-`Game` ties a game's dropdown name, window title (`MF` / `MF2`), layout and Ent. key label together. Adding a game means a new `Game` and a new layout, nothing else.
+`Game` ties a game's dropdown name, window title (`MF` / `MF2`), layout, and Ent. key label together. Adding a game means a new `Game` and a new layout, nothing else.
 
 Stand-ins (`@` for ○ and so on) are swapped by the search text box in `MainWindow`, not by `Typist`. `Typist` only ever sees characters that have keys, and refuses anything else as a guard.
 
@@ -74,7 +74,7 @@ Settings are saved once on close, not on each change. Rapid rewrites of `user.co
 ### Project constraints worth knowing
 
 - **`MocchiMacro.csproj` is an old-style project.** A new `.cs` file isn't compiled until it has its own `<Compile Include="..." />` line. The Tests and LiveCheck projects are SDK-style and pick files up by themselves.
-- **C# 7.3** throughout (the .NET Framework 4.8 default): tuples are fine; nullable reference types, records, switch expressions and `using` declarations aren't.
+- **C# 7.3** throughout (the .NET Framework 4.8 default): tuples are fine; nullable reference types, records, switch expressions, and `using` declarations aren't.
 - **The tool ships as one `.exe`** with nothing next to it. Art is embedded, DPI awareness is declared in `app.manifest` rather than a config file, and no NuGet packages are referenced by the main project. Keep it that way.
 - **DPI.** The tool is PerMonitorV2 aware so click points are real pixels. The window uses `AutoScaleMode.Dpi` and sets its font after `InitializeComponent`; comments in `MainWindow.cs` say what broke otherwise.
 

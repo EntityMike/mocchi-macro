@@ -1,5 +1,5 @@
 // Typist tests: they drive the typist through a fake game port and check only what the game
-// would see, which screen points were clicked, in what order and when.
+// would see, which screen points were clicked, in what order, and when.
 
 using System.Drawing;
 using System.Linq;

@@ -11,7 +11,7 @@ The thinnest path from the tool's window to letters in the game's monster field.
 - A main window titled "Mocchi Macro" with a search text box and a Go button. It replaces the template form.
 - The keyboard layout: every key's center in the 1600×900 reference picture, plus whether a character has a key. Leave out the unknown punctuation key.
 - The typist and its game port. Go finds the `MF2` game window and clicks BS 12 times. Then it clicks each key of the search text, at a fixed 10 keys per second scheduled against the clock, with a 50 ms hold per click. It reads the client area before every click.
-- For now, assume the game runs in a window at 1600×900 and is already in front. Scaling, focus and error handling come in later tickets. If the game isn't found, the typist reports that so the window doesn't crash, but no friendly message is needed yet.
+- For now, assume the game runs in a window at 1600×900 and is already in front. Scaling, focus, and error handling come in later tickets. If the game isn't found, the typist reports that so the window doesn't crash, but no friendly message is needed yet.
 - The real game port wraps `user32.dll` (see the spec). The fake game port records each click with a virtual clock.
 - A new MSTest test project (`MSTest.TestFramework`, `MSTest.TestAdapter`).
 
@@ -21,7 +21,7 @@ The thinnest path from the tool's window to letters in the game's monster field.
 - [x] Ent. is never clicked.
 - [x] Test: at 1600×900, 12 BS clicks come first, then each key at its measured position (the positions measured by the pre-repo keyboard test).
 - [x] Test: at 10 keys/s, click *n* happens at *n* × 100 ms on the fake clock.
-- [x] Test: the layout says letters, digits and `○ × △ □` have keys, and space, accented letters and the unknown punctuation key don't.
+- [x] Test: the layout says letters, digits, and `○ × △ □` have keys, and space, accented letters, and the unknown punctuation key don't.
 - [x] Tests run from Visual Studio's Test Explorer.
 
 ## User stories covered

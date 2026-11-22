@@ -5,7 +5,7 @@
 // color, each animation file (idle.txt, typing.txt, done.txt, problem.txt) holds its frames
 // and play order, footer-band.txt holds the band's tiles and their order, and icon-16.txt and
 // icon-32.txt hold the hand-placed icon faces. This writes png/<animation>-<frame>.png for
-// every frame, png/footer-band-<tile>.png for every tile, and Mocchi.ico with 16, 32, 48 and
+// every frame, png/footer-band-<tile>.png for every tile, and Mocchi.ico with 16, 32, 48, and
 // 256 px images. Running it again on unchanged grids gives byte-for-byte the same files.
 //
 // It's compiled with the C# 5 compiler that ships with .NET Framework, so nothing new is

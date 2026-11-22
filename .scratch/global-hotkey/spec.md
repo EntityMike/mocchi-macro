@@ -29,7 +29,7 @@ The hotkey is fixed, not changeable. The tool tries three key combinations in or
 
 ## Implementation Decisions
 
-- **The hotkey brings the window up; it doesn't type.** On the hotkey, the main window is restored if minimized, brought to the front and activated. Then the search text box gets focus with all its text selected. If the window is already in front, the hotkey does the same, so pressing it always leaves the box ready.
+- **The hotkey brings the window up; it doesn't type.** On the hotkey, the main window is restored if minimized, brought to the front, and activated. Then the search text box gets focus with all its text selected. If the window is already in front, the hotkey does the same, so pressing it always leaves the box ready.
   - Windows normally refuses to let a background program take focus. A program that receives a hotkey message is allowed to, since the organizer's key press went to it. If that turns out not to hold, record it in the ticket and look for a workaround before going further.
 - **Ignored while typing.** While Go types (the time its inputs are disabled), the hotkey does nothing. Activating the tool then would take focus from the game partway through a name.
 - **Fullscreen.** A fullscreen game doesn't minimize when it loses focus. It stays behind whatever window is in front, so the hotkey puts the tool over it, and Go brings the game back to the front as it does today. This is accepted: viewers may see the tool over the game for a few seconds. Avoiding it needs typing without leaving the game, which waits for the preset list.

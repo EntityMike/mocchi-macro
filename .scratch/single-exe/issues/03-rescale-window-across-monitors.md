@@ -84,7 +84,7 @@ The development machine's two monitors share one scaling, so the handler was che
   | 175% | 11×24 | 528 | 525, clips 3 px |
   | 200% | 13×26 | 624 | 600, clips 24 px |
 
-  Under the font-based size alone (no suggested rectangle), the window grows with the controls, at 400, 450, 550 and 650 wide inside.
+  Under the font-based size alone (no suggested rectangle), the window grows with the controls, at 400, 450, 550, and 650 wide inside.
 - **The two paths disagree.** At startup the window's size came from the font rescale, but after a drag it came from Windows' rectangle. So opening on a monitor and dragging onto it could give different sizes.
 
 ### What would need rethinking

@@ -2,7 +2,7 @@
 # window. It's built from the tiles below, laid side by side in the order line's order.
 #
 # Every tile is 20 wide and 6 tall, and shares the same left and right edge columns (three
-# transparent pixels, then the dark grass edge, the lit grass top and the grass), so any tile
+# transparent pixels, then the dark grass edge, the lit grass top, and the grass), so any tile
 # can sit beside any other without a seam.
 #
 # The order line is long enough to fill the row at 200% scaling: 14 tiles of 20 pixels at 3×

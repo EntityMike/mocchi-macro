@@ -73,7 +73,7 @@ namespace MocchiMacro
             // A space marks a cell left out. The keyboard's empty cells type a space in the game,
             // but they're left out, so MR1 DX has no space key, like MR2 DX. Right block row 5,
             // column 4 is ←, MR1 DX's BS, which is left out as well so it can't be typed as a
-            // character. Left block row 6 is circle, cross and three punctuation keys; row 7 ends
+            // character. Left block row 6 is circle, cross, and three punctuation keys; row 7 ends
             // in the middle dot.
             string[] leftBlock = { "ABCDE", "FGHIJ", "KLMNO", "PQRST", "UVWXY", "Z    ", "\u25CB\u00D7!?~", "+-%.\u00B7", "12345" };
             string[] rightBlock = { "abcde", "fghij", "klmno", "pqrst", "uvwxy", "z_   ", "/    ", "     ", "67890" };

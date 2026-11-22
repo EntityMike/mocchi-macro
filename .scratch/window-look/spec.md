@@ -1,4 +1,4 @@
-# Window look: a mascot, an icon and a tidier window
+# Window look: a mascot, an icon, and a tidier window
 
 Status: resolved
 
@@ -31,7 +31,7 @@ The art is original, drawn for this tool in Mocchi's likeness, not taken from th
 
 1. As an organizer, I want the tool to look tidy and modern, so that I trust it enough to run it and don't mind it being on screen.
 2. As an organizer, I want to see "Mocchi Macro" in full in its title bar, so that I can find it among my windows.
-3. As an organizer, I want a Mocchi icon on the .exe, the title bar and the taskbar, so that I can spot the tool at a glance.
+3. As an organizer, I want a Mocchi icon on the .exe, the title bar, and the taskbar, so that I can spot the tool at a glance.
 4. As an organizer, I want the mascot to animate while Go types, so that I can see at a glance that typing is under way.
 5. As an organizer, I want the mascot to hop when typing is done and droop when something went wrong, so that I get the outcome before reading the status line.
 6. As an organizer, I want the mascot to idle and blink between battles, so that the window feels alive without being distracting.
@@ -73,7 +73,7 @@ The art is original, drawn for this tool in Mocchi's likeness, not taken from th
   - Rejected: **Python with Pillow.** It's a new tool to install.
   - Rejected: **drawing the grids at runtime.** It leaves no PNGs for an artist to edit, and the `.ico` has to exist at build time anyway.
 - **The icon.** It shows Mocchi's face, not the whole body, so it reads at small sizes.
-  - It holds 16, 32, 48 and 256 px. The 16 and 32 are hand-placed grids; 256 is the 32 enlarged 8×, and 48 is the 32 at its own size, centered, since 48 isn't a whole multiple of 32.
+  - It holds 16, 32, 48, and 256 px. The 16 and 32 are hand-placed grids; 256 is the 32 enlarged 8×, and 48 is the 32 at its own size, centered, since 48 isn't a whole multiple of 32.
   - One `.ico` serves as the .exe's icon (the project's application icon) and the main window's icon, so the title bar and taskbar match the Desktop.
 - **The layout.**
   - **Font:** Segoe UI 9pt for the whole window. It's set in the window's constructor, after `InitializeComponent`, and not in the designer. Set in the designer, it arrives while WinForms still has scaling to do, so the fixed-size labels scale twice above 100%, and the oversized status line covers the game dropdown. So the designer's view shows the default font.
@@ -88,23 +88,23 @@ The art is original, drawn for this tool in Mocchi's likeness, not taken from th
 
 - The typist and the keyboard layouts are unchanged, so their automated tests keep passing. The window is checked by hand, as before.
 - **The art** is judged by the repo owner from the previews (ticket 01).
-- **The layout:** at 100%, 125% and 150% scaling:
+- **The layout:** at 100%, 125%, and 150% scaling:
   - nothing is cut off or overlapping
   - the title shows in full
   - the mascot is crisp, not blurred.
-- **The icon:** it shows in the title bar, the taskbar and Alt+Tab, and on the .exe in Explorer and on the Desktop at small, medium and large icon sizes.
+- **The icon:** it shows in the title bar, the taskbar, and Alt+Tab, and on the .exe in Explorer and on the Desktop at small, medium, and large icon sizes.
 - **The animations:**
   - typing loops for as long as Go types
   - Done hops once, then idles after about 2 s
   - a game-not-found Go and an empty-box Go both droop once
   - a Go during the hold cuts it short
   - idle blinks every few seconds.
-- **Everything else** in the window works as before: Go, Enter, the hotkey, the typing rate, the game dropdown and the tooltip.
+- **Everything else** in the window works as before: Go, Enter, the hotkey, the typing rate, the game dropdown, and the tooltip.
 
 ## Out of Scope
 
 - A custom theme, dark mode, or custom-drawn controls.
-- Hand-drawn 20, 24 and 40 px icon sizes. At 125% and 150% scaling, the title bar probably enlarges the 16 px face, which makes it slightly blockier; add those sizes later if it looks poor.
+- Hand-drawn 20, 24, and 40 px icon sizes. At 125% and 150% scaling, the title bar probably enlarges the 16 px face, which makes it slightly blockier; add those sizes later if it looks poor.
 - The README screenshot, the version in the title, and the update notice (release-1.0.0 spec).
 
 ## Further Notes

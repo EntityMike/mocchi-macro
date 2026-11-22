@@ -1,6 +1,6 @@
 // The update check: asks GitHub once for the tool's latest release and says whether it's newer
 // than the running version, so the window can show the update notice. Any failure, such as
-// being offline, a timeout, rate limiting or a 404, counts as no newer release.
+// being offline, a timeout, rate limiting, or a 404, counts as no newer release.
 
 using System;
 using System.Net.Http;

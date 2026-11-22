@@ -81,14 +81,14 @@ The middle dot becomes a key in both games, typed with the stand-in `` ` `` or b
 - **Main window.**
   - **Game dropdown:** a drop-down list (no typing) at the bottom of the window next to the typing rate, with "MR1 DX" and "MR2 DX". It defaults to MR2 DX, and Go disables it with the other inputs while typing.
   - **Switching games** clears the search text box completely, which also clears the dropped-characters note. The status line is left alone.
-  - The search text box cleans text against the selected game's layout: stand-ins, dropping and the 12-character limit, as today.
+  - The search text box cleans text against the selected game's layout: stand-ins, dropping, and the 12-character limit, as today.
   - **Game-not-found message:** it names the selected game: "MR1 DX not found. Start it, then press Go again." (or "MR2 DX ..."). It doesn't look for the other game.
 - **Saved settings:** the game is saved in the user settings next to the typing rate, once, on close, and restored at startup. A missing or unknown saved value means MR2 DX.
 - **Both monster fields hold 12 characters** (MR1 DX's results list shows a 12-character name), so the box's 12-character limit and the 12 BS clicks to clear stay the same for both games.
 
 ## Testing Decisions
 
-- As in the main-window spec, tests drive the typist through its one operation with the fake game port, and check only what the game would see: which points were clicked, in what order and when, and the outcome.
+- As in the main-window spec, tests drive the typist through its one operation with the fake game port, and check only what the game would see: which points were clicked, in what order, when, and the outcome.
 - What the new typist tests cover, with MR1 DX's layout:
   - At 1600×900, twelve `←` clicks at (1028, 536), then each key at its measured position. For example, "Mocchi" lands at M (428, 356), o (1028, 356), c (878, 236), c, h (878, 296), i (953, 296).
   - At 854×480 and at 3440×1441 fullscreen, positions scale and shift from the reference the same way as MR2 DX's.
@@ -99,7 +99,7 @@ The middle dot becomes a key in both games, typed with the stand-in `` ` `` or b
   - Each game's stand-ins map to a symbol key that game has, and no stand-in has a key itself.
 - The existing MR2 DX tests keep passing unchanged, apart from the old "the unknown punctuation key has no key" case, which becomes the `·` case above.
 - The main window isn't tested automatically. Check it by hand:
-  - **MR1 DX:** windowed at 1600×900, one other size, and fullscreen once. Across a few search texts, type every MR1 DX key at least once. For example `ABCDEFGHIJKL`, `MNOPQRSTUVWX`, `YZabcdefghij`, `klmnopqrstuv`, `wxyz_/@*~!?+`, `` -%.`12345678 `` and `90`.
+  - **MR1 DX:** windowed at 1600×900, one other size, and fullscreen once. Across a few search texts, type every MR1 DX key at least once. For example `ABCDEFGHIJKL`, `MNOPQRSTUVWX`, `YZabcdefghij`, `klmnopqrstuv`, `wxyz_/@*~!?+`, `` -%.`12345678 ``, and `90`.
   - **MR2 DX:** the `` ` `` stand-in typing `·` into the game.
   - **The dropdown:** remembered across a restart, clearing the box on a switch, and disabled while typing.
   - **Messages and tooltip:** the not-found message names the game, and the tooltip changes with the game.

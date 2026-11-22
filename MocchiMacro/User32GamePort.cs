@@ -1,5 +1,5 @@
 // The real game port: finds the game window by its title and clicks it through user32.dll.
-// The click, timing and window calls follow the keyboard test that was proven against the game.
+// The click, timing, and window calls follow the keyboard test that was proven against the game.
 
 using System;
 using System.Diagnostics;
@@ -87,7 +87,7 @@ namespace MocchiMacro
         [StructLayout(LayoutKind.Sequential)]
         struct MOUSEINPUT { public int dx, dy; public uint mouseData, dwFlags, time; public IntPtr dwExtraInfo; }
 
-        // INPUT is really a union of mouse, keyboard and hardware input. Mouse is the largest
+        // INPUT is really a union of mouse, keyboard, and hardware input. Mouse is the largest
         // member, so declaring only it still gives the right struct size on 32- and 64-bit.
         [StructLayout(LayoutKind.Sequential)]
         struct INPUT { public uint type; public MOUSEINPUT mi; }

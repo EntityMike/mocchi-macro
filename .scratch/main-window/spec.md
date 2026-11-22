@@ -97,7 +97,7 @@ A small window the organizer can put on any monitor. It has a box for the search
   - A search text with a character that has no key reports that outcome, and nothing is clicked.
 - The keyboard layout's "does this character have a key" check is tested for the cases the search text box relies on: letters, digits, `○ × △ □`, space, accented letters, and the unknown punctuation key.
 - The main window isn't tested automatically. Check it by hand against the game in windowed mode at 1600×900, plus one other size, and once in fullscreen.
-- Prior art: there are no tests in the repo yet. The throwaway keyboard test run before this repo existed (`keyboard-test.cs`, not kept here) held the measured key positions and the click, timing and focus behavior proven against the game. It's the reference for the expected click positions, except BS and Ent., which come from the screenshot named under the keyboard layout module.
+- Prior art: there are no tests in the repo yet. The throwaway keyboard test run before this repo existed (`keyboard-test.cs`, not kept here) held the measured key positions and the click, timing, and focus behavior proven against the game. It's the reference for the expected click positions, except BS and Ent., which come from the screenshot named under the keyboard layout module.
 
 ## Out of Scope
 

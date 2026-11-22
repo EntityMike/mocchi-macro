@@ -21,7 +21,7 @@ Review the code that will ship as 1.0.0 for glaring issues, so they're fixed bef
    - a settings folder that can't be written to
 4. **Long sessions.** Leaks or slowdowns over hours of use, since a tournament runs that long: images, handles, timers.
 5. **Win32 calls.** Mistakes in signatures or in handling their errors.
-6. **Stale docs.** Comments, file headers, `CLAUDE.md` or the README that no longer match the code.
+6. **Stale docs.** Comments, file headers, `CLAUDE.md`, or the README that no longer match the code.
 7. **Dead code, and tests that don't test what their names say.**
 
 **Screen size and key positions.** The repo owner has wondered for a while whether the way key positions follow the game's size is generic enough. Answer that question as part of the audit.
@@ -36,7 +36,7 @@ Each game's key positions are measured in a 1600×900 picture. Before each click
 
 End with a recommendation, ranked like any other finding. Either it's generic enough as it is, and why, or say what should change and what that would fix.
 
-Review the main project first, then the tests, the live check and the art generator. The project constraints in `CLAUDE.md` count as standards, so breaking one is a finding. They include the single .exe, C# 7.3, no NuGet packages in the main project, and the typist never sleeping or reading the time itself.
+Review the main project first, then the tests, the live check, and the art generator. The project constraints in `CLAUDE.md` count as standards, so breaking one is a finding. They include the single .exe, C# 7.3, no NuGet packages in the main project, and the typist never sleeping or reading the time itself.
 
 **Not in scope:** new features, refactors for taste, and style changes that make no difference. Every finding has to name a way something goes wrong.
 
@@ -51,7 +51,7 @@ Review the main project first, then the tests, the live check and the art genera
 
 ## Acceptance criteria
 
-- [ ] Every file in the main project has been read. The tests, the live check and the art generator have been checked against the list above.
+- [ ] Every file in the main project has been read. The tests, the live check, and the art generator have been checked against the list above.
 - [ ] The findings are in this ticket's comments, ranked, and each names what goes wrong.
 - [ ] The screen size question is answered with a recommendation: generic enough as it is, or what to change.
 - [ ] The repo owner has decided on each finding: fix now, give it its own ticket, or leave it.

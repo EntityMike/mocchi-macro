@@ -31,7 +31,7 @@ A small "?" button in the top-left corner of the tool's window, above the mascot
 An **OK** button closes it, and so do Enter and Esc.
 
 **Rules it follows:**
-- **One source for the details.** The name, the one-line description and the copyright are read from the .exe's file details (ticket 01), as the title bar reads the version. They're never written out a second time.
+- **One source for the details.** The name, the one-line description, and the copyright are read from the .exe's file details (ticket 01), as the title bar reads the version. They're never written out a second time.
 - **No network use.** Nothing is fetched. A link only opens the browser when clicked. If there's no default browser, nothing happens, as with the update notice.
 - **The hotkey isn't blocked.** Pressing it while the About box is open closes the box, then brings up the search text as usual. A forgotten About box mustn't stop the next search text.
 - **The window's rules apply to it too:** DPI-aware scaling, and the font set after the designer's layout, so its text and links aren't cut off at higher display scaling.
@@ -42,12 +42,12 @@ An **OK** button closes it, and so do Enter and Esc.
 
 ## Acceptance criteria
 
-- [ ] The "?" button sits in the top-left corner, doesn't overlap the mascot, and the window is the same size as before. Check this at real 100%, 125% and 150% scaling.
+- [ ] The "?" button sits in the top-left corner, doesn't overlap the mascot, and the window is the same size as before. Check this at real 100%, 125%, and 150% scaling.
 - [ ] Hovering over the button shows "About". It's last in the tab order, and disabled while Go types.
-- [ ] The About box shows the mascot and all seven parts in order, with nothing cut off, at 100%, 125% and 150%.
-- [ ] Its name, version, description and copyright match the .exe's Properties → Details.
+- [ ] The About box shows the mascot and all seven parts in order, with nothing cut off, at 100%, 125%, and 150%.
+- [ ] Its name, version, description, and copyright match the .exe's Properties → Details.
 - [ ] Each of the three links opens the right page in the browser.
-- [ ] OK, Enter and Esc each close it.
+- [ ] OK, Enter, and Esc each close it.
 - [ ] With the About box open, the hotkey closes it and leaves the search text selected in the tool's window.
 - [ ] `CHANGELOG.md`'s 1.0.0 entry mentions the About box.
 - [ ] The typist and keyboard layout tests still pass, and so does the live check (run by the repo owner).

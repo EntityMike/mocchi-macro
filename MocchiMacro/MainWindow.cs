@@ -4,10 +4,10 @@
 // and the game are saved in the user settings when the window closes and restored at startup.
 // Switching games clears the search text box.
 // The search text box swaps stand-ins such as '@' for the symbol keys they stand for, holds
-// at most 12 characters and drops any character the selected game's keyboard has no key for,
+// at most 12 characters, and drops any character the selected game's keyboard has no key for,
 // with a note under it naming what was dropped or saying the text was cut to 12. Its tooltip
 // lists the stand-ins you can type in the selected game. Enter in it runs Go. While Go types,
-// it, both boxes and the dropdown are disabled; then a status line between the search text
+// it, both boxes, and the dropdown are disabled; then a status line between the search text
 // and the typing rate says how typing went.
 // The hotkey brings the window to the front from any program with the search text selected,
 // so the organizer can type the next one over it. It's Ctrl+Alt+Shift+M, or a fallback when
@@ -56,7 +56,7 @@ namespace MocchiMacro
             // version in AssemblyInfo.cs. Three parts, since the fourth is always 0.
             Text = "Mocchi Macro " + RunningVersion.ToString(3);
 
-            // For the title bar, taskbar and Alt+Tab. The .exe's own icon doesn't reach these:
+            // For the title bar, taskbar, and Alt+Tab. The .exe's own icon doesn't reach these:
             // without this the window shows WinForms' default icon.
             Icon = MascotArt.LoadIcon();
 

@@ -25,9 +25,9 @@ There's no animation yet; that's ticket 04.
 
 ## Acceptance criteria
 
-- [x] At 100%, 125% and 150% scaling, nothing is cut off or overlapping, and the full title shows in the title bar.
+- [x] At 100%, 125%, and 150% scaling, nothing is cut off or overlapping, and the full title shows in the title bar.
 - [x] At each scaling, the mascot is crisp, with square pixels, not blurred.
-- [x] Go, Enter, the hotkey, the hotkey label, the typing rate, the game dropdown, the tooltip and the status line all work as before. (Not checked with Go typing into a running game; see the comments.)
+- [x] Go, Enter, the hotkey, the hotkey label, the typing rate, the game dropdown, the tooltip, and the status line all work as before. (Not checked with Go typing into a running game; see the comments.)
 - [x] The window still can't be resized or maximized.
 - [x] The automated tests pass unchanged.
 
