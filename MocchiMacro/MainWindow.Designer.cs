@@ -46,6 +46,8 @@ namespace MocchiMacro
             this.footerRow = new System.Windows.Forms.Panel();
             this.footerBand = new System.Windows.Forms.PictureBox();
             this.updateNoticeLink = new System.Windows.Forms.LinkLabel();
+            this.aboutButton = new System.Windows.Forms.Button();
+            this.aboutButtonToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.controlsColumn.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mascotBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.typingRateBox)).BeginInit();
@@ -217,6 +219,17 @@ namespace MocchiMacro
             this.updateNoticeLink.Visible = false;
             this.updateNoticeLink.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.UpdateNoticeLink_LinkClicked);
             //
+            // aboutButton
+            //
+            this.aboutButton.Location = new System.Drawing.Point(12, 10);
+            this.aboutButton.Name = "aboutButton";
+            this.aboutButton.Size = new System.Drawing.Size(22, 22);
+            this.aboutButton.TabIndex = 3;
+            this.aboutButton.Text = "?";
+            this.aboutButtonToolTip.SetToolTip(this.aboutButton, "About");
+            this.aboutButton.UseVisualStyleBackColor = true;
+            this.aboutButton.Click += new System.EventHandler(this.AboutButton_Click);
+            //
             // MainWindow
             //
             this.AcceptButton = this.goButton;
@@ -226,6 +239,7 @@ namespace MocchiMacro
             this.Controls.Add(this.controlsColumn);
             this.Controls.Add(this.mascotBox);
             this.Controls.Add(this.footerRow);
+            this.Controls.Add(this.aboutButton);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.Name = "MainWindow";
@@ -260,5 +274,7 @@ namespace MocchiMacro
         private System.Windows.Forms.Panel footerRow;
         private System.Windows.Forms.PictureBox footerBand;
         private System.Windows.Forms.LinkLabel updateNoticeLink;
+        private System.Windows.Forms.Button aboutButton;
+        private System.Windows.Forms.ToolTip aboutButtonToolTip;
     }
 }

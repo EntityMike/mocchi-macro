@@ -116,7 +116,7 @@ The README is rewritten for organizers. The repo owner builds and publishes the 
   - Rejected: **installing the `gh` CLI.** It's a new tool, for a step done once per release.
   - Rejected: **code signing.** It costs about $10 a month (Azure Artifact Signing, formerly Trusted Signing); the README explains SmartScreen instead.
 - **The About box,** opened by a small "?" button in the window's top-left corner. Ticket 05 has the full contents.
-  - **A small window, not a message box.** It shows the idle mascot, the text, clickable links, and an OK button.
+  - **A small window, not a message box.** It shows the trophy frame (new art of Mocchi sitting in a giant gold trophy cup, one still frame), the text, clickable links, and an OK button.
     - Rejected: **a message box.** It's one line of code, but its URLs can't be clicked, the same reason the update notice doesn't use one.
   - **What it says:** the name and version, what the tool does, the copyright and license, links to the repo's page (for the README and changelog), the Monster Rancher Discord, and the game on Steam, thanks to Koei Tecmo and the Monster Rancher community, the README's not-affiliated line, and "Enjoy!". The name, description, and copyright are read from the .exe's file details, so they're written once.
     - The support link is the Discord, since organizers are already there and the repo doesn't use GitHub issues.

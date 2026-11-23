@@ -3,7 +3,8 @@
 //
 // The grids in this folder are the source of truth: palette.txt maps each character to a
 // color, each animation file (idle.txt, typing.txt, done.txt, problem.txt) holds its frames
-// and play order, footer-band.txt holds the band's tiles and their order, and icon-16.txt and
+// and play order, about.txt holds the About box's one still frame, with no play order,
+// footer-band.txt holds the band's tiles and their order, and icon-16.txt and
 // icon-32.txt hold the hand-placed icon faces. This writes png/<animation>-<frame>.png for
 // every frame, png/footer-band-<tile>.png for every tile, and Mocchi.ico with 16, 32, 48, and
 // 256 px images. Running it again on unchanged grids gives byte-for-byte the same files.
@@ -27,7 +28,9 @@ using System.Linq;
 
 static class MakeArt
 {
-    static readonly string[] Animations = { "idle", "typing", "done", "problem" };
+    // The mascot's grid files. about.txt is the About box's one still frame, not an animation,
+    // but its frame is written the same way.
+    static readonly string[] Animations = { "idle", "typing", "done", "problem", "about" };
 
     const int TileWidth = 20, TileHeight = 6;
 

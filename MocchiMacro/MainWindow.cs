@@ -20,6 +20,7 @@
 // A footer row along the bottom shows the footer band, a still strip of pixel-art grass. At
 // startup the tool asks GitHub for its latest release; if it's newer, the update notice, a link
 // to the releases page, takes the band's place.
+// A small "?" button in the top-left corner, above the mascot, opens the About box.
 
 using System;
 using System.Collections.Generic;
@@ -38,9 +39,6 @@ namespace MocchiMacro
         // The monster field holds at most 12 characters.
         const int MaxSearchTextLength = 12;
 
-        // AssemblyVersion, for the title bar and the update check.
-        static readonly Version RunningVersion = typeof(MainWindow).Assembly.GetName().Version;
-
         public MainWindow()
         {
             InitializeComponent();
@@ -51,10 +49,8 @@ namespace MocchiMacro
             // shows the default font as a result.
             Font = new Font("Segoe UI", 9F);
 
-            // "Mocchi Macro 1.0.0", so an organizer asking for help can say which version they're
-            // on. Read from AssemblyVersion rather than written out, so a release only bumps the
-            // version in AssemblyInfo.cs. Three parts, since the fourth is always 0.
-            Text = "Mocchi Macro " + RunningVersion.ToString(3);
+            // "Mocchi Macro 1.0.0", read from the .exe's file details rather than written out.
+            Text = ToolDetails.NameAndVersion;
 
             // For the title bar, taskbar, and Alt+Tab. The .exe's own icon doesn't reach these:
             // without this the window shows WinForms' default icon.
@@ -110,7 +106,7 @@ namespace MocchiMacro
             // Task.Run, not just the async call: on .NET Framework, the start of an HttpClient
             // request (finding a proxy, looking up the address) runs on the calling thread before
             // its first await, which could hold up the window for seconds.
-            Version newer = await Task.Run(() => UpdateCheck.FindNewerReleaseAsync(RunningVersion));
+            Version newer = await Task.Run(() => UpdateCheck.FindNewerReleaseAsync(ToolDetails.Version));
             if (newer == null || IsDisposed) return;
 
             // The whole text is the link, a bigger target with nothing in it that reads as plain
@@ -133,6 +129,20 @@ namespace MocchiMacro
             }
             catch (Exception)
             {
+            }
+        }
+
+        // The About box while it's open, so the hotkey can close it.
+        AboutBox openAboutBox;
+
+        // Modal, so Go can't start typing behind it.
+        void AboutButton_Click(object sender, EventArgs e)
+        {
+            using (var aboutBox = new AboutBox())
+            {
+                openAboutBox = aboutBox;
+                aboutBox.ShowDialog(this);
+                openAboutBox = null;
             }
         }
 
@@ -250,6 +260,8 @@ namespace MocchiMacro
             searchTextBox.Enabled = enabled;
             typingRateBox.Enabled = enabled;
             gameBox.Enabled = enabled;
+            // Opening the About box would take the game out of the front partway through a name.
+            aboutButton.Enabled = enabled;
         }
 
         static string DescribeOutcome(TypingOutcome outcome, Game game, string searchText)
@@ -410,6 +422,17 @@ namespace MocchiMacro
             // The search text box is disabled while Go types. Taking focus then would pull the
             // game out of the front partway through a name.
             if (!searchTextBox.Enabled) return;
+
+            // A forgotten About box mustn't stop the next search text, so the hotkey closes it.
+            // This window stays disabled until its ShowDialog returns, which is after this
+            // message, so the rest is tried again from the queue. Should that still come before
+            // the box has gone, it closes the box again and goes back on the queue.
+            if (openAboutBox != null)
+            {
+                openAboutBox.Close();
+                BeginInvoke((Action)BringUpSearchText);
+                return;
+            }
 
             if (WindowState == FormWindowState.Minimized) WindowState = FormWindowState.Normal;
 

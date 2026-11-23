@@ -15,4 +15,5 @@ The first release.
 - Remembers the game and the typing rate between runs.
 - The mascot shows how typing went, alongside the status line.
 - An update notice says when a newer release is out.
+- An About box, opened by the "?" button, says what the tool is and who made it, with links to help, support, and the game.
 - One .exe, with nothing to install.

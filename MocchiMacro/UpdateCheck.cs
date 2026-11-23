@@ -12,10 +12,10 @@ namespace MocchiMacro
     public static class UpdateCheck
     {
         // /latest skips drafts and pre-releases.
-        const string LatestReleaseApiUrl = "https://api.github.com/repos/EntityMike/mocchi-macro/releases/latest";
+        const string LatestReleaseApiUrl = "https://api.github.com/repos/" + ToolDetails.Repo + "/releases/latest";
 
         // Where the update notice's link goes, for organizers.
-        public const string LatestReleasePageUrl = "https://github.com/EntityMike/mocchi-macro/releases/latest";
+        public const string LatestReleasePageUrl = ToolDetails.RepoPageUrl + "/releases/latest";
 
         // The release's tag, newer than the running version, or null when there's none.
         // Never throws: an organizer offline or behind a firewall just sees no notice.

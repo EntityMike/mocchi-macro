@@ -54,6 +54,12 @@
     <Compile Include="MainWindow.Designer.cs">
       <DependentUpon>MainWindow.cs</DependentUpon>
     </Compile>
+    <Compile Include="AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="FooterBand.cs" />
     <Compile Include="Game.cs" />
     <Compile Include="IGamePort.cs" />
@@ -61,6 +67,7 @@
     <Compile Include="MascotAnimation.cs" />
     <Compile Include="MascotArt.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="ToolDetails.cs" />
     <Compile Include="Typist.cs" />
     <Compile Include="UpdateCheck.cs" />
     <Compile Include="User32GamePort.cs" />
