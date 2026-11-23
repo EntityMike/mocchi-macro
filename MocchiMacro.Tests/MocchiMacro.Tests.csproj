@@ -28,6 +28,8 @@
     <!-- So the tests can check MascotAnimation's timings against the art files' "play" lines,
          and FooterBand's order against footer-band.txt's "order" line. -->
     <None Include="..\art\*.txt" Link="art\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+    <!-- So the tests can check the changelog's newest entry against AssemblyVersion. -->
+    <None Include="..\CHANGELOG.md" Link="CHANGELOG.md" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>
