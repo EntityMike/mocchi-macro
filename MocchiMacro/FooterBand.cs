@@ -26,18 +26,23 @@ namespace MocchiMacro
             {
                 int tileWidth = tiles[0].Width;
                 var band = new Bitmap(width, tiles[0].Height);
-                using (Graphics graphics = Graphics.FromImage(band))
+                using (var graphics = Graphics.FromImage(band))
                 {
                     // Drawn at their own pixel size, given outright: DrawImageUnscaled would scale
                     // by each bitmap's DPI. The last tile is cut off at the row's edge.
                     for (int i = 0; i * tileWidth < width; i++)
+                    {
                         graphics.DrawImage(tiles[Order[i % Order.Count] - 1], i * tileWidth, 0, tileWidth, band.Height);
+                    }
                 }
                 return band;
             }
             finally
             {
-                foreach (Bitmap tile in tiles) tile.Dispose();
+                foreach (Bitmap tile in tiles)
+                {
+                    tile.Dispose();
+                }
             }
         }
     }

@@ -55,8 +55,14 @@ namespace MocchiMacro
         // layout's stand-ins.
         public char SwapStandIn(char c)
         {
-            foreach (var (standIn, symbol) in StandIns)
-                if (c == standIn) return symbol;
+            foreach ((char standIn, char symbol) in StandIns)
+            {
+                if (c == standIn)
+                {
+                    return symbol;
+                }
+            }
+
             return c;
         }
 
@@ -77,7 +83,7 @@ namespace MocchiMacro
             // in the middle dot.
             string[] leftBlock = { "ABCDE", "FGHIJ", "KLMNO", "PQRST", "UVWXY", "Z    ", "\u25CB\u00D7!?~", "+-%.\u00B7", "12345" };
             string[] rightBlock = { "abcde", "fghij", "klmno", "pqrst", "uvwxy", "z_   ", "/    ", "     ", "67890" };
-            var keys = GridKeys(leftBlock, rightBlock, leftBlockX, rightBlockX, columnPitch, topRowY, rowPitch);
+            Dictionary<char, PointF> keys = GridKeys(leftBlock, rightBlock, leftBlockX, rightBlockX, columnPitch, topRowY, rowPitch);
 
             // BS is the ← key on the grid. Ent. is the END key below the grid, measured.
             var backspace = new PointF(rightBlockX + 4 * columnPitch, topRowY + 5 * rowPitch);
@@ -94,7 +100,7 @@ namespace MocchiMacro
             // triangle, square.
             string[] leftBlock = { "ABCDE", "FGHIJ", "KLMNO", "PQRST", "UVWXY", "Z!?()", "'\":\u00B7.", "01234" };
             string[] rightBlock = { "abcde", "fghij", "klmno", "pqrst", "uvwxy", "z\u25CB\u00D7\u25B3\u25A1", "+-=~%", "56789" };
-            var keys = GridKeys(leftBlock, rightBlock, leftBlockX, rightBlockX, columnPitch, topRowY, rowPitch);
+            Dictionary<char, PointF> keys = GridKeys(leftBlock, rightBlock, leftBlockX, rightBlockX, columnPitch, topRowY, rowPitch);
 
             // BS sits right of the grid on the digits row, and Ent. one row below it. Their x is
             // measured; their y is the grid row's, which is within 3 px of the measured centers.
@@ -114,8 +120,15 @@ namespace MocchiMacro
                 float y = topRowY + row * rowPitch;
                 for (int col = 0; col < 5; col++)
                 {
-                    if (leftBlock[row][col] != ' ') keys[leftBlock[row][col]] = new PointF(leftBlockX + col * columnPitch, y);
-                    if (rightBlock[row][col] != ' ') keys[rightBlock[row][col]] = new PointF(rightBlockX + col * columnPitch, y);
+                    if (leftBlock[row][col] != ' ')
+                    {
+                        keys[leftBlock[row][col]] = new PointF(leftBlockX + col * columnPitch, y);
+                    }
+
+                    if (rightBlock[row][col] != ' ')
+                    {
+                        keys[rightBlock[row][col]] = new PointF(rightBlockX + col * columnPitch, y);
+                    }
                 }
             }
             return keys;

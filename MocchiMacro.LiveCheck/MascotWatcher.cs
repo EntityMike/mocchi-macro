@@ -42,9 +42,12 @@ namespace MocchiMacro.LiveCheck
         void LoadFrames()
         {
             Color background;
-            using (Bitmap now = tool.CaptureMascot()) background = now.GetPixel(0, 0);
+            using (Bitmap now = tool.CaptureMascot())
+            {
+                background = now.GetPixel(0, 0);
+            }
 
-            var names = typeof(MascotArt).Assembly.GetManifestResourceNames()
+            IOrderedEnumerable<string> names = typeof(MascotArt).Assembly.GetManifestResourceNames()
                 .Where(resource => resource.StartsWith(ResourcePrefix) && resource.EndsWith(ResourceSuffix))
                 .Select(resource => resource.Substring(ResourcePrefix.Length, resource.Length - ResourcePrefix.Length - ResourceSuffix.Length))
                 .OrderBy(name => name, StringComparer.Ordinal);
@@ -64,7 +67,10 @@ namespace MocchiMacro.LiveCheck
                         }
                     }
                     string fingerprint = Fingerprint(onWindow);
-                    if (!frameNames.ContainsKey(fingerprint)) frameNames[fingerprint] = name;
+                    if (!frameNames.ContainsKey(fingerprint))
+                    {
+                        frameNames[fingerprint] = name;
+                    }
                 }
             }
         }
@@ -81,7 +87,10 @@ namespace MocchiMacro.LiveCheck
             {
                 string frame = CurrentFrame();
                 if (timeline.Count == 0 || timeline.Last().Frame != frame)
+                {
                     timeline.Add((clock.ElapsedMilliseconds, frame));
+                }
+
                 SlowestReplyMs = Math.Max(SlowestReplyMs, tool.MeasureReplyMs());
                 Thread.Sleep(5);
             }
@@ -92,11 +101,18 @@ namespace MocchiMacro.LiveCheck
         {
             using (Bitmap captured = tool.CaptureMascot())
             {
-                if (frameNames.TryGetValue(Fingerprint(captured), out string name)) return name;
+                if (frameNames.TryGetValue(Fingerprint(captured), out string name))
+                {
+                    return name;
+                }
 
                 UnknownFrames++;
                 // Only the first few, since a blurred mascot would be every capture.
-                if (UnknownFrames <= 3) captured.Save(Path.Combine(Program.OutputFolder, "unknown-frame-" + UnknownFrames + ".png"), ImageFormat.Png);
+                if (UnknownFrames <= 3)
+                {
+                    captured.Save(Path.Combine(Program.OutputFolder, "unknown-frame-" + UnknownFrames + ".png"), ImageFormat.Png);
+                }
+
                 return "unknown";
             }
         }
@@ -109,9 +125,15 @@ namespace MocchiMacro.LiveCheck
             var pixels = new byte[picture.Width * picture.Height * 4];
             Marshal.Copy(data.Scan0, pixels, 0, pixels.Length);
             picture.UnlockBits(data);
-            for (int alpha = 3; alpha < pixels.Length; alpha += 4) pixels[alpha] = 255;
+            for (int alpha = 3; alpha < pixels.Length; alpha += 4)
+            {
+                pixels[alpha] = 255;
+            }
 
-            using (MD5 md5 = MD5.Create()) return Convert.ToBase64String(md5.ComputeHash(pixels));
+            using (var md5 = MD5.Create())
+            {
+                return Convert.ToBase64String(md5.ComputeHash(pixels));
+            }
         }
     }
 }

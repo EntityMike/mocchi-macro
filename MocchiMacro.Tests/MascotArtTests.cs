@@ -16,9 +16,9 @@ namespace MocchiMacro.Tests
         public void LoadFrameEnlargesEachPixelIntoASharpSquareBlock()
         {
             const int blockSize = 3;
-            Color white = Color.FromArgb(0xFF, 0xFF, 0xFF);
-            Color outline = Color.FromArgb(0x3A, 0x24, 0x30);
-            Color skin = Color.FromArgb(0xF5, 0xC9, 0xC6);
+            var white = Color.FromArgb(0xFF, 0xFF, 0xFF);
+            var outline = Color.FromArgb(0x3A, 0x24, 0x30);
+            var skin = Color.FromArgb(0xF5, 0xC9, 0xC6);
 
             using (Bitmap frame = MascotArt.LoadFrame("idle-1"))
             {
@@ -28,8 +28,12 @@ namespace MocchiMacro.Tests
 
                 int left = 10 * blockSize, top = 9 * blockSize;
                 for (int y = top; y < top + blockSize; y++)
+                {
                     for (int x = left; x < left + blockSize; x++)
+                    {
                         AssertPixel(white, frame, x, y);
+                    }
+                }
 
                 AssertPixel(outline, frame, left - 1, top);
                 AssertPixel(outline, frame, left + blockSize, top);
@@ -44,13 +48,13 @@ namespace MocchiMacro.Tests
         [TestMethod]
         public void LoadIconGivesTheHandPlacedFaceAtSmallSize()
         {
-            Color white = Color.FromArgb(0xFF, 0xFF, 0xFF);
-            Color outline = Color.FromArgb(0x3A, 0x24, 0x30);
-            Color skin = Color.FromArgb(0xF5, 0xC9, 0xC6);
+            var white = Color.FromArgb(0xFF, 0xFF, 0xFF);
+            var outline = Color.FromArgb(0x3A, 0x24, 0x30);
+            var skin = Color.FromArgb(0xF5, 0xC9, 0xC6);
 
             using (Icon icon = MascotArt.LoadIcon())
             using (var small = new Icon(icon, 16, 16))
-            using (Bitmap face = small.ToBitmap())
+            using (var face = small.ToBitmap())
             {
                 Assert.AreEqual(16, face.Width);
                 Assert.AreEqual(16, face.Height);
@@ -66,18 +70,22 @@ namespace MocchiMacro.Tests
         [TestMethod]
         public void TheExeCarriesTheEmbeddedIcon()
         {
-            using (Icon exeIcon = Icon.ExtractAssociatedIcon(typeof(MascotArt).Assembly.Location))
-            using (Bitmap exeFace = exeIcon.ToBitmap())
+            using (var exeIcon = Icon.ExtractAssociatedIcon(typeof(MascotArt).Assembly.Location))
+            using (var exeFace = exeIcon.ToBitmap())
             using (Icon embeddedIcon = MascotArt.LoadIcon())
             using (var embeddedAtExeSize = new Icon(embeddedIcon, exeFace.Size))
-            using (Bitmap embeddedFace = embeddedAtExeSize.ToBitmap())
+            using (var embeddedFace = embeddedAtExeSize.ToBitmap())
             {
                 for (int y = 0; y < exeFace.Height; y++)
                 {
                     for (int x = 0; x < exeFace.Width; x++)
                     {
                         // A fully transparent pixel's color can't be seen, and Windows doesn't keep it.
-                        if (exeFace.GetPixel(x, y).A == 0 && embeddedFace.GetPixel(x, y).A == 0) continue;
+                        if (exeFace.GetPixel(x, y).A == 0 && embeddedFace.GetPixel(x, y).A == 0)
+                        {
+                            continue;
+                        }
+
                         AssertPixel(embeddedFace.GetPixel(x, y), exeFace, x, y);
                     }
                 }

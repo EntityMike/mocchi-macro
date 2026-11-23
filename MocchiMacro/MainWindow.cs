@@ -107,7 +107,10 @@ namespace MocchiMacro
             // request (finding a proxy, looking up the address) runs on the calling thread before
             // its first await, which could hold up the window for seconds.
             Version newer = await Task.Run(() => UpdateCheck.FindNewerReleaseAsync(ToolDetails.Version));
-            if (newer == null || IsDisposed) return;
+            if (newer == null || IsDisposed)
+            {
+                return;
+            }
 
             // The whole text is the link, a bigger target with nothing in it that reads as plain
             // text. The row keeps its size, so the window doesn't change.
@@ -170,7 +173,10 @@ namespace MocchiMacro
                 frame = MascotArt.LoadFrame(name);
                 mascotFrames[name] = frame;
             }
-            if (mascotBox.Image != frame) mascotBox.Image = frame;
+            if (mascotBox.Image != frame)
+            {
+                mascotBox.Image = frame;
+            }
         }
 
         Game SelectedGame => (Game)gameBox.SelectedItem;
@@ -182,7 +188,11 @@ namespace MocchiMacro
         {
             // The dropdown can raise this without the game changing, such as when the organizer
             // picks the game that's already selected; that mustn't clear the search text box.
-            if (SelectedGame == lastSelectedGame) return;
+            if (SelectedGame == lastSelectedGame)
+            {
+                return;
+            }
+
             lastSelectedGame = SelectedGame;
 
             // Saved with the typing rate, on close.
@@ -336,8 +346,15 @@ namespace MocchiMacro
             // underline on the next character.
             var note = new List<string>();
             if (dropped.Length > 0)
+            {
                 note.Add("No key, dropped: " + string.Join(", ", dropped.Distinct().Select(c => c == ' ' ? "space" : c.ToString())));
-            if (excess > 0) note.Add("Cut to " + MaxSearchTextLength);
+            }
+
+            if (excess > 0)
+            {
+                note.Add("Cut to " + MaxSearchTextLength);
+            }
+
             droppedNoteLabel.Text = string.Join(". ", note);
         }
 
@@ -385,7 +402,7 @@ namespace MocchiMacro
             base.OnHandleCreated(e);
 
             string hotkeyName = null;
-            foreach (var combination in HotkeyCombinations)
+            foreach ((string Name, uint Modifiers, Keys Key) combination in HotkeyCombinations)
             {
                 if (RegisterHotKey(Handle, HotkeyId, combination.Modifiers | MOD_NOREPEAT, (uint)combination.Key))
                 {
@@ -400,9 +417,13 @@ namespace MocchiMacro
             // The first Go replaces it with its own status. The default needs nothing beyond the label.
             string defaultHotkey = HotkeyCombinations[0].Name;
             if (hotkeyName == null)
+            {
                 ShowStatus("All three hotkeys are taken by other programs, so there's no hotkey. Typing still works.", ProblemColor);
+            }
             else if (hotkeyName != defaultHotkey)
+            {
                 ShowStatus(defaultHotkey + " is taken by another program, so the hotkey is " + hotkeyName + ".", ProblemColor);
+            }
         }
 
         protected override void OnHandleDestroyed(EventArgs e)
@@ -413,7 +434,11 @@ namespace MocchiMacro
 
         protected override void WndProc(ref Message m)
         {
-            if (m.Msg == WM_HOTKEY && m.WParam == (IntPtr)HotkeyId) BringUpSearchText();
+            if (m.Msg == WM_HOTKEY && m.WParam == (IntPtr)HotkeyId)
+            {
+                BringUpSearchText();
+            }
+
             base.WndProc(ref m);
         }
 
@@ -421,7 +446,10 @@ namespace MocchiMacro
         {
             // The search text box is disabled while Go types. Taking focus then would pull the
             // game out of the front partway through a name.
-            if (!searchTextBox.Enabled) return;
+            if (!searchTextBox.Enabled)
+            {
+                return;
+            }
 
             // A forgotten About box mustn't stop the next search text, so the hotkey closes it.
             // This window stays disabled until its ShowDialog returns, which is after this
@@ -434,7 +462,10 @@ namespace MocchiMacro
                 return;
             }
 
-            if (WindowState == FormWindowState.Minimized) WindowState = FormWindowState.Normal;
+            if (WindowState == FormWindowState.Minimized)
+            {
+                WindowState = FormWindowState.Normal;
+            }
 
             // Windows normally stops a background program from taking the front, but the
             // program that receives a hotkey is allowed to: the key press was meant for it.

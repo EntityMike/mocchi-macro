@@ -66,9 +66,12 @@ namespace MocchiMacro.LiveCheck
             tool.MoveTo(Math.Max(Screen.PrimaryScreen.WorkingArea.Left, bounds.Left - tool.WindowSize.Width - ScreenMargin), bounds.Top);
 
             ClickAt(new Point(bounds.Left + bounds.Width / 2, bounds.Top + bounds.Height / 2));
-            IntPtr handle = (IntPtr)window.Invoke((Func<IntPtr>)(() => window.Handle));
+            var handle = (IntPtr)window.Invoke((Func<IntPtr>)(() => window.Handle));
             if (GetForegroundWindow() != handle)
+            {
                 throw new InvalidOperationException("The fake game window didn't come to the front.");
+            }
+
             window.ClearClicks();
             return window;
         }
@@ -85,7 +88,11 @@ namespace MocchiMacro.LiveCheck
         {
             using (var picture = new Bitmap(ClientSize.Width, ClientSize.Height))
             {
-                using (Graphics graphics = Graphics.FromImage(picture)) Draw(graphics);
+                using (var graphics = Graphics.FromImage(picture))
+                {
+                    Draw(graphics);
+                }
+
                 picture.Save(path);
             }
         }));
@@ -109,7 +116,9 @@ namespace MocchiMacro.LiveCheck
             using (var mark = new Pen(Color.Red, 3))
             {
                 foreach (Point click in clicks)
+                {
                     graphics.DrawEllipse(mark, click.X - MarkRadius, click.Y - MarkRadius, MarkRadius * 2, MarkRadius * 2);
+                }
             }
         }
 
@@ -123,7 +132,11 @@ namespace MocchiMacro.LiveCheck
                 Invoke((Action)Close);
                 return;
             }
-            if (disposing) screenshot.Dispose();
+            if (disposing)
+            {
+                screenshot.Dispose();
+            }
+
             base.Dispose(disposing);
         }
 

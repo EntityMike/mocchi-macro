@@ -74,7 +74,7 @@ namespace MocchiMacro.LiveCheck
             // Taken before the tool starts, so the tool shows its taken-hotkey startup message.
             bool holdingHotkey = RegisterHotKey(IntPtr.Zero, HotkeyId, MOD_ALT | MOD_CONTROL | MOD_SHIFT, (uint)Keys.M);
 
-            using (ToolWindow tool = ToolWindow.Launch())
+            using (var tool = ToolWindow.Launch())
             {
                 Console.WriteLine("Display scaling: " + tool.Dpi * 100 / 96 + "%");
                 tool.SaveScreenshot(Path.Combine(OutputFolder, "tool-window.png"));
@@ -82,12 +82,15 @@ namespace MocchiMacro.LiveCheck
                 var watcher = new MascotWatcher(tool);
 
                 CheckIdleWithStartupMessage(tool, watcher);
-                if (holdingHotkey) UnregisterHotKey(IntPtr.Zero, HotkeyId);
+                if (holdingHotkey)
+                {
+                    UnregisterHotKey(IntPtr.Zero, HotkeyId);
+                }
 
                 CheckEmptyBox(tool, watcher);
                 CheckGameNotFound(tool, watcher, Game.Mr2Dx);
 
-                using (FakeGameWindow fake = FakeGameWindow.Open(Game.Mr2Dx, tool))
+                using (var fake = FakeGameWindow.Open(Game.Mr2Dx, tool))
                 {
                     Console.WriteLine();
                     Console.WriteLine("Go on MR2 DX at 1 key/s");
@@ -100,7 +103,7 @@ namespace MocchiMacro.LiveCheck
                 }
 
                 tool.SelectGame(Game.Mr1Dx);
-                using (FakeGameWindow fake = FakeGameWindow.Open(Game.Mr1Dx, tool))
+                using (var fake = FakeGameWindow.Open(Game.Mr1Dx, tool))
                 {
                     Console.WriteLine();
                     Console.WriteLine("Go on MR1 DX at 3 keys/s");
@@ -128,7 +131,7 @@ namespace MocchiMacro.LiveCheck
             Console.WriteLine("Idle, with a startup message showing");
             Check(tool.Status.Contains("taken"), "The startup message shows: " + tool.Status);
 
-            var timeline = watcher.Watch(7000);
+            List<(long Ms, string Frame)> timeline = watcher.Watch(7000);
             Show(timeline);
             Check(timeline.All(shown => shown.Frame.StartsWith("idle")), "Only idle frames, so no droop");
 
@@ -159,7 +162,7 @@ namespace MocchiMacro.LiveCheck
 
         static void CheckDroopedOnce(MascotWatcher watcher)
         {
-            var timeline = watcher.Watch(3500);
+            List<(long Ms, string Frame)> timeline = watcher.Watch(3500);
             Show(timeline);
 
             var droop = timeline.SkipWhile(shown => shown.Frame != "problem-1").ToList();
@@ -178,9 +181,13 @@ namespace MocchiMacro.LiveCheck
 
             // Stops a set time after Go comes back, so the hop is watched as well as the typing.
             long goBackMs = -1;
-            var timeline = watcher.Watch(120000, elapsedMs =>
+            List<(long Ms, string Frame)> timeline = watcher.Watch(120000, elapsedMs =>
             {
-                if (goBackMs < 0 && tool.GoEnabled) goBackMs = elapsedMs;
+                if (goBackMs < 0 && tool.GoEnabled)
+                {
+                    goBackMs = elapsedMs;
+                }
+
                 return goBackMs >= 0 && elapsedMs - goBackMs >= watchAfterMs;
             });
 
@@ -200,7 +207,9 @@ namespace MocchiMacro.LiveCheck
             Show(after);
 
             if (pressedDuringHold)
+            {
                 Check(typing.Count > 0 && typing[0].Ms <= 200, "Go cuts the hold short and the loop starts at once");
+            }
 
             long expectedTypingMs = TypistStartMs + (BackspaceClicks + SearchText.Length - 1) * 1000 / typingRate + LastClickMs;
             Check(Near(typingEndMs, expectedTypingMs, TypingToleranceMs),
@@ -230,9 +239,9 @@ namespace MocchiMacro.LiveCheck
 
             // The layouts can say whether a character has a key but can't list them, so every
             // character is asked. In character order, which scatters the clicks across the keyboard.
-            List<char> keys = Enumerable.Range(char.MinValue, char.MaxValue + 1)
+            var keys = Enumerable.Range(char.MinValue, char.MaxValue + 1)
                 .Select(code => (char)code).Where(game.Layout.HasKey).ToList();
-            List<string> searchTexts = Enumerable.Range(0, (keys.Count + MaxSearchTextLength - 1) / MaxSearchTextLength)
+            var searchTexts = Enumerable.Range(0, (keys.Count + MaxSearchTextLength - 1) / MaxSearchTextLength)
                 .Select(run => new string(keys.Skip(run * MaxSearchTextLength).Take(MaxSearchTextLength).ToArray())).ToList();
 
             Console.WriteLine();
@@ -241,7 +250,7 @@ namespace MocchiMacro.LiveCheck
 
             tool.SelectGame(game);
             tool.SetTypingRate(typingRate);
-            using (FakeGameWindow fake = FakeGameWindow.Open(game, tool))
+            using (var fake = FakeGameWindow.Open(game, tool))
             {
                 var expected = new List<PointF>();
                 int doneRuns = 0;
@@ -251,7 +260,11 @@ namespace MocchiMacro.LiveCheck
                     tool.PressGo();
                     tool.WaitForGoDisabled();
                     tool.WaitForGoEnabled();
-                    if (tool.Status.StartsWith("Done")) doneRuns++;
+                    if (tool.Status.StartsWith("Done"))
+                    {
+                        doneRuns++;
+                    }
+
                     expected.AddRange(ExpectedClicks(game, searchText));
                 }
 
@@ -283,7 +296,7 @@ namespace MocchiMacro.LiveCheck
 
         static void CheckClicks(IReadOnlyList<Point> clicks, IEnumerable<PointF> expectedClicks)
         {
-            List<PointF> expected = expectedClicks.ToList();
+            var expected = expectedClicks.ToList();
             Check(clicks.Count == expected.Count, "Clicked every key (" + clicks.Count + " of " + expected.Count + ")");
 
             // The window is the reference size, so each click lands on the key's measured center,
@@ -305,7 +318,10 @@ namespace MocchiMacro.LiveCheck
         static void Check(bool passed, string what)
         {
             Console.WriteLine((passed ? "  pass  " : "  FAIL  ") + what);
-            if (!passed) failures++;
+            if (!passed)
+            {
+                failures++;
+            }
         }
 
         // ---- Win32 interop (user32.dll) ----

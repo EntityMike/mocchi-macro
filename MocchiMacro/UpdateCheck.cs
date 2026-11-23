@@ -45,7 +45,11 @@ namespace MocchiMacro
         // newer release: docs/releasing.md says tags are plain versions.
         public static Version NewerRelease(string tag, Version running)
         {
-            if (!Version.TryParse(tag, out Version release)) return null;
+            if (!Version.TryParse(tag, out Version release))
+            {
+                return null;
+            }
+
             Version newer = ToThreeParts(release);
             return newer > ToThreeParts(running) ? newer : null;
         }

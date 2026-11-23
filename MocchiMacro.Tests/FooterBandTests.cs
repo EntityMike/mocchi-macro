@@ -18,10 +18,10 @@ namespace MocchiMacro.Tests
         public void BuildLaysTheTilesInOrderAsWideAsTheRowInSharpBlocks()
         {
             const int blockSize = 3, tileWidth = 60;
-            Color blue = Color.FromArgb(0x5A, 0xAE, 0xE8);
-            Color yellow = Color.FromArgb(0xF9, 0xD5, 0x40);
-            Color darkGrass = Color.FromArgb(0x26, 0x59, 0x2C);
-            Color grass = Color.FromArgb(0x3F, 0x91, 0x40);
+            var blue = Color.FromArgb(0x5A, 0xAE, 0xE8);
+            var yellow = Color.FromArgb(0xF9, 0xD5, 0x40);
+            var darkGrass = Color.FromArgb(0x26, 0x59, 0x2C);
+            var grass = Color.FromArgb(0x3F, 0x91, 0x40);
 
             using (Bitmap band = FooterBand.Build(870))
             {
@@ -33,8 +33,13 @@ namespace MocchiMacro.Tests
                 // half-pixel shift would change its block or the pixels just outside it.
                 int left = tileWidth + 7 * blockSize;
                 for (int y = 0; y < blockSize; y++)
+                {
                     for (int x = left; x < left + blockSize; x++)
+                    {
                         AssertPixel(blue, band, x, y);
+                    }
+                }
+
                 Assert.AreEqual(0, band.GetPixel(left - 1, 0).A, "Left of the petal should be transparent.");
                 Assert.AreEqual(0, band.GetPixel(left + blockSize, 0).A, "Right of the petal should be transparent.");
                 AssertPixel(yellow, band, left, blockSize);

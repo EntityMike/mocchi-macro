@@ -19,7 +19,7 @@ namespace MocchiMacro.Tests
 
             TypingOutcome outcome = new Typist(game, KeyboardLayout.Mr2Dx).Type("Mocchi", 10);
 
-            Point backspace = new Point(1297, 721);
+            var backspace = new Point(1297, 721);
             Point[] expected = Enumerable.Repeat(backspace, 12).Concat(new[]
             {
                 new Point(520, 441),  // M
@@ -197,7 +197,10 @@ namespace MocchiMacro.Tests
             // After the 12 BS clicks and "Moc", the window is dragged to 300,200.
             game.AfterClick = () =>
             {
-                if (game.Clicks.Count == 15) game.ClientArea = new Rectangle(300, 200, 1600, 900);
+                if (game.Clicks.Count == 15)
+                {
+                    game.ClientArea = new Rectangle(300, 200, 1600, 900);
+                }
             };
 
             new Typist(game, KeyboardLayout.Mr2Dx).Type("Mocchi", 10);
@@ -275,7 +278,10 @@ namespace MocchiMacro.Tests
             var game = new FakeGamePort();
             game.AfterClick = () =>
             {
-                if (game.Clicks.Count == 5) game.GameRunning = false;
+                if (game.Clicks.Count == 5)
+                {
+                    game.GameRunning = false;
+                }
             };
 
             TypingOutcome outcome = new Typist(game, KeyboardLayout.Mr2Dx).Type("Mocchi", 10);

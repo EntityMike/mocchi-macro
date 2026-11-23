@@ -28,7 +28,7 @@ namespace MocchiMacro
             using (var frame = new Bitmap(png))
             {
                 var enlarged = new Bitmap(frame.Width * Scale, frame.Height * Scale);
-                using (Graphics graphics = Graphics.FromImage(enlarged))
+                using (var graphics = Graphics.FromImage(enlarged))
                 {
                     graphics.InterpolationMode = InterpolationMode.NearestNeighbor;
                     // Without this, GDI+ samples from pixel corners rather than centers, which
@@ -46,7 +46,9 @@ namespace MocchiMacro
         public static Icon LoadIcon()
         {
             using (Stream ico = typeof(MascotArt).Assembly.GetManifestResourceStream("Mocchi.ico"))
+            {
                 return new Icon(ico);
+            }
         }
     }
 }

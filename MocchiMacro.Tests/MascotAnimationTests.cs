@@ -141,7 +141,7 @@ namespace MocchiMacro.Tests
                 .ToList();
 
             long startMs = 0;
-            foreach (var step in steps)
+            foreach ((string Frame, int Ms) step in steps)
             {
                 Assert.AreEqual(step.Frame, mascot.FrameAt(startMs), animation + " at " + startMs + " ms");
                 long lastMs = startMs + step.Ms - 1;

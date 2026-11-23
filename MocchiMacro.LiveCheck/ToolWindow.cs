@@ -32,7 +32,7 @@ namespace MocchiMacro.LiveCheck
         // by its path, so whatever this check sets can't reach the settings of a copy in real use.
         public static ToolWindow Launch()
         {
-            Process process = Process.Start(typeof(Game).Assembly.Location);
+            var process = Process.Start(typeof(Game).Assembly.Location);
             process.WaitForInputIdle();
             while (process.MainWindowHandle == IntPtr.Zero)
             {
@@ -52,16 +52,38 @@ namespace MocchiMacro.LiveCheck
             {
                 string className = ClassNameOf(child).ToUpperInvariant();
                 Rectangle bounds = BoundsOf(child);
-                if (className.Contains("BUTTON") && TextOf(child) == "Go") goButton = child;
-                if (className.Contains("EDIT")) editBoxes.Add(child);
-                if (className.Contains("COMBOBOX")) gameBox = child;
-                if (className.Contains("STATIC")) labels.Add(child);
-                if (bounds.Width == MascotSize && bounds.Height == MascotSize) mascot = child;
+                if (className.Contains("BUTTON") && TextOf(child) == "Go")
+                {
+                    goButton = child;
+                }
+
+                if (className.Contains("EDIT"))
+                {
+                    editBoxes.Add(child);
+                }
+
+                if (className.Contains("COMBOBOX"))
+                {
+                    gameBox = child;
+                }
+
+                if (className.Contains("STATIC"))
+                {
+                    labels.Add(child);
+                }
+
+                if (bounds.Width == MascotSize && bounds.Height == MascotSize)
+                {
+                    mascot = child;
+                }
+
                 return true;
             }, IntPtr.Zero);
 
             if (mascot == IntPtr.Zero)
+            {
                 throw new InvalidOperationException("There's no control at the mascot's fixed size of " + MascotSize + " px.");
+            }
 
             // The search text box is much wider than the typing rate box's edit part.
             searchBox = editBoxes.OrderByDescending(box => BoundsOf(box).Width).First();
@@ -81,13 +103,19 @@ namespace MocchiMacro.LiveCheck
         public void WaitForGoDisabled()
         {
             var clock = Stopwatch.StartNew();
-            while (GoEnabled && clock.ElapsedMilliseconds < 2000) Thread.Sleep(1);
+            while (GoEnabled && clock.ElapsedMilliseconds < 2000)
+            {
+                Thread.Sleep(1);
+            }
         }
 
         public void WaitForGoEnabled()
         {
             var clock = Stopwatch.StartNew();
-            while (!GoEnabled && clock.ElapsedMilliseconds < 60000) Thread.Sleep(10);
+            while (!GoEnabled && clock.ElapsedMilliseconds < 60000)
+            {
+                Thread.Sleep(10);
+            }
         }
 
         public void SetSearchText(string text) => SendMessage(searchBox, WM_SETTEXT, IntPtr.Zero, text);
@@ -100,7 +128,7 @@ namespace MocchiMacro.LiveCheck
         {
             int index = Game.All.ToList().IndexOf(game);
             SendMessage(gameBox, CB_SETCURSEL, (IntPtr)index, IntPtr.Zero);
-            IntPtr selectionChanged = (IntPtr)((CBN_SELCHANGE << 16) | GetDlgCtrlID(gameBox));
+            var selectionChanged = (IntPtr)((CBN_SELCHANGE << 16) | GetDlgCtrlID(gameBox));
             SendMessage(GetParent(gameBox), WM_COMMAND, selectionChanged, gameBox);
         }
 
@@ -119,7 +147,7 @@ namespace MocchiMacro.LiveCheck
         {
             Rectangle bounds = BoundsOf(window);
             var picture = new Bitmap(bounds.Width, bounds.Height, PixelFormat.Format32bppArgb);
-            using (Graphics graphics = Graphics.FromImage(picture))
+            using (var graphics = Graphics.FromImage(picture))
             {
                 IntPtr deviceContext = graphics.GetHdc();
                 PrintWindow(window, deviceContext, PW_RENDERFULLCONTENT);
@@ -133,18 +161,27 @@ namespace MocchiMacro.LiveCheck
             Rectangle windowBounds = BoundsOf(window), mascotBounds = BoundsOf(mascot);
             mascotBounds.Offset(-windowBounds.Left, -windowBounds.Top);
             using (Bitmap whole = CaptureWindow())
+            {
                 return whole.Clone(mascotBounds, PixelFormat.Format32bppArgb);
+            }
         }
 
         public void SaveScreenshot(string path)
         {
-            using (Bitmap whole = CaptureWindow()) whole.Save(path, ImageFormat.Png);
+            using (Bitmap whole = CaptureWindow())
+            {
+                whole.Save(path, ImageFormat.Png);
+            }
         }
 
         // Killed, not closed, so the tool never gets as far as saving this run's settings.
         public void Dispose()
         {
-            if (!process.HasExited) process.Kill();
+            if (!process.HasExited)
+            {
+                process.Kill();
+            }
+
             process.Dispose();
         }
 

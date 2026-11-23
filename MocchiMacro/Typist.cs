@@ -46,11 +46,21 @@ namespace MocchiMacro
             // Checked before any click, BS included, so text the keyboard can't type leaves the
             // monster field as it was. The search text box already drops such characters; this
             // guards text that reaches the typist another way.
-            if (!searchText.All(layout.HasKey)) return TypingOutcome.CharacterWithoutKey;
-            if (!game.FindGame()) return TypingOutcome.GameNotFound;
+            if (!searchText.All(layout.HasKey))
+            {
+                return TypingOutcome.CharacterWithoutKey;
+            }
+
+            if (!game.FindGame())
+            {
+                return TypingOutcome.GameNotFound;
+            }
 
             // Restore only a minimized game: restoring a maximized one would shrink it.
-            if (game.IsMinimized()) game.Restore();
+            if (game.IsMinimized())
+            {
+                game.Restore();
+            }
 
             // Clicks land on whatever window is in front at the key's spot, so the game must
             // really be in front before the first one.
@@ -58,8 +68,16 @@ namespace MocchiMacro
             long askedMs = game.NowMs;
             while (!game.IsInFront())
             {
-                if (!game.GameStillExists()) return TypingOutcome.GameClosed;
-                if (game.NowMs - askedMs >= InFrontTimeoutMs) return TypingOutcome.GameNotInFront;
+                if (!game.GameStillExists())
+                {
+                    return TypingOutcome.GameClosed;
+                }
+
+                if (game.NowMs - askedMs >= InFrontTimeoutMs)
+                {
+                    return TypingOutcome.GameNotInFront;
+                }
+
                 game.Wait(InFrontCheckMs);
             }
             game.Wait(ReadyAfterInFrontMs);
@@ -75,10 +93,16 @@ namespace MocchiMacro
             for (int n = 0; n < keys.Length; n++)
             {
                 long waitMs = startMs + (long)(n * intervalMs) - game.NowMs;
-                if (waitMs > 0) game.Wait((int)waitMs);
+                if (waitMs > 0)
+                {
+                    game.Wait((int)waitMs);
+                }
 
                 // Once the game is gone, a click would land on whatever was behind it.
-                if (!game.GameStillExists()) return TypingOutcome.GameClosed;
+                if (!game.GameStillExists())
+                {
+                    return TypingOutcome.GameClosed;
+                }
 
                 // Read the client area before every click, so typing follows the window if it moves.
                 Rectangle picture = FindPicture(game.ReadClientArea());

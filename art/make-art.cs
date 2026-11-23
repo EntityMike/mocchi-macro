@@ -52,7 +52,10 @@ static class MakeArt
             string pngFolder = Path.Combine(artFolder, "png");
             Directory.CreateDirectory(pngFolder);
             foreach (string oldPng in Directory.GetFiles(pngFolder, "*.png"))
+            {
                 File.Delete(oldPng);
+            }
+
             foreach (string animation in Animations)
             {
                 List<string[]> frames = ReadGrids(Path.Combine(artFolder, animation + ".txt"), "frame", 32, 32);
@@ -100,15 +103,23 @@ static class MakeArt
         {
             string[] parts = line.Split((char[])null, StringSplitOptions.RemoveEmptyEntries);
             if (parts.Length < 2 || parts[0].Length != 1)
+            {
                 throw new ArtException(path + ": can't read palette line \"" + line + "\"");
+            }
 
             char key = parts[0][0];
             if (parts[1] == "transparent")
+            {
                 palette[key] = Color.Transparent;
+            }
             else if (parts[1].Length == 7 && parts[1][0] == '#')
+            {
                 palette[key] = Color.FromArgb(255, Color.FromArgb(Convert.ToInt32(parts[1].Substring(1), 16)));
+            }
             else
+            {
                 throw new ArtException(path + ": can't read color \"" + parts[1] + "\"");
+            }
         }
         return palette;
     }
@@ -129,7 +140,10 @@ static class MakeArt
             {
                 int number;
                 if (!int.TryParse(line.Substring(heading.Length).Trim(), out number) || number != grids.Count + 1)
+                {
                     throw new ArtException(path + ": expected \"" + heading + (grids.Count + 1) + "\", got \"" + line + "\"");
+                }
+
                 rows = new List<string>();
                 grids.Add(null);
             }
@@ -141,9 +155,13 @@ static class MakeArt
             {
                 rows.Add(line);
                 if (rows.Count == height)
+                {
                     grids[grids.Count - 1] = rows.ToArray();
+                }
                 else if (rows.Count > height)
+                {
                     throw new ArtException(path + ": " + heading + grids.Count + " has more than " + height + " rows");
+                }
             }
             else
             {
@@ -154,13 +172,23 @@ static class MakeArt
         for (int i = 0; i < grids.Count; i++)
         {
             if (grids[i] == null)
+            {
                 throw new ArtException(path + ": " + heading + (i + 1) + " has fewer than " + height + " rows");
+            }
+
             foreach (string row in grids[i])
+            {
                 if (row.Length != width)
+                {
                     throw new ArtException(path + ": " + heading + (i + 1) + " has a row " + row.Length + " wide, not " + width + ": \"" + row + "\"");
+                }
+            }
         }
         if (grids.Count == 0)
+        {
             throw new ArtException(path + ": no " + blockName + "s");
+        }
+
         return grids;
     }
 
@@ -168,7 +196,10 @@ static class MakeArt
     {
         List<string[]> frames = ReadGrids(path, "frame", size, size);
         if (frames.Count != 1)
+        {
             throw new ArtException(path + ": expected one frame, got " + frames.Count);
+        }
+
         return frames[0];
     }
 
@@ -177,7 +208,10 @@ static class MakeArt
     static IEnumerable<string> ReadLines(string path)
     {
         if (!File.Exists(path))
+        {
             throw new ArtException(path + ": not found");
+        }
+
         return File.ReadAllLines(path)
             .Select(line => line.TrimEnd())
             .Where(line => line.Length > 0 && !line.StartsWith("#"));
@@ -188,9 +222,15 @@ static class MakeArt
     static void CheckEdgesMatch(string path, List<string[]> tiles)
     {
         for (int i = 1; i < tiles.Count; i++)
+        {
             for (int y = 0; y < TileHeight; y++)
+            {
                 if (tiles[i][y][0] != tiles[0][y][0] || tiles[i][y][TileWidth - 1] != tiles[0][y][TileWidth - 1])
+                {
                     throw new ArtException(path + ": tile " + (i + 1) + "'s edge columns differ from tile 1's in row " + (y + 1));
+                }
+            }
+        }
     }
 
     // The grid in the middle of a larger, transparent one.
@@ -199,7 +239,7 @@ static class MakeArt
         int margin = (size - grid.Length) / 2;
         string blankRow = new string('.', size);
         string side = new string('.', margin);
-        var rows = new string[size];
+        string[] rows = new string[size];
         for (int y = 0; y < size; y++)
         {
             int gridY = y - margin;
@@ -222,10 +262,17 @@ static class MakeArt
             {
                 Color color;
                 if (!palette.TryGetValue(grid[y][x], out color))
+                {
                     throw new ArtException("No palette color for '" + grid[y][x] + "' in row " + (y + 1) + ": \"" + grid[y] + "\"");
+                }
+
                 for (int dy = 0; dy < scale; dy++)
+                {
                     for (int dx = 0; dx < scale; dx++)
+                    {
                         bitmap.SetPixel(x * scale + dx, y * scale + dy, color);
+                    }
+                }
             }
         }
         return bitmap;
@@ -267,7 +314,9 @@ static class MakeArt
                 offset += encodedImages[i].Length;
             }
             foreach (byte[] bytes in encodedImages)
+            {
                 writer.Write(bytes);
+            }
 
             writer.Flush();
             File.WriteAllBytes(path, stream.ToArray());
@@ -310,10 +359,15 @@ static class MakeArt
 
             for (int y = size - 1; y >= 0; y--)
             {
-                var mask = new byte[maskRowBytes];
+                byte[] mask = new byte[maskRowBytes];
                 for (int x = 0; x < size; x++)
+                {
                     if (image.GetPixel(x, y).A == 0)
+                    {
                         mask[x / 8] |= (byte)(0x80 >> (x % 8));
+                    }
+                }
+
                 writer.Write(mask);
             }
 

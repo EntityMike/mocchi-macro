@@ -67,10 +67,18 @@ namespace MocchiMacro
             // which is the hold.
             public string FrameAfter(long elapsedMs)
             {
-                if (Loops) elapsedMs %= LengthMs;
-                foreach (var step in steps)
+                if (Loops)
                 {
-                    if (elapsedMs < step.Ms) return step.Frame;
+                    elapsedMs %= LengthMs;
+                }
+
+                foreach ((string Frame, int Ms) step in steps)
+                {
+                    if (elapsedMs < step.Ms)
+                    {
+                        return step.Frame;
+                    }
+
                     elapsedMs -= step.Ms;
                 }
                 return steps.Last().Frame;
