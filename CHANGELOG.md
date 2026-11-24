@@ -17,3 +17,7 @@ The first release.
 - An update notice says when a newer release is out.
 - An About box, opened by the "?" button, says what the tool is and who made it, with links to help, support, and the game.
 - One .exe, with nothing to install.
+
+### Known issues
+
+- The tool finds the game window by its title alone, `MF` or `MF2`. Another window with the same title, such as File Explorer open on a folder named `MF2`, can get the clicks instead of the game.
