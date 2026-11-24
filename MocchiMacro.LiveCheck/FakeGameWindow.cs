@@ -1,6 +1,8 @@
 // A window that passes for the game: it has the game window's title and client size, and shows a
 // screenshot of that game's keyboard, so a person can watch the cursor land on each key. It marks
-// and records where each click lands, and does nothing else with it.
+// and records where each click lands, and does nothing else with it. It also marks, in blue, where
+// the layout puts Ent. (END in MR1 DX), which the typist never clicks, so a person can see by eye
+// whether that position sits on the key.
 // It stays on top of everything, so the typist's clicks can't reach another program.
 
 using System;
@@ -27,9 +29,13 @@ namespace MocchiMacro.LiveCheck
         readonly Bitmap screenshot;
         readonly List<Point> clicks = new List<Point>();
 
+        // The window is the reference size, so the layout's position is the window's own.
+        readonly PointF enter;
+
         FakeGameWindow(Game game)
         {
             screenshot = new Bitmap(Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "screenshots", game.WindowTitle + ".png"));
+            enter = game.Layout.Enter;
             Text = game.WindowTitle;
             ClientSize = ClientAreaInScreenshot.Size;
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -113,6 +119,11 @@ namespace MocchiMacro.LiveCheck
         void Draw(Graphics graphics)
         {
             graphics.DrawImage(screenshot, ClientRectangle, ClientAreaInScreenshot, GraphicsUnit.Pixel);
+            using (var enterMark = new Pen(Color.Blue, 3))
+            {
+                graphics.DrawEllipse(enterMark, enter.X - MarkRadius, enter.Y - MarkRadius, MarkRadius * 2, MarkRadius * 2);
+            }
+
             using (var mark = new Pen(Color.Red, 3))
             {
                 foreach (Point click in clicks)

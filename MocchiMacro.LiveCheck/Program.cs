@@ -7,7 +7,8 @@
 //   dotnet build mocchi-macro.slnx
 //   MocchiMacro.LiveCheck/bin/Debug/net48/MocchiMacro.LiveCheck.exe
 // Watch the cursor land on each key, or look afterward at the pictures it saves in live-check-output
-// next to the .exe. It exits with 0 if everything passed.
+// next to the .exe: red rings are clicks, and the blue ring is where the layout puts Ent. (END in
+// MR1 DX), which no Go clicks. It exits with 0 if everything passed.
 //
 // It can't show that the game accepts the clicks: the fake game window only records them. And the
 // expected click positions come from the tool's own layouts, so the screenshot under the marks is
@@ -232,7 +233,8 @@ namespace MocchiMacro.LiveCheck
 
         // Every key a search text can use, over as many Go runs as the box's limit takes. The marks
         // build up over the runs, so the saved picture shows every key clicked. It can't include
-        // Ent., which the typist never clicks, so the organizer can check the text first.
+        // Ent., which the typist never clicks, so the organizer can check the text first; the
+        // picture's blue ring shows where Ent. would be instead.
         static void CheckWholeKeyboard(ToolWindow tool, Game game, string pictureName)
         {
             const int typingRate = 10;
