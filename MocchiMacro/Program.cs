@@ -2,11 +2,8 @@
 // Build the solution and run MocchiMacro/bin/Debug/MocchiMacro.exe (CLAUDE.md has the commands).
 
 using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using MocchiMacro.Properties;
 

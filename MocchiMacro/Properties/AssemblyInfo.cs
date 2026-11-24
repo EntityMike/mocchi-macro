@@ -3,7 +3,6 @@
 // versions at the bottom, as docs/releasing.md says.
 
 using System.Reflection;
-using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
 [assembly: AssemblyTitle("Mocchi Macro")]
