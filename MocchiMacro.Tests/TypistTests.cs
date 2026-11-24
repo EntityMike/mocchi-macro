@@ -291,6 +291,52 @@ namespace MocchiMacro.Tests
         }
 
         [TestMethod]
+        public void WhenTheGameLeavesTheFrontPartwayThroughItReportsSoAndNoClicksFollow()
+        {
+            var game = new FakeGamePort();
+            game.AfterClick = () =>
+            {
+                if (game.Clicks.Count == 5)
+                {
+                    game.LeaveFront();
+                }
+            };
+
+            TypingOutcome outcome = new Typist(game, KeyboardLayout.Mr2Dx).Type("Mocchi", 10);
+
+            Assert.AreEqual(TypingOutcome.GameLeftFront, outcome);
+            Assert.AreEqual(5, game.Clicks.Count);
+        }
+
+        // The real port skips a press when the game has left the front or closed during the
+        // click, so the last key may not have reached the game: that isn't Done.
+        [TestMethod]
+        [DataRow(true, TypingOutcome.GameClosed)]
+        [DataRow(false, TypingOutcome.GameLeftFront)]
+        public void WhenTheGameGoesDuringTheLastClickItIsNotReportedDone(bool closes, TypingOutcome expected)
+        {
+            var game = new FakeGamePort();
+            game.AfterClick = () =>
+            {
+                if (game.Clicks.Count == 18)
+                {
+                    if (closes)
+                    {
+                        game.GameRunning = false;
+                    }
+                    else
+                    {
+                        game.LeaveFront();
+                    }
+                }
+            };
+
+            TypingOutcome outcome = new Typist(game, KeyboardLayout.Mr2Dx).Type("Mocchi", 10);
+
+            Assert.AreEqual(expected, outcome);
+        }
+
+        [TestMethod]
         public void WhenTheGameClosesWhileWaitingToComeToTheFrontItReportsTheGameClosed()
         {
             var game = new FakeGamePort { ComesToFrontAfterMs = null };

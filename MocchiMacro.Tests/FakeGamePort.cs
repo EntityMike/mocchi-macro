@@ -52,6 +52,9 @@ namespace MocchiMacro.Tests
         public bool IsInFront() => askedToFrontAtMs.HasValue && ComesToFrontAfterMs.HasValue
             && NowMs >= askedToFrontAtMs + ComesToFrontAfterMs;
 
+        // Another window takes the front, as when the organizer presses Alt+Tab.
+        public void LeaveFront() => askedToFrontAtMs = null;
+
         public Rectangle ReadClientArea() => Minimized ? new Rectangle(-32000, -32000, 0, 0) : ClientArea;
 
         public void Click(Point screenPoint)

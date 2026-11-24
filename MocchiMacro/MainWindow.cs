@@ -289,6 +289,7 @@ namespace MocchiMacro
                 case TypingOutcome.CharacterWithoutKey: return "The search text has a character without a key.";
                 case TypingOutcome.GameNotInFront: return "The game didn't come to the front. Click the game, then press Go again.";
                 case TypingOutcome.GameClosed: return "The game window closed partway through, so typing stopped.";
+                case TypingOutcome.GameLeftFront: return "The game lost the front partway through, so typing stopped.";
                 default: return outcome.ToString();
             }
         }

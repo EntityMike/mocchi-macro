@@ -3,8 +3,9 @@
 // if minimized), clicks BS enough times to clear the field, then each key of the search text.
 // It never clicks Ent., so the organizer can check the text and run the search themselves,
 // except that a 12th character moves the game on by itself, as Ent. does. A search text with a
-// character the keyboard has no key for is refused before any click. It reports how typing
-// went, and clicks nothing more once something has gone wrong.
+// character the keyboard has no key for is refused before any click. It stops if the game
+// closes or another window takes the front partway through. It reports how typing went, and
+// clicks nothing more once something has gone wrong.
 
 using System.Drawing;
 using System.Linq;
@@ -18,6 +19,7 @@ namespace MocchiMacro
         CharacterWithoutKey,
         GameNotInFront,
         GameClosed,
+        GameLeftFront,
     }
 
     public class Typist
@@ -98,17 +100,38 @@ namespace MocchiMacro
                     game.Wait((int)waitMs);
                 }
 
-                // Once the game is gone, a click would land on whatever was behind it.
-                if (!game.GameStillExists())
+                TypingOutcome? stop = ReasonToStop();
+                if (stop.HasValue)
                 {
-                    return TypingOutcome.GameClosed;
+                    return stop.Value;
                 }
 
                 // Read the client area before every click, so typing follows the window if it moves.
                 Rectangle picture = FindPicture(game.ReadClientArea());
                 game.Click(ToScreen(keys[n], picture));
             }
-            return TypingOutcome.Done;
+
+            // Checked once more after the last click: the port skips a press when the game has
+            // gone during the click, so the last key may not have reached it.
+            return ReasonToStop() ?? TypingOutcome.Done;
+        }
+
+        // Why the next click mustn't happen, or null if it can. Once the game is gone, or another
+        // window has taken the front (such as after Alt+Tab), a click would land on whatever window
+        // is at the key's spot. A minimized game's clicks would land at the edge of the screen.
+        TypingOutcome? ReasonToStop()
+        {
+            if (!game.GameStillExists())
+            {
+                return TypingOutcome.GameClosed;
+            }
+
+            if (!game.IsInFront())
+            {
+                return TypingOutcome.GameLeftFront;
+            }
+
+            return null;
         }
 
         // The game's 16:9 picture inside the client area. In a window it fills the client area;

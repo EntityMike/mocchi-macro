@@ -63,6 +63,15 @@ namespace MocchiMacro
         {
             SetCursorPos(screenPoint.X, screenPoint.Y);
             Thread.Sleep(CursorSettleMs);
+
+            // The typist checked the game just before this click, but it can close or lose the
+            // front during the settle, and the press would then land on the window behind it.
+            // Skipped, the typist's next check stops typing.
+            if (!GameStillExists() || !IsInFront())
+            {
+                return;
+            }
+
             SendMouseButton(MOUSEEVENTF_LEFTDOWN);
             Thread.Sleep(ClickHoldMs);
             SendMouseButton(MOUSEEVENTF_LEFTUP);

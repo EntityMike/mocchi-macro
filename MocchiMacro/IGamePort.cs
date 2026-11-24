@@ -25,7 +25,8 @@ namespace MocchiMacro
         // The game window's client area: its size, and its top-left corner on screen.
         Rectangle ReadClientArea();
 
-        // Clicks a point on screen with the left mouse button.
+        // Clicks a point on screen with the left mouse button. The real port skips the press if
+        // the game has closed or left the front by then, so the typist checks again afterward.
         void Click(Point screenPoint);
 
         // Milliseconds since some fixed point; only differences matter.
