@@ -1,6 +1,6 @@
 # 06: Audit the code before release
 
-Status: ready-for-agent
+Status: resolved
 
 Blocked by: 05 (the last ticket that changes code)
 
@@ -51,12 +51,12 @@ Review the main project first, then the tests, the live check, and the art gener
 
 ## Acceptance criteria
 
-- [ ] Every file in the main project has been read. The tests, the live check, and the art generator have been checked against the list above.
-- [ ] The findings are in this ticket's comments, ranked, and each names what goes wrong.
-- [ ] The screen size question is answered with a recommendation: generic enough as it is, or what to change.
-- [ ] The repo owner has decided on each finding: fix now, give it its own ticket, or leave it.
-- [ ] Every "fix now" finding is fixed, and the full test suite passes.
-- [ ] The live check passes after the fixes (the repo owner runs it).
+- [x] Every file in the main project has been read. The tests, the live check, and the art generator have been checked against the list above.
+- [x] The findings are in this ticket's comments, ranked, and each names what goes wrong.
+- [x] The screen size question is answered with a recommendation: generic enough as it is, or what to change.
+- [x] The repo owner has decided on each finding: fix now, give it its own ticket, or leave it.
+- [x] Every "fix now" finding is fixed, and the full test suite passes.
+- [x] The live check passes after the fixes (the repo owner runs it).
 
 ## User stories covered
 
@@ -158,3 +158,5 @@ Review the main project first, then the tests, the live check, and the art gener
 - **14, partly fixed.** `KeyboardLayout.Enter` stays, since a later feature may use it. The empty resources template (`Properties/Resources.resx` and `Resources.Designer.cs`), the unused `using`s in `Program.cs` and `AssemblyInfo.cs`, and the main project's unused framework references (`System.Data`, `System.Data.DataSetExtensions`, `System.Deployment`, `System.Xml`, `System.Xml.Linq`, and `Microsoft.CSharp`) are removed. So that `Enter`'s positions are no longer unchecked, the live check now draws a blue ring at Ent. (END in MR1 DX) on every picture it saves. Drawn on the two keyboard screenshots, the ring sits on each key's label.
 
 All 107 tests pass. The live check is still to be run, by the repo owner; its pictures should show the blue ring on Ent. and END.
+
+**2026-11-23, checked by the repo owner:** The live check passes after the fixes. Closed.
