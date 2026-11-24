@@ -1,5 +1,6 @@
 // The real game port: finds the game window by its title and clicks it through user32.dll.
-// The click, timing, and window calls follow the keyboard test that was proven against the game.
+// The window calls follow the keyboard test that was proven against the game. The click has
+// changed since: it waits for the cursor to settle before pressing, as its comments say.
 
 using System;
 using System.Diagnostics;

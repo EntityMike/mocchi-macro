@@ -1,4 +1,7 @@
-﻿using System;
+﻿// The tool's entry point: deletes a damaged settings file, then opens the main window.
+// Build the solution and run MocchiMacro/bin/Debug/MocchiMacro.exe (CLAUDE.md has the commands).
+
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -11,9 +14,6 @@ namespace MocchiMacro
 {
     internal static class Program
     {
-        /// <summary>
-        /// The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {

@@ -1,7 +1,8 @@
 <!--
-  Tests for MocchiMacro. They drive the typist through a fake game port, so they run
-  instantly and need no game. Run them from Visual Studio's Test Explorer, or build and
-  run the test executable directly:
+  Tests for MocchiMacro: the typist (driven through a fake game port, so they run instantly
+  and need no game), the keyboard layouts, the mascot's art and animation, the footer band,
+  the update check, the tool details, and the changelog. Run them from Visual Studio's Test
+  Explorer, or build and run the test executable directly:
     bin/Debug/net48/MocchiMacro.Tests.exe
 -->
 <Project Sdk="Microsoft.NET.Sdk">

@@ -11,8 +11,8 @@
 // and the typing rate says how typing went.
 // The hotkey brings the window to the front from any program with the search text selected,
 // so the organizer can type the next one over it. It's Ctrl+Alt+Shift+M, or a fallback when
-// another program already has that, or none when all three are taken; a label at the bottom
-// shows which, and the status line says so at startup when it isn't the default.
+// another program already has that, or none when all three are taken; a label under the
+// typing rate shows which, and the status line says so at startup when it isn't the default.
 // The mascot stands to the left of the controls and reacts to Go: it curls in a loop while Go
 // types, then hops if the outcome is Done and droops on any problem, including an empty box.
 // Startup messages don't make it droop, since that's only about Go.

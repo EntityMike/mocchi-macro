@@ -1,9 +1,11 @@
-﻿using System.Reflection;
+﻿// The .exe's file details. Windows shows the title as the file's description in
+// Properties → Details and as the tool's name in Task Manager. A release bumps both
+// versions at the bottom, as docs/releasing.md says.
+
+using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Runtime.InteropServices;
 
-// The .exe's file details. Windows shows the title as the file's description in
-// Properties → Details and as the tool's name in Task Manager.
 [assembly: AssemblyTitle("Mocchi Macro")]
 [assembly: AssemblyDescription("Types monster names into MR1 DX's and MR2 DX's on-screen keyboards")]
 [assembly: AssemblyConfiguration("")]
