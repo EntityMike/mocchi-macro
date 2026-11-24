@@ -47,14 +47,11 @@ static class MakeArt
         {
             Dictionary<char, Color> palette = ReadPalette(Path.Combine(artFolder, "palette.txt"));
 
-            // Clear out the old frames first, so a frame taken out of a grid doesn't leave
-            // its PNG behind.
+            // Every file is made in memory, by path, before anything is written. A mistake in
+            // any grid then stops the run with the old files untouched, rather than partway
+            // through, with frames missing that the tool would crash on.
             string pngFolder = Path.Combine(artFolder, "png");
-            Directory.CreateDirectory(pngFolder);
-            foreach (string oldPng in Directory.GetFiles(pngFolder, "*.png"))
-            {
-                File.Delete(oldPng);
-            }
+            var files = new Dictionary<string, byte[]>();
 
             foreach (string animation in Animations)
             {
@@ -62,7 +59,7 @@ static class MakeArt
                 for (int i = 0; i < frames.Count; i++)
                 {
                     string pngPath = Path.Combine(pngFolder, animation + "-" + (i + 1) + ".png");
-                    File.WriteAllBytes(pngPath, ToPng(ToBitmap(frames[i], palette, 1)));
+                    files[pngPath] = ToPng(ToBitmap(frames[i], palette, 1));
                 }
             }
 
@@ -72,12 +69,12 @@ static class MakeArt
             for (int i = 0; i < tiles.Count; i++)
             {
                 string pngPath = Path.Combine(pngFolder, "footer-band-" + (i + 1) + ".png");
-                File.WriteAllBytes(pngPath, ToPng(ToBitmap(tiles[i], palette, 1)));
+                files[pngPath] = ToPng(ToBitmap(tiles[i], palette, 1));
             }
 
             string[] face16 = ReadSingleGrid(Path.Combine(artFolder, "icon-16.txt"), 16);
             string[] face32 = ReadSingleGrid(Path.Combine(artFolder, "icon-32.txt"), 32);
-            WriteIcon(Path.Combine(artFolder, "Mocchi.ico"), new[]
+            files[Path.Combine(artFolder, "Mocchi.ico")] = ToIcon(new[]
             {
                 ToBitmap(face16, palette, 1),
                 ToBitmap(face32, palette, 1),
@@ -85,6 +82,18 @@ static class MakeArt
                 ToBitmap(Centered(face32, 48), palette, 1),
                 ToBitmap(face32, palette, 8),
             });
+
+            // Clear out the old PNGs, so a frame taken out of a grid doesn't leave its PNG behind.
+            Directory.CreateDirectory(pngFolder);
+            foreach (string oldPng in Directory.GetFiles(pngFolder, "*.png"))
+            {
+                File.Delete(oldPng);
+            }
+
+            foreach (KeyValuePair<string, byte[]> file in files)
+            {
+                File.WriteAllBytes(file.Key, file.Value);
+            }
         }
         catch (ArtException e)
         {
@@ -289,7 +298,7 @@ static class MakeArt
 
     // An .ico is a directory of images. The 256 px image is stored as a PNG, as Windows
     // expects; the smaller ones as 32-bit bitmaps, which every Windows icon API reads.
-    static void WriteIcon(string path, Bitmap[] images)
+    static byte[] ToIcon(Bitmap[] images)
     {
         var encodedImages = images.Select(image => image.Width == 256 ? ToPng(image) : ToIconBitmap(image)).ToList();
 
@@ -319,7 +328,7 @@ static class MakeArt
             }
 
             writer.Flush();
-            File.WriteAllBytes(path, stream.ToArray());
+            return stream.ToArray();
         }
     }
 
