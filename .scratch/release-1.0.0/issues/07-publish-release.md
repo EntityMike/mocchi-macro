@@ -1,6 +1,6 @@
 # 07: Publish 1.0.0
 
-Status: ready-for-human
+Status: resolved
 
 Blocked by: 03, 04, 05, 06. Only ticket 04's README text is needed. Its animated screenshot is deferred and doesn't block publishing, and its GitHub rendering and SmartScreen checks happen here.
 
@@ -26,12 +26,12 @@ The agent writes the release notes into this ticket's comments: a line saying wh
 
 ## Acceptance criteria
 
-- [ ] The live check passes on the commit being released.
-- [ ] Before going public, Go typed into both real games, and the Done messages read correctly.
-- [ ] The repo is public, and the README renders on GitHub with a working download link.
-- [ ] The release `1.0.0` exists, isn't a pre-release, and has exactly one asset, `MocchiMacro.exe`.
-- [ ] The downloaded .exe runs after SmartScreen's Run anyway, and its title reads "Mocchi Macro 1.0.0".
-- [ ] The update notice showed for the `0.9.0` build and not for the real 1.0.0. Record the result in this ticket's comments.
+- [x] The live check passes on the commit being released.
+- [x] Before going public, Go typed into both real games, and the Done messages read correctly.
+- [x] The repo is public, and the README renders on GitHub with a working download link.
+- [x] The release `1.0.0` exists, isn't a pre-release, and has exactly one asset, `MocchiMacro.exe`.
+- [x] The downloaded .exe runs after SmartScreen's Run anyway, and its title reads "Mocchi Macro 1.0.0".
+- [x] The update notice showed for the `0.9.0` build and not for the real 1.0.0. Record the result in this ticket's comments.
 
 ## User stories covered
 
@@ -48,3 +48,13 @@ See the [README](https://github.com/EntityMike/mocchi-macro#readme) for more inf
 
 Enjoy!
 ````
+
+**2026-11-24, the release.**
+- **The release commit.** Before tagging, `CHANGELOG.md`'s 1.0.0 entry gained a Known issues section for the code audit's finding 4: the game window is found by its title alone. It's committed on its own as `Release 1.0.0`, the way `docs/releasing.md` lays out every later release, without a version bump, since the version was already `1.0.0.0`.
+- **Before tagging,** checked by the repo owner: the live check passes, and Go typed into both real games with the Done messages reading correctly. The tag `1.0.0` was then pushed with `main`, on the release commit.
+- **The Release build** was rebuilt in full from the tag with nothing uncommitted. The build is clean and all 107 tests pass. The title reads "Mocchi Macro 1.0.0", and the file details give the description, the product, version 1.0.0.0, and the copyright.
+- **The live release,** read from GitHub's API: tag `1.0.0` on `main`, titled "Mocchi Macro 1.0.0", not a draft or a pre-release, with one asset, `MocchiMacro.exe`. The repo page loads publicly, and the README's download link serves a file whose SHA-256 matches the Release build.
+- **The update notice,** checked by the repo owner: a build with `AssemblyVersion` set to `0.9.0.0` showed "Version 1.0.0 is out: download", and its link opened the releases page. The real 1.0.0 showed the band and no link. The `0.9.0.0` settings folder that build left was deleted afterward.
+- **SmartScreen,** checked by the repo owner: the .exe downloaded on another computer ran after Run anyway. The dialog's wording wasn't compared with the README's.
+
+Closed.

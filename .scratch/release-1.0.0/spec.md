@@ -1,6 +1,6 @@
 # Release 1.0.0: publish the tool on GitHub
 
-Status: ready-for-agent
+Status: resolved
 
 Blocked by: global-hotkey, window-look
 
