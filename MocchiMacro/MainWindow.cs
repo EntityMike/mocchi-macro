@@ -379,7 +379,16 @@ namespace MocchiMacro
         // ransomware and suspended it.
         void MainWindow_FormClosed(object sender, FormClosedEventArgs e)
         {
-            Settings.Default.Save();
+            // When the settings folder can't be written to, such as when anti-ransomware software
+            // blocks the write, this throws, and WinForms' crash dialog would come up as the tool
+            // closes. The typing rate and game just aren't kept instead.
+            try
+            {
+                Settings.Default.Save();
+            }
+            catch (Exception)
+            {
+            }
         }
 
         // Identifies the hotkey in WM_HOTKEY. Any number works, since the window has only one.
