@@ -22,7 +22,7 @@ Version 1.0.0 ships as one `MocchiMacro.exe` on the repo's GitHub Releases page,
 - **An update notice:** at startup, the tool asks GitHub for the latest release. If it's newer, a link in a new footer row reads "Version 1.1.0 is out: download" and opens the releases page. Otherwise the row shows a still band of pixel-art grass.
 - **An About box:** a small "?" button in the window's top-left corner opens a window saying what the tool is and who made it, with links to help, support, and the game.
 
-The README is rewritten for organizers. The repo owner builds and publishes the release from written steps, kept for every later release too, and release notes. What changed in each release goes in a new `CHANGELOG.md`, which the release notes link to. Before publishing, the whole codebase is audited for glaring issues, and the fixes the repo owner picks are made.
+The README is rewritten for organizers. The repo owner builds and publishes the release from written steps, kept for every later release too, and release notes. What changed in each release goes in a new `CHANGELOG.md`, which the README links to. Before publishing, the whole codebase is audited for glaring issues, and the fixes the repo owner picks are made.
 
 ## User Stories
 
@@ -109,7 +109,7 @@ The README is rewritten for organizers. The repo owner builds and publishes the 
   - **Build:** a Release build on their machine.
   - **Tag:** `1.0.0`, a plain version with no `v`, matching `AssemblyVersion`. A `v` tag would show no update notice.
   - **Asset:** one, the bare `MocchiMacro.exe`. No zip and no `.pdb`.
-  - **Where:** the release is created on GitHub's website, with release notes written in the ticket. They say what the tool does and give the SmartScreen note, and link to `CHANGELOG.md` for what's in the release rather than listing it.
+  - **Where:** the release is created on GitHub's website, with release notes written in the ticket. They're short, a line saying what the tool is and a link to the README, which has the SmartScreen note and links to `CHANGELOG.md`. They don't list the changes.
   - **Before going public:** Go types into both real games, which needs the VS mode server up. Typing into a real game in the new window is still unseen (window-look tickets 02 and 04), and the first public version shouldn't be its first real test.
   - **Visibility:** the repo goes public as it is (history, `.scratch/`, `CLAUDE.md`, game screenshots), just before the release is published. The live check's fake game window needs those screenshots, and the window-look spec names game art in a public repo as the likeliest way to get a takedown. It's accepted here, with the README saying whose they are.
   - Rejected: **a GitHub Actions build.** Worth it if releases get frequent, not for the first one.
@@ -169,3 +169,4 @@ The README is rewritten for organizers. The repo owner builds and publishes the 
 - 2026-11-21, while writing the README, the repo owner chose to keep the changes out of the GitHub release: `CHANGELOG.md` was added, newest release first, and the release notes link to it.
 - 2026-11-21, after the README was written, the repo owner added the About box as ticket 05, so publishing became 06.
 - 2026-11-21, the repo owner then added a whole-codebase audit as ticket 06, after the About box, so publishing became 07.
+- 2026-11-23, the repo owner cut the release notes down to a line about the tool and a link to the README, rather than repeating the README's SmartScreen note and linking to the changelog.
