@@ -71,6 +71,10 @@ The first time you run the tool, Windows may show a blue box saying "Windows pro
 1. Click **More info**.
 2. Click **Run anyway**.
 
+### Stand-ins on a non-US keyboard
+
+On some keyboard layouts, such as German or French, `^` and `` ` `` wait for the next key and combine with it (`^` then `a` gives `â`), so press Space right after one to type it as a stand-in.
+
 ### Antivirus
 
 The tool clicks the mouse for you, the way a person would, and some antivirus software finds that suspicious. If yours blocks or deletes the tool, you can add an exception for `MocchiMacro.exe` in its settings.
